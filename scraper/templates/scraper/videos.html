@@ -1,0 +1,49 @@
+{% extends 'scraper/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="videos">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="showcase-container">
+                <h1>#1 Twitter Video Downloader</h1>
+                <form action="">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    {{ field }}
+                    {% endfor %}
+                    <button class="form-btn" type="submit">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="video-items-container">
+            <div class="video-items">
+                <div class="video-item">
+                    <i class="fas fa-copy"></i>
+                    <h1 class="video-title">Copy</h1>
+                    <p class="video-detail">Copy the link of the tweet with the video from Twitter.</p>
+                </div>
+                <div class="video-item">
+                    <i class="fas fa-paste"></i>
+                    <h1 class="video-title">Paste</h1>
+                    <p class="video-detail">Paste the link in the text-field above and <span class="italics">blink
+                            twice</span> to wait for it
+                        to parse.</p>
+                </div>
+                <div class="video-item">
+                    <i class="fas fa-file-download"></i>
+                    <h1 class="video-title">Download</h1>
+                    <p class="video-detail">Donwload the video in any of your favorite mp4 formats and enjoy!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
