@@ -1,0 +1,29 @@
+{% extends 'scraper/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="downloads">
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <div class="showcase-container">
+                    <h1>Reinventing convenience</h1>
+                    <p>Hello,<span class="downloads-highlight"> @{{ download.requested_by }}</span> here's your video.
+                        Download it now to watch it later.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="downloads-container">
+                <video controls >
+                    <source src={{ download.url }} type='video/mp4'>
+                    Video tag is not supported by this browser.
+                </video>
+               
+            </div>
+        </div>
+    </div>
+    
+
+{% endblock content %}

@@ -10,7 +10,7 @@
 body {
     font-family: 'Montserrat',
         sans-serif;
-    color: #252525;
+    color: #161616;
     background-color: #fff;
     position: relative;
     min-height: 100vh;
@@ -70,8 +70,6 @@ nav {
     justify-content: center;
 }
 
-
-
 .showcase-container {
     max-width: 680px;
     align-self: center;
@@ -87,7 +85,7 @@ nav {
     font-size: 29px;
     font-weight: 700;
     line-height: 1.2;
-    color: #797979;
+    color: #535353;
     margin-top: 50px;
 }
 
@@ -96,31 +94,28 @@ nav {
     padding: 40px 0;
     background: #000;
     color: #fff;
-
+    
 }
 
 .home-items>.container {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .home-items-container {
-    max-width: 700px;
-    margin: 0 20px;
+    display: grid;
+    place-items: center;
+    max-width: 680px;
 }
 
 .home-item>h1 {
-    font-size: 50px;
+    font-size: 40px;
     font-weight: 700;
     margin-bottom: 28px;
 }
 
-.option>h1 {
-    font-size: 32px;
-    font-weight: 600;
-}
-
-.option>h1::after {
+.home-item>h1::after {
     background: #0071E3;
     display: block;
     content: '';
@@ -128,6 +123,11 @@ nav {
     margin-bottom: 20px;
     margin-top: 20px;
     width: 40px;
+}
+
+.option>h1 {
+    font-size: 32px;
+    font-weight: 600;
 }
 
 .option>p {
@@ -139,10 +139,6 @@ nav {
 
 .option>p>.highlight {
     color: #fff;
-}
-
-.option-1 {
-    margin-bottom: 40px;
 }
 
 /* VIDEOS */
@@ -235,6 +231,41 @@ form {
     font-style: italic;
 }
 
+/* DOWNLOADS */
+.downloads>.jumbotron {
+    background-color: #fff !important;
+    color: #000;
+}
+
+.downloads>.jumbotron>.container {
+    display: flex;
+    justify-content: center;
+}
+
+.downloads{
+    background: #0071E3;
+}
+
+.downloads-highlight{
+    color: #000;
+}
+
+.downloads-container{
+    max-width: 480px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+video{
+    width: 100%;
+    height: auto;
+     margin: 50px 0;
+}
+
+.downloads-container>a{
+    background-color: #fff;
+}
 
 /* THREADS */
 
@@ -246,14 +277,20 @@ form {
 }
 
 .threads-container {
-
-    text-align: center;
+    display: grid;
+    place-items: center;
 }
 
 .threads-container>h1 {
     font-size: 64px;
     font-weight: 700;
 
+}
+
+.threads-container>img{
+    max-width: 500px;
+    object-fit:contain;
+    margin-top: 50px;
 }
 
 
@@ -339,6 +376,10 @@ form {
         font-size: 18px;
     }
 
+    .home-item>h1 {
+        font-size: 26px;
+    }
+
     .video-items {
         max-width: 320px;
         flex-direction: column;
@@ -349,6 +390,10 @@ form {
 @media only screen and (max-width: 315px) {
     .showcase-container>h1 {
         font-size: 29px;
+    }
+
+    .home-item>h1 {
+        font-size: 22px;
     }
 
     .form-textfield {
