@@ -16,6 +16,31 @@ body {
     min-height: 100vh;
 }
 
+/* GLOBALS */
+.showcase-container {
+    max-width: 700px;
+    align-self: center;
+    text-align: center;
+}
+
+.showcase-container>h1 {
+    font-size: 70px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    color: black;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke: 2px black;
+}
+
+.showcase-container>p {
+    font-size: 29px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #393e46;
+    margin: 20px;
+}
+
 /* NAV */
 nav {
     top: 0;
@@ -60,41 +85,66 @@ nav {
 }
 
 /* HOME */
+.home{
+    background-color: #000;
+
+}
+
 .home>.jumbotron {
-    background-color: #fff !important;
+    min-height: 400px;
+    background-color: #0071E3 !important;
     margin-bottom: 0 !important;
 }
 
 .home>.jumbotron>.container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
-.showcase-container {
-    max-width: 680px;
+.home-showcase-container {
+    max-width: 700px;
     align-self: center;
     text-align: center;
 }
 
-.showcase-container>h1 {
+.home-showcase-container>h1 {
     font-size: 70px;
     font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    color: #fff;
+    -webkit-text-fill-color: #0071E3;
+    -webkit-text-stroke: 2px #fff;
 }
 
-.showcase-container>p {
-    font-size: 29px;
-    font-weight: 700;
-    line-height: 1.2;
-    color: #535353;
-    margin-top: 50px;
+.video-tiles-container{
+    max-width: 650px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.video-container{
+    width: 240px;
+    margin: 5px;
+}
+
+.video-container > video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    
 }
 
 .home-items {
-    min-height: 300px;
+    min-height: 100px;
     padding: 40px 0;
     background: #000;
     color: #fff;
-    
 }
 
 .home-items>.container {
@@ -106,7 +156,8 @@ nav {
 .home-items-container {
     display: grid;
     place-items: center;
-    max-width: 680px;
+    justify-self: center;
+    max-width: 630px;
 }
 
 .home-item>h1 {
@@ -151,6 +202,8 @@ nav {
     display: flex;
     justify-content: center;
 }
+
+
 
 .videos {
     display: flex;
@@ -250,6 +303,22 @@ form {
     color: #000;
 }
 
+.download-btn{
+    background-color: #0071E3;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: ease-in-out 200ms;
+}
+
+.download-btn:hover{
+    color: #fff;
+    text-decoration: none;
+    background: #0055aa;
+}
+
 .downloads-container{
     max-width: 480px;
     margin: 0 auto;
@@ -257,10 +326,13 @@ form {
     justify-content: center;
 }
 
-video{
+.downloads-container-video {
     width: 100%;
     height: auto;
-     margin: 50px 0;
+    margin: 50px 0;
+    outline: none;
+    border: none;
+    border-radius: 5px;
 }
 
 .downloads-container>a{
@@ -270,7 +342,8 @@ video{
 /* THREADS */
 
 .threads {
-    height: 100vh;
+    /* height: 100vh; */
+    margin-top: 50px;
     display: flex;
     align-items: center;
     justify-self: center;
@@ -288,7 +361,7 @@ video{
 }
 
 .threads-container>img{
-    max-width: 38rem;
+    max-width: 35rem;
     object-fit:contain;
     margin-top: 40px;
 }
@@ -298,6 +371,12 @@ video{
 @media only screen and (max-width: 768px) {
     .showcase-container>h1 {
         font-size: 52px;
+    }
+
+    .video-container {
+        width: 400px;
+        margin: 10px;
+
     }
 
     .form-textfield {
@@ -320,7 +399,7 @@ video{
     }
 
     .threads-container>img {
-        max-width: 30rem;
+        max-width: 28rem;
         object-fit: contain;
         margin-top: 40px;
     }
@@ -342,6 +421,15 @@ video{
         font-size: 22px;
         margin-top: 30px;
 
+    }
+
+    .video-tiles-container {
+        flex-direction: column;
+    }
+
+    .video-container {
+        width: 240px;
+        margin: 20px 0;
     }
 
     .home-item>h1 {
@@ -380,11 +468,11 @@ video{
         font-size: 38px;
     }
 
-     .threads-container>img {
-         max-width: 20rem;
-         object-fit: contain;
-         margin-top: 40px;
-     }
+    .threads-container>img {
+        max-width: 20rem;
+        object-fit: contain;
+        margin-top: 40px;
+    }
 }
 
 @media only screen and (max-width: 320px) {
@@ -395,6 +483,8 @@ video{
     .showcase-container>p {
         font-size: 18px;
     }
+
+    
 
     .home-item>h1 {
         font-size: 26px;

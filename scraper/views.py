@@ -6,7 +6,9 @@ from .forms import VideoForm
 
 
 def home(request):
-    context = {}
+    last_4_videos = TwitterVideo.objects.order_by('-date_processed_utc')[:4]
+
+    context = {'last_4_videos': last_4_videos}
     return render(request, 'scraper/home.html', context)
 
 # THREADS VIEW
@@ -26,8 +28,14 @@ def threads(request):
 #     return render(request, 'scraper/videos.html', context)
 
 
-def downloads(request, slug):
+def download(request, slug):
     download = TwitterVideo.objects.get(slug=slug)
-    context = {'download': download}
 
-    return render(request, 'scraper/downloads.html', context)
+    question_separated_strings = download.url.split('?')
+    stroke_separated_strings = question_separated_strings[0].split('/')
+    period_separated_strings = stroke_separated_strings[-1].split('.')
+    extension = period_separated_strings[-1]
+
+    context = {'download': download, 'extension': extension}
+
+    return render(request, 'scraper/download.html', context)

@@ -6,9 +6,18 @@
 <div class="home">
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <div class="showcase-container">
-                <h1>Fast, Secure & Reliable</h1>
-                <p>Download Twitter Videos and GIFS now to watch them later.</p>
+            <div class="home-showcase-container">
+                <h1>Smart Content Delivery</h1>
+            </div>
+            <div class="video-tiles-container">
+            {% for video in last_4_videos %}
+            <div class="video-container">
+                <video controls>
+                    <source src={{ video.url }} type="video/mp4">
+                    Video tag is not supported by this browser.
+                </video>
+            </div>
+            {% endfor %}
             </div>
         </div>
     </div>
