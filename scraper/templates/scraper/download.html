@@ -11,17 +11,18 @@
                             href="https://twitter.com/{{ download.requested_by }}">@{{ download.requested_by }}</a></span>
                         here's your video.
                     </p>
-                    <a href={{ download.url }} download class="download-btn">Download Video</a>
+
+                    <input type="button" class="download-btn"
+                        onclick="download('{{ download.url }}', '{{ download.requested_by }}', '{{ download.slug }}')" value="Donwload Video"/>
                 </div>
             </div>
         </div>
         <div class="container">
             <div class="downloads-container">
-                <video class="downloads-container-video" controls >
+                <video class="downloads-container-video" controls download="video">
                     <source src={{ download.url }} type='video/{{ extension }}'>
                     Video tag is not supported by this browser.
                 </video>
-                
                 
             </div>
         </div>

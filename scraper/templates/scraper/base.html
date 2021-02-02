@@ -49,6 +49,29 @@
     {% endblock content %}
 
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
+    {% comment %} Logic for downloading file and adding a custom download name {% endcomment %}
+    <script>
+        function download(videoURL, requested_by, slug) {
+            axios({
+            url: videoURL,
+            method: "GET",
+            responseType: "blob"
+            }).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data], {type: 'video/mp4'}));
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${requested_by}_${slug}.mp4`;
+            document.body.appendChild(link);
+            link.click();
+            window.URL.revokeObjectURL(url)
+            
+            console.log(response)
+        });
+        }
+    
+    </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

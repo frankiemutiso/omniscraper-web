@@ -35,7 +35,8 @@ def download(request, slug):
     stroke_separated_strings = question_separated_strings[0].split('/')
     period_separated_strings = stroke_separated_strings[-1].split('.')
     extension = period_separated_strings[-1]
+    link = period_separated_strings[0]
 
-    context = {'download': download, 'extension': extension}
+    context = {'download': download, 'extension': extension, 'link': link}
 
     return render(request, 'scraper/download.html', context)
