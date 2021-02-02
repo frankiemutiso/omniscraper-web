@@ -22,11 +22,11 @@
 </head>
 
 <body>
-    {% comment %} bootstrap navabar {% endcomment %}
+    <!-- bootstrap navabar !-->
     <nav class="navbar navbar-custom navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand logo" href={% url 'home' %}>Omni<span class="logo-highlight">Scraper</span></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            <button class="hamburger navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -51,7 +51,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 
-    {% comment %} Logic for downloading file and adding a custom download name {% endcomment %}
+    <!-- Logic for downloading file and adding a custom download name -->
     <script>
         function download(videoURL, requested_by, slug) {
             axios({
@@ -72,7 +72,8 @@
         }
     
     </script>
-    <!-- Optional JavaScript -->
+    
+    <!-- JavaScript for running Bootstrap -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
