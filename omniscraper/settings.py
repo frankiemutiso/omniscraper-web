@@ -30,7 +30,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['omniscraper.com']
+ALLOWED_HOSTS = ['omniscraper.herokuapp.com']
 
 
 # Application definition
