@@ -1,0 +1,1 @@
+web: gunicorn omniscraper.wsgi --log-file -
