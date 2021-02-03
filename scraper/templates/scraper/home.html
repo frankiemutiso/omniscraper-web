@@ -10,14 +10,14 @@
             </div>
             <div class="video-tiles-container">
             
-            {% comment %} {% for video in last_4_videos %}
+            {% for video in last_4_videos %}
                 <div class="video-container">
                     <video controls>
                         <source src={{ video.url }} type="video/mp4">
                         Video tag is not supported by this browser.
                     </video>
                 </div>
-            {% endfor %} {% endcomment %}
+            {% endfor %}
             </div>
         </div>
     </div>
