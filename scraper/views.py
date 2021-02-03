@@ -29,14 +29,18 @@ def threads(request):
 
 
 def download(request, slug):
-    download = TwitterVideo.objects.get(slug=slug)
+    try:
+        download = TwitterVideo.objects.get(slug=slug)
 
-    question_separated_strings = download.url.split('?')
-    stroke_separated_strings = question_separated_strings[0].split('/')
-    period_separated_strings = stroke_separated_strings[-1].split('.')
-    extension = period_separated_strings[-1]
-    link = period_separated_strings[0]
+        question_separated_strings = download.url.split('?')
+        stroke_separated_strings = question_separated_strings[0].split('/')
+        period_separated_strings = stroke_separated_strings[-1].split('.')
+        extension = period_separated_strings[-1]
+        link = period_separated_strings[0]
 
-    context = {'download': download, 'extension': extension, 'link': link}
+        context = {'download': download, 'extension': extension, 'link': link}
 
-    return render(request, 'scraper/download.html', context)
+        return render(request, 'scraper/download.html', context)
+    except Exception as error:
+        context = {'error': error}
+        return render(request, 'scraper/download.html', context)

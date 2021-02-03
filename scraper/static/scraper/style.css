@@ -285,6 +285,45 @@ form {
 }
 
 /* DOWNLOADS */
+.error{
+    height: 100vh;
+    background-color: #f6f6f6 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error>.container{
+    display: grid;
+    place-items: center;
+    text-align: center;
+    width: 320px;
+}
+
+.error>.container>h1{
+    font-weight: 700;
+}
+
+.error>.container>p{
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.error-btn{
+    background: transparent;
+    border: 1px solid #0071E3;
+    padding: 10px 12px;
+    text-decoration: none;
+    transition: ease-in-out 250ms;
+    font-weight: 600;
+}
+
+.error-btn:hover{
+    background: #0071E3;
+    color: #fff;
+    text-decoration: none;
+}
+
 .downloads>.jumbotron {
     background-color: #fff !important;
     color: #000;

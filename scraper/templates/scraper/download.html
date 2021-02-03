@@ -2,6 +2,15 @@
 {% load static %}
 
 {% block content %}
+    {% if error %}
+    <div class="error">
+        <div class="container">
+            <h1>Oh no! 😭</h1>
+            <p>The page you are looking for cannot be found.</p>
+            <a class="error-btn" href={% url 'home' %}>Go to homepage</a>
+        </div>
+    </div>
+    {% else %}
     <div class="downloads">
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
@@ -27,6 +36,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
     
 
 {% endblock content %}
