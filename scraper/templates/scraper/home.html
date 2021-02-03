@@ -11,12 +11,12 @@
             <div class="video-tiles-container">
             
             {% for video in last_4_videos %}
-            <div class="video-container">
-                <video controls>
-                    <source src={{ video.url }} type="video/mp4">
-                    Video tag is not supported by this browser.
-                </video>
-            </div>
+                <div class="video-container">
+                    <video controls>
+                        <source src={{ video.url }} type="video/mp4">
+                        Video tag is not supported by this browser.
+                    </video>
+                </div>
             {% endfor %}
             </div>
         </div>
