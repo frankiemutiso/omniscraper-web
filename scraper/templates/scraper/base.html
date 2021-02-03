@@ -65,7 +65,7 @@
     <!-- Logic for downloading file and adding a custom download name -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 
-    <script>
+    {% comment %} <script>
         function download(videoURL, requested_by, slug) {
             axios({
                 url: videoURL,
@@ -85,7 +85,7 @@
                 console.log(response)
             });
         }
-    </script>
+    </script> {% endcomment %}
 </body>
 
 </html>
