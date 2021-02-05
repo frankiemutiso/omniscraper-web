@@ -306,10 +306,6 @@ form {
 }
 
 /* DOWNLOADS */
-.downloads{
-    height: 100vh;
-     background: #0071E3;
-}
 .error{
     height: 100vh;
     background-color: #f6f6f6 !important;
@@ -357,6 +353,10 @@ form {
 .downloads>.jumbotron>.container {
     display: flex;
     justify-content: center;
+}
+
+.downloads{
+    background: #0071E3;
 }
 
 .downloads-highlight{
@@ -536,6 +536,10 @@ form {
         flex-direction: column;
     }
 
+    .download-container {
+        max-width: 280px;
+    }
+
     .threads-container>h1{
         font-size: 38px;
     }
@@ -573,6 +577,11 @@ form {
         max-width: 320px;
         flex-direction: column;
     }
+
+    .download-container{
+        max-width: 280px;
+    }
+    
 
     .threads-container>h1{
         font-size: 30px;
