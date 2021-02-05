@@ -38,7 +38,8 @@ def download(request, slug):
         else:
             mime = "video/mp4"
 
-        context = {'download': download, 'mime': mime, 'extension': extension, 'link': link}
+        context = {'download': download, 'mime': mime,
+                   'extension': extension, 'link': link}
 
         return render(request, 'scraper/download.html', context)
     except Exception as error:
