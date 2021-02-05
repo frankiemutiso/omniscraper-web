@@ -18,27 +18,27 @@ def threads(request):
     context = {}
     return render(request, 'scraper/threads.html')
 
-# VIDEOS VIEW
-
-
-# def videos(request):
-#     form = VideoForm()
-#     context = {'form': form}
-
-#     return render(request, 'scraper/videos.html', context)
-
 
 def download(request, slug):
     try:
         download = TwitterVideo.objects.get(slug=slug)
 
+        # Get extension from the url
         question_separated_strings = download.url.split('?')
         stroke_separated_strings = question_separated_strings[0].split('/')
         period_separated_strings = stroke_separated_strings[-1].split('.')
         extension = period_separated_strings[-1]
         link = period_separated_strings[0]
 
-        context = {'download': download, 'extension': extension, 'link': link}
+        # Depending on extension. Provide suitable MIME Type
+        if extension == "mov":
+            mime = "video/quicktime"
+        elif extension == 'm3u8':
+            mime = 'application/x-mpegURL'
+        else:
+            mime = "video/mp4"
+
+        context = {'download': download, 'mime': mime, 'extension': extension, 'link': link}
 
         return render(request, 'scraper/download.html', context)
     except Exception as error:

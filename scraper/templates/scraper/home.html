@@ -6,17 +6,26 @@
 <div class="home">
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <div class="showcase-container home-showcase-container">
+            <div class="home-showcase-container">
+                <p>Recent videos</p>
             </div>
             <div class="video-tiles-container">
             
             {% for video in last_4_videos %}
                 <div class="video-container">
-                    <video controls>
-                        <source src={{ video.url }} type="video/mp4">
+                    <video 
+                        class='lazy'
+                        controls
+                    >
+                        <source data-src="{{ video.url }}#t=0,1" type="video/mp4">
+                        <source data-src="https://video.twimg.com/tweet_video/EsMXFhJXYAMIOkS.mp4#t=0,1" type="video/mp4">
                         Video tag is not supported by this browser.
                     </video>
+                    <div class="buttons">
+                        <a class="video-button" href={% url 'download' video.slug %}>View Video</a>
+                    </div>
                 </div>
+                
             {% endfor %}
             </div>
         </div>

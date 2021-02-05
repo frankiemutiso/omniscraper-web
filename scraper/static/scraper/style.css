@@ -24,7 +24,7 @@ body {
 }
 
 .showcase-container>h1 {
-    font-size: 70px;
+    font-size: 60px;
     font-weight: 700;
     line-height: 1.1;
     color: black;
@@ -32,7 +32,7 @@ body {
 }
 
 .showcase-container>p {
-    font-size: 29px;
+    font-size: 25px;
     font-weight: 700;
     line-height: 1.2;
     color: #393e46;
@@ -96,8 +96,9 @@ nav {
 
 .home>.jumbotron {
     min-height: 400px;
-    background-color: #f6f6f6 !important;
+    background-color: #fff !important;
     margin-bottom: 0 !important;
+    padding-top: 50px !important;
 }
 
 .home>.jumbotron>.container {
@@ -107,26 +108,27 @@ nav {
 }
 
 .home-showcase-container {
-    max-width: 700px;
+    max-width: 600px;
     align-self: center;
     text-align: center;
 }
 
-.home-showcase-container>h1 {
-    color: #fff;
-    margin-bottom: 30px;
+.home-showcase-container>p {
+    font-size: 35px;
+    font-weight: 700;
+    color: #393e46;
 }
 
 .video-tiles-container{
-    max-width: 650px;
+    max-width: 680px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
 
 .video-container{
-    width: 240px;
-    margin: 5px;
+    width: 280px;
+    margin: 30px;
 }
 
 .video-container > video{
@@ -136,7 +138,26 @@ nav {
     outline: none;
     border: none;
     border-radius: 3px;
+    margin-bottom: 10px;
     
+}
+
+.video-button{
+    background-color: #fff;
+    color: #0071E3;
+    font-weight: 600;
+    font-size: 15px;
+    border: 1px solid #0071E3;
+    padding: 10px 12px;
+    transition: ease-in-out 200ms;
+}
+
+.video-button:hover{
+    text-decoration: none;
+    background-color: #0071E3;
+    color: white;
+    box-shadow: 0px 2px 5px -1px #000;
+
 }
 
 .home-items {
@@ -156,7 +177,7 @@ nav {
     display: grid;
     place-items: center;
     justify-self: center;
-    max-width: 500px;
+    max-width: 580px;
     margin: 0 20px;
 }
 
@@ -359,7 +380,7 @@ form {
 .download-btn:hover{
     color: #fff;
     text-decoration: none;
-    background: #0055aa;
+    box-shadow: 0px 2px 5px -1px #000;
 }
 
 .downloads-container{
@@ -416,10 +437,18 @@ form {
         font-size: 56px;
     }
 
-    .video-container {
-        width: 400px;
-        margin: 10px;
+    .video-tiles-container{
+        display: flex;
+        flex-direction: column;
+    }
 
+    .video-container {
+        width: 500px;
+
+    }
+
+    .home-items-container {
+        max-width: 500px;
     }
 
     .form-textfield {
@@ -450,7 +479,7 @@ form {
 
 }
 
-@media only screen and (max-width: 430px) {
+@media only screen and (max-width: 500px) {
     .logo {
         font-size: 18px !important;
     }
@@ -466,13 +495,13 @@ form {
 
     }
 
-    .video-tiles-container {
-        flex-direction: column;
+    .video-container {
+        width: 300px;
+        margin-bottom: 10px;
     }
 
-    .video-container {
-        width: 280px;
-        margin: 20px 0;
+    .home-items-container {
+        max-width: 300px;
     }
 
     .home-item>h1 {
@@ -524,7 +553,16 @@ form {
     }
 
     .showcase-container>p {
-        font-size: 18px;
+        font-size: 22px;
+    }
+
+    .home-showcase-container>p {
+        font-size: 28px;
+    }
+
+    .video-container {
+        width: 240px;
+        margin-bottom: 5px;
     }
 
     .home-item>h1 {

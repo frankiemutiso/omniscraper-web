@@ -16,23 +16,24 @@
             <div class="container">
                 <div class="showcase-container">
                     <h1>Reinventing convenience</h1>
-                    <p>Hello, <a
+                    <p>Requested by, <a
                             href="https://twitter.com/{{ download.requested_by }}">@{{ download.requested_by }}</a>
-                        here's your video.
                     </p>
 
                     <input type="button" class="download-btn"
-                        onclick="download('{{ download.url }}', '{{ download.requested_by }}', '{{ download.slug }}')" value="Donwload Video"/>
+                        onclick="download('{{ download.url }}', '{{ download.requested_by }}', '{{ download.slug }}', '{{ download.extension }}')" value="Donwload Video"/>
                 </div>
             </div>
         </div>
         <div class="container">
             <div class="downloads-container">
-                <video class="downloads-container-video" controls download="video">
-                    <source src={{ download.url }} type='video/{{ extension }}'>
+                <video  
+                    controls
+                    class="downloads-container-video"
+                >
+                    <source src="{{ download.url}}#t=1,2" type={{ mime }}>
                     Video tag is not supported by this browser.
                 </video>
-                
             </div>
         </div>
     </div>
