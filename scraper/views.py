@@ -34,7 +34,7 @@ def download(request, slug):
         if extension == "mov":
             mime = "video/quicktime"
         elif extension == 'm3u8':
-            mime = 'application/x-mpegURL'
+            mime = 'application/vnd.apple.mpegurl'
         else:
             mime = "video/mp4"
 

@@ -98,19 +98,21 @@ nav {
     min-height: 400px;
     background-color: #fff !important;
     margin-bottom: 0 !important;
-    padding-top: 50px !important;
+    padding-top: 16px !important;
 }
 
 .home>.jumbotron>.container {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; 
+ 
 }
 
 .home-showcase-container {
     max-width: 600px;
     align-self: center;
     text-align: center;
+    margin: 20px 0;
 }
 
 .home-showcase-container>p {
@@ -128,7 +130,8 @@ nav {
 
 .video-container{
     width: 280px;
-    margin: 30px;
+    height: 180px;
+    margin: 0 30px 58px 30px;
 }
 
 .video-container > video{
@@ -344,6 +347,7 @@ form {
     background: #0071E3;
     color: #fff;
     text-decoration: none;
+    box-shadow: 0px 2px 5px -1px #000;
 }
 
 .downloads>.jumbotron {
@@ -359,6 +363,7 @@ form {
 .downloads{
     height: 100%;
     background: #0071E3;
+    margin-bottom: 0 !important;
 }
 
 .downloads-highlight{
@@ -367,7 +372,7 @@ form {
 
 .download-btn{
     border: none;
-    outline-color: #013466;
+    outline: none;
     border-radius: 3px;
     text-decoration: none;
     background-color: #0071E3;
@@ -446,6 +451,8 @@ form {
 
     .video-container {
         width: 500px;
+        height: 360px;
+        margin: 0 30px 58px 30px;
 
     }
 
@@ -481,7 +488,7 @@ form {
 
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 530px) {
     .logo {
         font-size: 18px !important;
     }
@@ -499,7 +506,7 @@ form {
 
     .video-container {
         width: 300px;
-        margin-bottom: 10px;
+        height: 180px;
     }
 
     .home-items-container {
@@ -568,7 +575,6 @@ form {
 
     .video-container {
         width: 240px;
-        margin-bottom: 5px;
     }
 
     .home-item>h1 {

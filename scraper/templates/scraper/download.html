@@ -21,7 +21,7 @@
                     </p>
 
                     <input type="button" class="download-btn"
-                        onclick="download('{{ download.url }}', '{{ download.requested_by }}', '{{ download.slug }}', '{{ download.extension }}')" value="Donwload Video"/>
+                        onclick="download('{{ download.url }}', '{{ download.requested_by }}', '{{ download.slug }}', '{{ extension }}', '{{ mime }}')" value="Donwload Video"/>
                 </div>
             </div>
         </div>
@@ -31,7 +31,8 @@
                     controls
                     class="downloads-container-video lazy"
                 >
-                    <source data-src="{{ download.url}}#t=0,1" type={{ mime }}>
+                    <source data-src="{{ download.url }}" type={{ mime }}>
+                    <source data-src="https://video.twimg.com/tweet_video/EsMXFhJXYAMIOkS.mp4" type="video/mp4">
                     Video tag is not supported by this browser.
                 </video>
             </div>
