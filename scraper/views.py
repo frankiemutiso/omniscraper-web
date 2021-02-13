@@ -1,15 +1,16 @@
 from django.shortcuts import render
 from .models import TwitterVideo
-from .forms import VideoForm
+from django.views.generic.list import ListView
 
 # HOME VIEW
 
 
-def home(request):
-    last_4_videos = TwitterVideo.objects.order_by('-date_processed_utc')[:4]
-
-    context = {'last_4_videos': last_4_videos}
-    return render(request, 'scraper/home.html', context)
+class HomeView(ListView):
+    model = TwitterVideo
+    context_object_name = 'videos'
+    paginate_by = 4
+    template_name = 'scraper/home.html'
+    ordering = '-date_processed_utc'
 
 # THREADS VIEW
 
@@ -33,8 +34,8 @@ def download(request, slug):
         # Depending on extension. Provide suitable MIME Type
         if extension == "mov":
             mime = "video/quicktime"
-        elif extension == 'm3u8':
-            mime = 'application/vnd.apple.mpegurl'
+        elif extension == "m3u8":
+            mime = "application/x-mpegURL"
         else:
             mime = "video/mp4"
 

@@ -28,11 +28,12 @@
         <div class="container">
             <div class="downloads-container">
                 <video  
-                    controls
                     class="downloads-container-video lazy"
+                    controls
+                    controlsList="nodownload" disablePictureInPicture
                 >
-                    <source data-src="{{ download.url }}" type={{ mime }}>
-                    <source data-src="https://video.twimg.com/tweet_video/EsMXFhJXYAMIOkS.mp4" type="video/mp4">
+                    <source src="{{ download.url }}" type={{ mime }}>
+                    <source src="https://video.twimg.com/tweet_video/EsMXFhJXYAMIOkS.mp4" type="video/mp4">
                     Video tag is not supported by this browser.
                 </video>
             </div>

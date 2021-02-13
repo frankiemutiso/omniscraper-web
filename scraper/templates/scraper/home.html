@@ -9,41 +9,31 @@
             <div class="home-showcase-container">
                 <p>Recent videos</p>
             </div>
-            <div class="video-tiles-container">
+            <div class="infinite-container">
+                <div class="video-tiles-container">
+                    {% for video in videos %}
+                        <div class="video-container">
+                            <video controls controlsList="nodownload" disablePictureInPicture>
+                                <source src="{{ video.url }}" type="video/mp4">
+                                <source src="https://video.twimg.com/tweet_video/EsMXFhJXYAMIOkS.mp4" type="video/mp4">
+                                Video tag is not supported by this browser.
+                            </video>
+                            <div class="buttons">
+                                <a class="video-button" href={% url 'download' video.slug %}>Watch Video</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if page_obj.has_next %}
+                <p class="pagination">
+                    <a class="next-page" href="?page={{ page_obj.next_page_number }}"></a>
+                </p>
+                {% endif %}
+            </div>
             
-            {% for video in last_4_videos %}
-                <div class="video-container">
-                    <video 
-                        class='lazy'
-                        controls
-                    >
-                        <source data-src="{{ video.url }}" type={{ mime }}>
-                        <source data-src="https://video.twimg.com/tweet_video/EsMXFhJXYAMIOkS.mp4" type="video/mp4">
-                        Video tag is not supported by this browser.
-                    </video>
-                    <div class="buttons">
-                        <a class="video-button" href={% url 'download' video.slug %}>View Video</a>
-                    </div>
-                </div>
-                
-            {% endfor %}
-            </div>
         </div>
     </div>
-    <div class="home-items">
-        <div class="container">
-            <div class="home-items-container">
-                <div class="home-item">
-                    <h1>Download Twitter Videos</h1>
-                    <div class="option">
-                        <p>Mention <a href="https://twitter.com/omniscraper/" target="_blank"
-                                rel="noopener noreferrer">@omniscraper</a> in any
-                            tweet with a video/GIF and instantly get a download link to the video.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 </div>
 
 
