@@ -72,9 +72,16 @@
         jQuery(function ($) {
             var $infinite = $('.infinite-container');
             $infinite.jscroll({
-                loadingHtml: '<div class="text-center">' +
-                    '<img src="{% static 'scraper/images/spinner.svg' %}" alt="Loading" />' +
-                    '</div>',
+                loadingHtml: '<div class="video-tiles-placeholder">' +
+                    '<div>' +
+                        '<div class="video-container-placeholder">' + '</div>' +
+                        '<button class="video-button-placeholder">' + '</button>' +
+                    '</div>' +
+                    '<div>' +
+                        '<div class="video-container-placeholder">' + '</div>' +
+                        '<button class="video-button-placeholder">' + '</button>' +
+                    '</div>' +
+                '</div>' ,
                 pagingSelector: '.pagination',
                 padding: 100,
                 nextSelector: 'a.next-page:last',
