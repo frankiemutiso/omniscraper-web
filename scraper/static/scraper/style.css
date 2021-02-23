@@ -360,7 +360,6 @@ form {
 
 .downloads{
     min-height: 100vh;
-    background: #000;
     margin-bottom: 0 !important;
 }
 
@@ -398,7 +397,7 @@ form {
 .downloads-container-video {
     width: 100%;
     height: auto;
-    margin: 50px 0;
+    margin-bottom: 50px;
     outline: none;
     border: none;
     border-radius: 3px;
