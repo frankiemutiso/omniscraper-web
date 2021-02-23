@@ -24,4 +24,21 @@ python3 -m venv venv
 pip install -r requirements.txt
 ```
 
+Run locally with this command
 
+```
+python manage.py runserver
+```
+
+
+# Contribution
+
+1. Fork your own repository
+2. Clone the forked repository
+3. To merge the latest changes from the main branch into your forked repository fetch all changes using the following git commands
+
+```
+git pull https://github.com/frankiemutiso/omniscraper-web main 
+```
+
+Be sure to change `main` to whatever your current branch name is.
