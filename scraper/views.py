@@ -6,7 +6,7 @@ from django.views.generic.list import ListView
 
 
 class HomeView(ListView):
-    model = TwitterVideo
+    queryset = TwitterVideo.objects.exclude(url__regex=r"m3u8\?tag=\d+$")
     context_object_name = 'videos'
     paginate_by = 4
     template_name = 'scraper/home.html'
