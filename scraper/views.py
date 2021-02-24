@@ -12,12 +12,7 @@ class HomeView(ListView):
     template_name = 'scraper/home.html'
     ordering = '-date_processed_utc'
 
-# THREADS VIEW
-
-
-def threads(request):
-    context = {}
-    return render(request, 'scraper/threads.html')
+# DOWNLOADS VIEW
 
 
 def download(request, slug):
