@@ -11,7 +11,7 @@ body {
     font-family: 'Montserrat',
         sans-serif;
     color: #161616;
-    background-color: #fff;
+    background-color: #F7F8FB;
     position: relative;
     min-height: 100vh;
 }
@@ -143,7 +143,7 @@ nav {
     width: 280px;
     height: 180px;
     margin: 0 30px 10px 30px;
-    background-color: lightgray;
+    background-color: #F7F8FB;
 }
 
 .video-container > video{
@@ -177,7 +177,7 @@ nav {
 }
 
 .video-button-placeholder{
-    background-color: lightgray;
+    background-color: #F7F8FB;
     padding: 10px 12px;
     height: 42px;
     width: 128px;
@@ -281,7 +281,7 @@ nav {
 }
 
 .downloads>.jumbotron {
-    background-color: #fff !important;
+    background-color: #F7F8FB !important;
     color: #000;
 }
 
@@ -321,6 +321,7 @@ nav {
 
 .downloads-container{
     max-width: 480px;
+    max-height: 320px;
     margin: 0 auto;
     display: flex;
     justify-content: center;
