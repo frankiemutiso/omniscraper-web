@@ -16,7 +16,7 @@ import environ
 import django_heroku
 import dj_database_url
 
-env = environ.Env()
+env = environ.Env(DJANGO_USE_GA=(bool, True))
 environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -71,6 +71,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'scraper.context_processors.ga_tracking_id',
+                'scraper.context_processors.use_ga'
             ],
         },
     },
@@ -161,3 +163,9 @@ django_heroku.settings(locals())
 
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
+
+GA_TRACKING_ID = env('GA_TRACKING_ID')
+
+
+USE_GA = env('DJANGO_USE_GA')
+USE_GA = {'True': True, 'False': False}.get(USE_GA, False)

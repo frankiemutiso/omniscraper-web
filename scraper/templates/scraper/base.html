@@ -36,7 +36,7 @@
     {% endblock content %}
 
     {% block ga %}
-        {% include 'scraper/ga.html' %}
+        {% include 'scraper/ga.html' with ga_tracking_id=ga_tracking_id %}
     {% endblock ga %}
     
     <!-- Logic for downloading file and adding a custom download name using AXIOS -->
