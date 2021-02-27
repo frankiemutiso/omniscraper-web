@@ -11,7 +11,7 @@ body {
     font-family: 'Montserrat',
         sans-serif;
     color: #161616;
-    background-color: #F7F8FB;
+    background-color: #f4f9f9;
     position: relative;
     min-height: 100vh;
 }
@@ -89,19 +89,14 @@ nav {
 }
 
 /* HOME */
-.home{
-    background-color: #000;
 
-}
-
-.home>.jumbotron {
+.home>.showcase {
     min-height: 400px;
-    background-color: #fff !important;
     margin-bottom: 0 !important;
     padding-top: 16px !important;
 }
 
-.home>.jumbotron>.container {
+.home>.showcase>.container {
     display: flex;
     flex-direction: column;
     align-items: center; 
@@ -143,7 +138,7 @@ nav {
     width: 280px;
     height: 180px;
     margin: 0 30px 10px 30px;
-    background-color: #F7F8FB;
+    background-color: #E0E0E0;
 }
 
 .video-container > video{
@@ -177,7 +172,7 @@ nav {
 }
 
 .video-button-placeholder{
-    background-color: #F7F8FB;
+    background-color: #E0E0E0;
     padding: 10px 12px;
     height: 42px;
     width: 128px;
@@ -280,19 +275,29 @@ nav {
     box-shadow: 0px 2px 5px -1px #000;
 }
 
-.downloads>.jumbotron {
-    background-color: #F7F8FB !important;
-    color: #000;
-}
-
-.downloads>.jumbotron>.container {
+.downloads {
+    background-image: url('/static/scraper/images/omnisraper-website-background.png');
+    background-color: #F7F8FB;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    height: 100vh;
+    margin-bottom: 0 !important;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
 }
 
-.downloads{
-    min-height: 100vh;
-    margin-bottom: 0 !important;
+.downloads>.showcase {
+    height: 160px;
+    margin-bottom: 20px;
+     color: #000;
+}
+
+.downloads>.showcase>.container {
+    display: flex;
+    justify-content: center;
 }
 
 .downloads-highlight{
@@ -325,6 +330,7 @@ nav {
     margin: 0 auto;
     display: flex;
     justify-content: center;
+    
 }
 
 .downloads-container-video {
@@ -335,6 +341,7 @@ nav {
     border: none;
     border-radius: 3px;
     border: 1px solid #e7e6e1;
+    background-color: #f4f9f9;
 }
 
 .downloads-container>a{
