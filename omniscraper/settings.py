@@ -169,3 +169,11 @@ GA_TRACKING_ID = env('GA_TRACKING_ID')
 
 USE_GA = env('DJANGO_USE_GA')
 USE_GA = {'True': True, 'False': False}.get(USE_GA, False)
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': env('IP'),
+    }
+}
