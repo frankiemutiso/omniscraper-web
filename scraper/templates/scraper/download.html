@@ -13,24 +13,28 @@
     {% else %}
     <div class="downloads">
         <div class="container">
-            <div class="downloads-container">
-                <video  
-                    class="downloads-container-video lazy"
-                    controls
-                    controlsList="nodownload" disablePictureInPicture
-                >
-                    <source src="{{ download.url }}" type={{ mime }}>
-                    Video tag is not supported by this browser.
-                </video>
+            <div>
+                <div class="downloads-container">
+                    <video  
+                        class="downloads-container-video lazy"
+                        controls
+                        controlsList="nodownload" disablePictureInPicture
+                    >
+                        <source src="{{ download.url }}" type={{ mime }}>
+                        Video tag is not supported by this browser.
+                    </video>
+                    
+                </div>
                 <div class="video-bottom">
                     <input type="button" class="download-btn"
                         onclick="download('{{ download.url }}', '{{ download.requested_by }}', '{{ download.slug }}', '{{ extension }}', '{{ mime }}')"
                         value="Download" />
                     <a href="https://twitter.com/i/status/{{ download.tweet_with_video_id }}" target="_blank"
-                            rel="noopener noreferrer">Source Tweet</a>
-                    
+                        rel="noopener noreferrer">Source Tweet</a>
+
                 </div>
             </div>
+            
         </div>
     </div>
     {% endif %}
