@@ -16,7 +16,7 @@ import environ
 import django_heroku
 import dj_database_url
 
-env = environ.Env(DJANGO_USE_GA=(bool, True))
+env = environ.Env()
 environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

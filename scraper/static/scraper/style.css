@@ -281,7 +281,7 @@ nav {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    height: 100vh;
+    min-height: 100vh;
     margin-bottom: 0 !important;
     display: flex;
     flex-direction: column;
@@ -289,31 +289,15 @@ nav {
     justify-content: center;
 }
 
-.downloads>.showcase {
-    height: 160px;
-    margin-bottom: 20px;
-     color: #000;
-}
-
-.downloads>.showcase>.container {
-    display: flex;
-    justify-content: center;
-}
-
-.downloads-highlight{
-    color: #000;
-}
-
 .download-btn{
     border: none;
     outline: none;
-    border-radius: 3px;
     text-decoration: none;
     background-color: #0071E3;
     color: #fff;
     text-decoration: none;
     font-weight: 600;
-    padding: 10px 12px;
+    padding: 8px 12px;
     cursor: pointer;
     transition: ease-in-out 200ms
 }
@@ -328,15 +312,13 @@ nav {
     max-width: 480px;
     max-height: 320px;
     margin: 0 auto;
-    display: flex;
-    justify-content: center;
     
 }
 
 .downloads-container-video {
     width: 100%;
     height: auto;
-    margin-bottom: 50px;
+    /* margin-bottom: 50px; */
     outline: none;
     border: none;
     border-radius: 3px;
@@ -344,8 +326,17 @@ nav {
     background-color: #f4f9f9;
 }
 
-.downloads-container>a{
-    background-color: #fff;
+.video-bottom{
+    display: flex;
+    justify-content: space-between;
+}
+
+.video-bottom>a{
+    font-size: 15px;
+    text-decoration: none;
+    font-weight: 500;
+    text-transform: uppercase;
+    
 }
 
 /* MEDIA QUERIES */
