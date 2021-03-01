@@ -1,13 +1,10 @@
 from django.shortcuts import render
 from .models import TwitterVideo
 from django.views.generic.list import ListView
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
 
 # HOME VIEW
 
 
-@method_decorator(cache_page(60 * 5), name='dispatch')
 class HomeView(ListView):
     queryset = TwitterVideo.objects.exclude(url__regex=r"m3u8\?tag=\d+$")
     context_object_name = 'videos'
