@@ -8,8 +8,8 @@
 }
 
 body {
-    background: linear-gradient(rgba(253, 253, 253, 0.5),
-        rgba(253, 253, 253, 0.5)),
+    background: linear-gradient(rgba(253, 253, 253, 0.6),
+        rgba(253, 253, 253, 0.6)),
     url('/static/scraper/images/omnisraper-website-background.png');
     
     background-repeat: no-repeat;
