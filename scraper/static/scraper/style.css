@@ -8,6 +8,12 @@
 }
 
 body {
+    background-image: url('/static/scraper/images/omnisraper-website-background.png');
+    background-color: #FDFDFD;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
     font-family: 'Montserrat',
         sans-serif;
     color: #161616;
@@ -276,11 +282,6 @@ nav {
 }
 
 .downloads {
-    /* background-image: url('/static/scraper/images/omnisraper-website-background.png'); */
-    background-color: #FDFDFD;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -301,13 +302,12 @@ nav {
 .download-btn{
     border: none;
     outline: none;
-    border-radius: 3px;
     text-decoration: none;
     background-color: #0071E3;
     color: #fff;
     text-decoration: none;
     font-weight: 600;
-    padding: 10px 12px;
+    padding: 0.625em 0.75em;
     cursor: pointer;
     transition: ease-in-out 200ms
 }
@@ -315,12 +315,12 @@ nav {
 .download-btn:hover{
     color: #fff;
     text-decoration: none;
-    box-shadow: 0px 2px 5px -1px #000;
+    box-shadow: 0em 0.123em 0.3125em -0.0625em #000;
 }
 
 .downloads-container{
-    max-width: 480px;
-    max-height: 320px;
+    width: 480px;
+    height: 320px;
     display: flex;
 }
 
@@ -422,16 +422,14 @@ nav {
         font-size: 30px;
     }
 
-    .option>h1 {
-        font-size: 24px;
-        font-weight: 600;
+    .downloads-container {
+        width: 300px;
+        height: 200px;
+        display: flex;
     }
 
-    .option>p {
-        font-size: 18px;
-        font-weight: 600;
-        color: #86868B;
-        line-height: 1.2;
+    .download-btn {
+        padding: 0.375em 0.625em;
     }
 }
 
@@ -466,6 +464,12 @@ nav {
         max-width: 280px;
     }
 
+    .downloads-container {
+        width: 280px;
+        height: 180px;
+        display: flex;
+    }
+
 
 }
 
@@ -473,5 +477,11 @@ nav {
 
     .home-item>h1 {
         font-size: 22px;
+    }
+
+    .downloads-container {
+        width: 240px;
+        height: 160px;
+        display: flex;
     }
 }
