@@ -309,16 +309,25 @@ nav {
     background-color: #0071E3;
     color: #fff;
     text-decoration: none;
-    font-weight: 600;
-    padding: 0.625em 0.75em;
+    font-weight: 500;
+    padding: 0.625em 1em;
+    border-radius: 50px;
     cursor: pointer;
-    transition: ease-in-out 200ms
+    transition: ease-in-out 200ms;
+    text-transform: uppercase;
+    font-size: 14px;
+
 }
 
 .download-btn:hover{
     color: #fff;
     text-decoration: none;
     box-shadow: 0em 0.123em 0.3125em -0.0625em #000;
+}
+
+.download-btn > i{
+    margin-right: 5px;
+    /* font-size: 10px; */
 }
 
 .downloads-container{
@@ -332,9 +341,9 @@ nav {
     height: auto;
     outline: none;
     border: none;
-    border-radius: 3px;
+    border-radius: 10px;
     border: 1px solid #e7e6e1;
-    background-color: #f4f9f9;
+    background-color: #f6f5f5;
     margin-bottom: 10px;
 }
 
@@ -346,6 +355,7 @@ nav {
     display: flex;
     justify-content: space-between;
     justify-self:start;
+    margin-top: 10px;
 }
 
 .video-bottom>a {
@@ -431,9 +441,9 @@ nav {
         display: flex;
     }
 
-    .download-btn {
+    /* .download-btn {
         padding: 0.375em 0.625em;
-    }
+    } */
 }
 
 @media only screen and (max-width: 320px) {

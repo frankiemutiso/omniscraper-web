@@ -26,9 +26,11 @@
                     
                 </div>
                 <div class="video-bottom">
-                    <input type="button" class="download-btn"
-                        onclick="download('{{ download.url }}', '{{ download.requested_by }}', '{{ download.slug }}', '{{ extension }}', '{{ mime }}')"
-                        value="Download" />
+                <button class="download-btn"
+                    onclick="download('{{ download.url }}', '{{ download.requested_by }}', '{{ download.slug }}', '{{ extension }}', '{{ mime }}')">
+                    
+                        Download
+                </button>
                     <a href="https://twitter.com/i/status/{{ download.tweet_with_video_id }}" target="_blank"
                         rel="noopener noreferrer">Source Tweet</a>
 
