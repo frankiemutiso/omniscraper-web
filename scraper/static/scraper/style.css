@@ -303,8 +303,6 @@ nav {
 }
 
 .download-btn{
-    border: none;
-    outline: none;
     text-decoration: none;
     background-color: #0071E3;
     color: #fff;
@@ -316,6 +314,8 @@ nav {
     transition: ease-in-out 200ms;
     text-transform: uppercase;
     font-size: 14px;
+    border: none;
+    outline: none;
 
 }
 

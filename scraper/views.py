@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from .models import TwitterVideo
 from django.views.generic.list import ListView
+
+from .models import TwitterVideo
 
 # HOME VIEW
 
@@ -12,11 +13,13 @@ class HomeView(ListView):
     template_name = 'scraper/home.html'
     ordering = '-date_processed_utc'
 
+
 # DOWNLOADS VIEW
 
 
 def download(request, slug):
     try:
+        # Get the video with the given slug
         download = TwitterVideo.objects.get(slug=slug)
 
         # Get extension from the url

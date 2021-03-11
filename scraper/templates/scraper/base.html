@@ -43,7 +43,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 
     <script>
-        function download(videoURL, requested_by, slug, extension, mime) {
+        function download(videoURL, slug, extension, mime) {
             axios({
                 url: videoURL,
                 method: "GET",
@@ -56,7 +56,7 @@
                 );
                 const link = document.createElement("a");
                 link.href = url;
-                link.download = `${requested_by}_${slug}.${extension}`;
+                link.download = `${slug}.${extension}`;
                 document.body.appendChild(link);
                 link.click();
                 window.URL.revokeObjectURL(url);
