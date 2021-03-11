@@ -11,7 +11,7 @@ class HomeView(ListView):
     context_object_name = 'videos'
     paginate_by = 4
     template_name = 'scraper/home.html'
-    ordering = '-date_processed_utc'
+    ordering = '-date_saved_utc'
 
 
 # DOWNLOADS VIEW
