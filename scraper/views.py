@@ -47,11 +47,11 @@ def download(request, slug):
         return render(request, 'scraper/download.html', context)
 
 
-def flag(request, slug):
-    if request.method == 'POST':
-        flag_video = TwitterVideo.objects.get(slug=slug)
-        flag_video.flagged = True
+# def flag(request, id):
+#     if request.method == 'POST':
+#         flag_video = TwitterVideo.objects.get(id=id)
+#         flag_video.flagged = True
 
-        flag_video.save()
+#         flag_video.save()
 
-        return redirect('home')
+#         return redirect('home')

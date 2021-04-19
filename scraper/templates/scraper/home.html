@@ -20,7 +20,7 @@
                             <div class="buttons">
                                 <a class="video-button" href={% url 'download' video.slug %}>View Video</a>
                                 {% if user.is_authenticated %}
-                                    <form action="{% url 'flag' video.slug %}" method="POST">
+                                    <form method="POST">
                                         {% csrf_token %}
                                         <input class="video-button" type="submit" value="Report" />
                                     </form>
