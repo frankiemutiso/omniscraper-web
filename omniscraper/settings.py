@@ -147,6 +147,11 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+LOGIN_REDIRECT_URL = "home"
+
+
+LOGOUT_REDIRECT_URL = "home"
+
 
 # enforce site-wide HTTPS
 

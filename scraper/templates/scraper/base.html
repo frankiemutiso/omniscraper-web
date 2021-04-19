@@ -27,7 +27,12 @@
     <!-- bootstrap navabar -->
     <nav class="navbar navbar-custom navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand logo" href={% url 'home' %}>Omni<span class="logo-highlight">Scraper</span></a>
+            <a class="navbar-brand logo mr-auto" href={% url 'home' %}>Omni<span
+                    class="logo-highlight">Scraper</span></a>
+            {% if user.is_authenticated %}
+                <a class="nav-link text-white nav-links" href="{% url 'logout' %}">Logout</a>
+            {% endif %}
+
         </div>
     </nav>
 

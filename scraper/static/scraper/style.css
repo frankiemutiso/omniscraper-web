@@ -157,19 +157,37 @@ nav {
     outline: none;
     border: none;
     border-radius: 3px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     border: 1px solid #e7e6e1;
     
 }
 
+.buttons{
+    display: flex;
+    justify-content: space-between;
+}
+
 .video-button{
+    border-right: none;
+    outline: none;
     background-color: #fff;
     color: #0071E3;
     font-weight: 600;
     font-size: 15px;
     border: 1px solid #0071E3;
-    padding: 10px 12px;
+    padding: 5px 12px;
     transition: ease-in-out 200ms;
+}
+
+.report-btn{
+    border: 1px solid #0071E3;
+    background-color: #fff;
+    color: #0071E3;
+    font-size: 15px;
+    font-weight: 600;
+    outline: none;
+    /* padding: 8px 10px; */
+    font-family: inherit;
 }
 
 .video-button:hover{
