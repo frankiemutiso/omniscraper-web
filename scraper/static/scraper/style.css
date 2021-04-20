@@ -389,6 +389,27 @@ nav {
 
 }
 
+.login-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+}
+
+.login-form>h4{
+    margin-bottom: 20px;
+}
+
+.login-form>form{
+    font-size: 15px;
+    width: 320px;
+    background-color: #F6F8FA;
+    padding: 24px 16px;
+    border: 1px solid #EAECEF;
+    border-radius: 5px;
+}
+
 /* MEDIA QUERIES */
 @media only screen and (max-width: 768px) {
     .showcase-container>h1 {
@@ -504,6 +525,15 @@ nav {
         width: 280px;
         height: 180px;
         display: flex;
+    }
+
+    .login-form>form {
+        font-size: 14px;
+        width: 240px;
+        background-color: #F6F8FA;
+        padding: 24px 16px;
+        border: 1px solid #EAECEF;
+        border-radius: 5px;
     }
 
 
