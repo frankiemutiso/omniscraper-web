@@ -168,7 +168,7 @@ nav {
 }
 
 .video-button{
-    border-right: none;
+    border: none;
     outline: none;
     background-color: #fff;
     color: #0071E3;
@@ -177,6 +177,11 @@ nav {
     border: 1px solid #0071E3;
     padding: 5px 12px;
     transition: ease-in-out 200ms;
+}
+
+.video-button:focus{
+    border: none !important;
+    outline: none !important;
 }
 
 .report-btn{
