@@ -30,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['omniscraper.herokuapp.com']
 
@@ -158,13 +158,13 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 # enforce site-wide HTTPS
 
-# CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
-# SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
-# SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = True
 
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
