@@ -22,7 +22,7 @@
                                 {% if user.is_authenticated %}
                                 <form action="{% url 'flag' video.slug %}" method="POST">
                                     {% csrf_token %}
-                                    <button class="video-button" type="submit">
+                                    <button class="video-button report-btn" type="submit">
                                         Report
                                     </button>
                                 </form>
