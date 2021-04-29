@@ -26,14 +26,14 @@
                     
                 </div>
                 <div class="video-bottom">
+                    <a href="https://twitter.com/i/status/{{ download.parent_tweet_id }}" target="_blank"
+                        rel="noopener noreferrer">
+                        Source
+                    </a>
                     <button class="download-btn"
                         onclick="download('{{ download.url }}', '{{ download.slug }}', '{{ extension }}', '{{ mime }}')">
-                        
                             Download
                     </button>
-                    <a href="https://twitter.com/i/status/{{ download.parent_tweet_id }}" target="_blank"
-                        rel="noopener noreferrer">Source Tweet</a>
-
                 </div>
             </div>
             
