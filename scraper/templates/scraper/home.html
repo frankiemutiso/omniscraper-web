@@ -18,7 +18,6 @@
                                 Video tag is not supported by this browser.
                             </video>
                             <div class="buttons">
-                                <a class="video-button" href={% url 'download' video.slug %}>View Video</a>
                                 {% if user.is_authenticated %}
                                 <form action="{% url 'flag' video.slug %}" method="POST">
                                     {% csrf_token %}
@@ -27,6 +26,7 @@
                                     </button>
                                 </form>
                                 {% endif %}
+                                <a class="video-button" href={% url 'download' video.slug %}>View Video</a>
                             </div>
                         </div>
                     {% endfor %}
