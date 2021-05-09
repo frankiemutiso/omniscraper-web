@@ -3,7 +3,7 @@
 
 ## It works on my machine
 
-Running locally requires a Postres instance, so make an installation and set the following environment variables.
+Running locally requires a Postgres instance, so make an installation and set the following environment variables.
 
  - DB_HOST - IP or fully qualified domain name to the instance. If local this could be localhost or 127.0.0.1. 
  - DB_NAME - This is the database name
