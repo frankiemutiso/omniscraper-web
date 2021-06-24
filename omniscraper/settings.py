@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'crispy_forms',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -196,13 +198,19 @@ GA_TRACKING_ID = env('GA_TRACKING_ID')
 USE_GA = env('DJANGO_USE_GA')
 USE_GA = {'True': True, 'False': False}.get(USE_GA, False)
 
-
+# Configurations for handling webpack bundled files
 WEBPACK_LOADER = {
     'DEFAULT': {
         'BUNDLE_DIR_NAME': 'omniscraper_frontend/bundles/',
         'STATS_FILE': os.path.join(BASE_DIR, 'omniscraper_frontend/webpack-stats.json'),
     }
 }
+
+
+CORS_ALLOWED_ORIGINS = [
+    "https://omniscraper.com/",
+    "https://omniscraper.herokuapp.com/"
+]
 
 LOGGING = {
     'version': 1,
