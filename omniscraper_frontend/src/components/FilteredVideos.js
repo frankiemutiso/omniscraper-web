@@ -505,7 +505,7 @@ export class Home extends Component {
               clickable
               color="primary"
               variant={
-                window.location.pathname.split("/")[-1] === tag.slug
+                window.location.pathname.split("/")[1] === tag.slug
                   ? "default"
                   : "outlined"
               }
