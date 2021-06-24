@@ -42,7 +42,7 @@ class App extends Component {
     videosLoadingError: false,
     loading: false,
     offset: 0,
-    limit: 6,
+    limit: 8,
     videos: [],
     hasMore: true,
   };
@@ -55,7 +55,7 @@ class App extends Component {
   loadVideos = () => {
     this.setState({ loading: true }, () => {
       const { offset, limit } = this.state;
-      const url = `https://omnifinal.herokuapp.com/api/videos/?limit=${limit}&offset=${offset}`;
+      const url = `https://omniscraper.herokuapp.com/api/videos/?limit=${limit}&offset=${offset}`;
 
       axios
         .get(url)
@@ -81,7 +81,7 @@ class App extends Component {
 
   loadTags = () => {
     this.setState({ tagsLoading: true }, () => {
-      const url = "https://omnifinal.herokuapp.com/api/tags/";
+      const url = "https://omniscraper.herokuapp.com/api/tags/";
 
       axios
         .get(url)

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = `https://omnifinal.herokuapp.com/api/`;
+const baseURL = `https://omniscraper.herokuapp.com/api/`;
 
 export const axiosInstance = axios.create({
   baseURL: baseURL,
