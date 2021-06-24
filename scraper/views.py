@@ -65,7 +65,7 @@ class TwitterVideoDetail(APIView):
         video = self.get_object(slug)
         serializer = TwitterVideoSerializer(video, data=request.data)
 
-        if serializer.is_valid():
+        if serializer.is_valid() and request.user.is_authenticated:
             serializer.save()
             return Response(serializer.data)
 
@@ -76,7 +76,7 @@ class TwitterVideoDetail(APIView):
         serializer = TwitterVideoSerializer(
             video, data=request.data, partial=True)
 
-        if serializer.is_valid():
+        if serializer.is_valid() and request.user.is_authenticated:
             serializer.save()
             return Response(serializer.data)
 
@@ -92,7 +92,7 @@ class VideoTagsList(APIView):
 
     def post(self, request):
         serializer = VideoTagSerializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid() and request.user.is_authenticated:
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
