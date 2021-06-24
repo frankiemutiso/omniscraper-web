@@ -288,7 +288,7 @@ export class Home extends Component {
       checkedTags,
     } = this.state;
 
-    const { classes, loggedIn, videoTags, location, match } = this.props;
+    const { classes, loggedIn, videoTags } = this.props;
     const {
       flagVideo,
       handlePromptOpen,
@@ -505,7 +505,8 @@ export class Home extends Component {
               clickable
               color="primary"
               variant={
-                window.location.pathname.split("/")[1] === tag.slug
+                this.props.clickedTag !== null &&
+                this.props.clickedTag.id == tag.id
                   ? "default"
                   : "outlined"
               }

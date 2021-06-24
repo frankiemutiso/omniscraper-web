@@ -36,7 +36,7 @@ class App extends Component {
     loggedIn: localStorage.getItem("access_token") ? true : false,
     loginLoading: false,
     error: null,
-    clickedTag: localStorage.getItem("clicked_tag") || null,
+    clickedTag: JSON.parse(localStorage.getItem("clicked_tag")) || null,
     tagsLoading: false,
     videoTags: [],
 
@@ -104,7 +104,7 @@ class App extends Component {
 
   handleClickedTag = (tag) => {
     this.setState({ clickedTag: tag }, () =>
-      localStorage.setItem("clicked_tag", this.state.clickedTag)
+      localStorage.setItem("clicked_tag", JSON.stringify(this.state.clickedTag))
     );
   };
 
