@@ -13,7 +13,7 @@ module.exports = function (_env, argv) {
     entry: "./src/index.js",
     output: {
       path: path.resolve(__dirname, "./static/omniscraper_frontend/bundles"),
-      filename: "[name].js",
+      filename: "[name].[contenthash].js",
       chunkFilename: "[id]-[chunkhash].js",
     },
     module: {
@@ -75,6 +75,7 @@ module.exports = function (_env, argv) {
       new WorkboxPlugin.GenerateSW(),
     ].filter(Boolean),
     optimization: {
+      moduleIds: "deterministic",
       minimize: isProd,
       minimizer: [
         new TerserWebpackPlugin({
@@ -103,12 +104,8 @@ module.exports = function (_env, argv) {
         cacheGroups: {
           vendors: {
             test: /[\\/]node_modules[\\/]/,
-            name(module, chunks, cacheGroupKey) {
-              const packageName = module.context.match(
-                /[\\/]node_modules[\\/](.*?)([\\/]|$)/
-              )[1];
-              return `${cacheGroupKey}.${packageName.replace("@", "")}`;
-            },
+            name: "vendors",
+            chunks: "all",
           },
           common: {
             minChunks: 2,
