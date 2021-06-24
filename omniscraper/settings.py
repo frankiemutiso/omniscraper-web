@@ -208,8 +208,9 @@ WEBPACK_LOADER = {
 
 
 CORS_ALLOWED_ORIGINS = [
-    "https://omniscraper.com/",
-    "https://omniscraper.herokuapp.com/"
+    "https://omniscraper.com",
+    "https://omniscraper.herokuapp.com",
+    "http://127.0.0.1:8000"
 ]
 
 LOGGING = {
