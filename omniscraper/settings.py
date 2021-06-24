@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'webpack_loader',
     'scraper',
+    'omniscraper_frontend',
 
 
 ]
@@ -137,7 +138,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'omniscraper_frontend/static'), ]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'omniscraper_frontend/static'), ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
@@ -198,9 +199,9 @@ USE_GA = env('DJANGO_USE_GA')
 USE_GA = {'True': True, 'False': False}.get(USE_GA, False)
 
 
-# WEBPACK_LOADER = {
-#     'DEFAULT': {
-#         'BUNDLE_DIR_NAME': 'omniscraper_frontend/bundles/',
-#         'STATS_FILE': os.path.join(BASE_DIR, 'omniscraper_frontend/webpack-stats.json'),
-#     }
-# }
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'omniscraper_frontend/bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'omniscraper_frontend/webpack-stats.json'),
+    }
+}
