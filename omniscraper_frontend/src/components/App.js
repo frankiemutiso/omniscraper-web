@@ -14,6 +14,8 @@ import { axiosInstance } from "../axiosInstance";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 const FilteredVideos = React.lazy(() => import("./FilteredVideos"));
 import { ThreeDots } from "@bit/mhnpd.react-loader-spinner.three-dots";
+import ReactGA from "react-ga";
+import { createBrowserHistory } from "history";
 
 const theme = createMuiTheme({
   typography: {
@@ -28,6 +30,8 @@ const theme = createMuiTheme({
     },
   },
 });
+
+const history = createBrowserHistory();
 
 class App extends Component {
   state = {
@@ -191,9 +195,16 @@ class App extends Component {
       videos,
     } = this.state;
 
+    ReactGA.initialize("UA-190601275-1");
+
+    history.listen((location) => {
+      ReactGA.set({ page: location.pathname });
+      ReactGA.pageview(location.pathname + location.search);
+    });
+
     return (
       <ThemeProvider theme={theme}>
-        <Router>
+        <Router history={history}>
           <div>
             <Suspense
               fallback={
