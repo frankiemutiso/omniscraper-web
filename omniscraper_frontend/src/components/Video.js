@@ -101,7 +101,7 @@ export class Video extends Component {
             <CardActions
               style={{ display: "flex", justifyContent: "space-between" }}
             >
-              {/* <Button
+              <Button
                 size="small"
                 color="primary"
                 startIcon={<TwitterIcon />}
@@ -110,10 +110,7 @@ export class Video extends Component {
                 href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
               >
                 Source
-              </Button> */}
-              <a href={`https://twitter.com/i/status/${video.parent_tweet_id}`}>
-                Source
-              </a>
+              </Button>
               <Button
                 size="small"
                 color="primary"
