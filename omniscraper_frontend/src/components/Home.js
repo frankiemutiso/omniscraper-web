@@ -19,8 +19,6 @@ import TextField from "@material-ui/core/TextField";
 import Chip from "@material-ui/core/Chip";
 import Fab from "@material-ui/core/Fab";
 import Hidden from "@material-ui/core/Hidden";
-
-import ReportIcon from "@material-ui/icons/Report";
 import MovieOutlinedIcon from "@material-ui/icons/MovieOutlined";
 import { withStyles } from "@material-ui/core";
 
@@ -160,7 +158,7 @@ export class Home extends Component {
   };
 
   handleCreateTag = () => {
-    const url = "https://omniscraper.herokuapp.com/api/tags/";
+    const url = `${process.env.API_URL}/api/tags/`;
 
     const { tagName, description } = this.state;
     const { loadTags } = this.props;
@@ -239,7 +237,7 @@ export class Home extends Component {
   handleEditVideoTags = () => {
     const { selectedTagsIds, clickedVideo } = this.state;
 
-    const url = `https://omniscraper.herokuapp.com/api/${clickedVideo.slug}`;
+    const url = `${process.env.API_URL}/api/${clickedVideo.slug}`;
 
     this.setState({ editingVideoTags: true }, () => {
       axios
@@ -560,7 +558,7 @@ export class Home extends Component {
                         fontFamily: "inherit",
                         marginLeft: "auto",
                       }}
-                      onClick={handleScrollPosition}
+                      // onClick={handleScrollPosition}
                     >
                       View
                     </Button>

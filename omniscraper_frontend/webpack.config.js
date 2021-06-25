@@ -1,13 +1,18 @@
 const path = require("path");
+var webpack = require("webpack");
 const BundleTracker = require("webpack-bundle-tracker");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const WorkboxPlugin = require("workbox-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserWebpackPlugin = require("terser-webpack-plugin");
-const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
-module.exports = function (_env, argv) {
+module.exports = function (env, argv) {
   const isProd = argv.mode === "production";
   const isDev = !isProd;
+
+  const envKeys = Object.keys(env).reduce((prev, next) => {
+    prev[`process.env.${next}`] = JSON.stringify(env[next]);
+    return prev;
+  }, {});
 
   return {
     entry: "./src/index.js",
@@ -20,6 +25,7 @@ module.exports = function (_env, argv) {
       rules: [
         {
           test: /\.js$/,
+          include: path.resolve(__dirname, "src"),
           exclude: /node_modules/,
           use: {
             loader: "babel-loader",
@@ -62,7 +68,6 @@ module.exports = function (_env, argv) {
             },
           ],
         },
-        { test: /\.worker\.js$/, loader: "worker-loader" },
       ],
     },
     plugins: [
@@ -72,13 +77,14 @@ module.exports = function (_env, argv) {
           filename: "[name].[contenthash:8].css",
           chunkFilename: "[name].[contenthash:8].chunk.css",
         }),
-      new WorkboxPlugin.GenerateSW(),
+      new webpack.DefinePlugin(envKeys),
     ].filter(Boolean),
     optimization: {
       moduleIds: "deterministic",
       minimize: isProd,
       minimizer: [
         new TerserWebpackPlugin({
+          parallel: 4,
           terserOptions: {
             compress: {
               comparisons: false,
@@ -93,23 +99,22 @@ module.exports = function (_env, argv) {
             warnings: false,
           },
         }),
-        new OptimizeCssAssetsPlugin(),
+        new CssMinimizerPlugin({
+          parallel: 4,
+        }),
       ],
       usedExports: true,
       splitChunks: {
         chunks: "all",
-        minSize: 0,
-        maxInitialRequests: 20,
-        maxAsyncRequests: 20,
+        // minSize: 0,
+        minSize: 1000 * 600,
+        maxInitialRequests: 25,
+        maxAsyncRequests: 25,
         cacheGroups: {
           vendors: {
-            test: /[\\/]node_modules[\\/]/,
+            test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
             name: "vendors",
             chunks: "all",
-          },
-          common: {
-            minChunks: 2,
-            priority: -10,
           },
         },
       },

@@ -8,7 +8,6 @@ import { withStyles } from "@material-ui/core";
 import axios from "axios";
 import React, { Component } from "react";
 import { withRouter } from "react-router";
-
 import Download from "@material-ui/icons/ArrowDownward";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
@@ -37,7 +36,7 @@ export class Video extends Component {
   loadVideo = () => {
     this.setState({ loading: true }, () => {
       const slug = this.props.match.params.slug;
-      const url = `https://omniscraper.herokuapp.com/api/${slug}`;
+      const url = `${process.env.API_URL}/api/${slug}`;
 
       axios
         .get(url)
@@ -102,20 +101,23 @@ export class Video extends Component {
             <CardActions
               style={{ display: "flex", justifyContent: "space-between" }}
             >
-              <Button
+              {/* <Button
                 size="small"
                 color="primary"
                 startIcon={<TwitterIcon />}
-                href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
               >
                 Source
-              </Button>
+              </Button> */}
+              <a href={`https://twitter.com/i/status/${video.parent_tweet_id}`}>
+                Source
+              </a>
               <Button
                 size="small"
                 color="primary"
-                variant="outlined"
+                variant="contained"
                 startIcon={<Download />}
                 onClick={() => downloadVideo(video)}
               >

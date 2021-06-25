@@ -1,19 +1,16 @@
 import React, { Suspense, Component } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { Router, Switch, Route, Redirect } from "react-router-dom";
+
 import axios from "axios";
 const Home = React.lazy(() => import("./Home"));
 const Login = React.lazy(() => import("./Login"));
+const FilteredVideos = React.lazy(() => import("./FilteredVideos"));
 import Nav from "./Nav";
 const Video = React.lazy(() => import("./Video"));
 import { axiosInstance } from "../axiosInstance";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
-const FilteredVideos = React.lazy(() => import("./FilteredVideos"));
 import { ThreeDots } from "@bit/mhnpd.react-loader-spinner.three-dots";
+import createHistory from "history/createBrowserHistory";
 
 const theme = createMuiTheme({
   typography: {
@@ -29,6 +26,12 @@ const theme = createMuiTheme({
   },
 });
 
+const history = createHistory();
+
+history.listen((location) => {
+  window.ga("send", "pageview"), location.pathname;
+});
+
 class App extends Component {
   state = {
     username: "",
@@ -42,33 +45,23 @@ class App extends Component {
     videosLoadingError: false,
     loading: false,
     offset: 0,
-    limit: 8,
+    limit: 12,
     videos: [],
     hasMore: true,
   };
 
   componentDidMount() {
+    window.ga("create", "UA-190601275-1", "auto");
+    window.ga("send", "pageview");
+
     this.loadTags();
     this.loadVideos();
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.location !== prevProps.location) {
-      this.onRouteChange();
-    }
-  }
-
-  onRouteChange = () => {
-    window.gtag("config", "UA-190601275-1", {
-      page_title: this.props.location.pathname,
-      page_path: this.props.location.pathname,
-    });
-  };
-
   loadVideos = () => {
     this.setState({ loading: true }, () => {
       const { offset, limit } = this.state;
-      const url = `https://omniscraper.herokuapp.com/api/videos/?limit=${limit}&offset=${offset}`;
+      const url = `${process.env.API_URL}/api/videos/?limit=${limit}&offset=${offset}`;
 
       axios
         .get(url)
@@ -94,7 +87,7 @@ class App extends Component {
 
   loadTags = () => {
     this.setState({ tagsLoading: true }, () => {
-      const url = "https://omniscraper.herokuapp.com/api/tags/";
+      const url = `${process.env.API_URL}/api/tags/`;
 
       axios
         .get(url)
@@ -206,7 +199,7 @@ class App extends Component {
 
     return (
       <ThemeProvider theme={theme}>
-        <Router>
+        <Router history={history}>
           <div>
             <Suspense
               fallback={
@@ -229,25 +222,32 @@ class App extends Component {
 
               <Switch>
                 {loggedIn ? <Redirect from="/login" to="/" /> : ""}
-                <Route exact path="/">
-                  <Home
-                    loggedIn={loggedIn}
-                    videoTags={videoTags}
-                    handleClickedTag={handleClickedTag}
-                    clickedTag={clickedTag}
-                    tagsLoading={tagsLoading}
-                    loadTags={loadTags}
-                    error={videosLoadingError}
-                    loading={loading}
-                    hasMore={hasMore}
-                    videos={videos}
-                    loadVideos={loadVideos}
-                  />
-                </Route>
+                <Route
+                  exact
+                  path="/"
+                  render={(props) => (
+                    <Home
+                      {...props}
+                      loggedIn={loggedIn}
+                      videoTags={videoTags}
+                      handleClickedTag={handleClickedTag}
+                      clickedTag={clickedTag}
+                      tagsLoading={tagsLoading}
+                      loadTags={loadTags}
+                      error={videosLoadingError}
+                      loading={loading}
+                      hasMore={hasMore}
+                      videos={videos}
+                      loadVideos={loadVideos}
+                    />
+                  )}
+                />
+
                 <Route
                   path="/tags/:slug"
-                  children={
+                  render={(props) => (
                     <FilteredVideos
+                      {...props}
                       videoTags={videoTags}
                       loggedIn={loggedIn}
                       handleClickedTag={handleClickedTag}
@@ -255,12 +255,13 @@ class App extends Component {
                       tagsLoading={tagsLoading}
                       loadTags={loadTags}
                     />
-                  }
+                  )}
                 />
                 <Route
                   path="/login"
-                  children={
+                  render={(props) => (
                     <Login
+                      {...props}
                       username={username}
                       password={password}
                       loginLoading={loginLoading}
@@ -268,10 +269,10 @@ class App extends Component {
                       handleChange={handleChange}
                       handleSubmit={handleLogin}
                     />
-                  }
-                ></Route>
+                  )}
+                />
 
-                <Route path="/:slug" children={<Video />} />
+                <Route path="/:slug" render={() => <Video />} />
               </Switch>
             </Suspense>
           </div>
