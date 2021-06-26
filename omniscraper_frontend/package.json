@@ -36,6 +36,7 @@
     "@material-ui/lab": "^4.0.0-alpha.58",
     "axios": "^0.21.1",
     "history": "^4.7.2",
+    "json-bigint": "^1.0.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0"
   }

@@ -107,7 +107,7 @@ module.exports = function (env, argv) {
       splitChunks: {
         chunks: "all",
         // minSize: 0,
-        minSize: 1000 * 600,
+        minSize: 1000 * 800,
         maxInitialRequests: 25,
         maxAsyncRequests: 25,
         cacheGroups: {
