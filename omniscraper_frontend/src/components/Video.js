@@ -10,6 +10,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router";
 import Download from "@material-ui/icons/ArrowDownward";
 import TwitterIcon from "@material-ui/icons/Twitter";
+import JSONbig from "json-bigint";
 
 const styles = (theme) => ({
   root: {
@@ -39,9 +40,11 @@ export class Video extends Component {
       const url = `${process.env.API_URL}/api/${slug}`;
 
       axios
-        .get(url)
+        .get(url, { transformResponse: (data) => JSONbig.parse(data) })
         .then((res) => {
-          this.setState({ video: res.data });
+          this.setState({
+            video: res.data,
+          });
         })
         .catch((err) =>
           this.setState({
