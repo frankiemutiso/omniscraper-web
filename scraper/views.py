@@ -76,7 +76,7 @@ class TwitterVideoDetail(APIView):
         serializer = TwitterVideoSerializer(
             video, data=request.data, partial=True)
 
-        if serializer.is_valid() and request.user.is_authenticated:
+        if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
 
