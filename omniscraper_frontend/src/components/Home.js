@@ -36,8 +36,18 @@ export class Home extends Component {
   }
 
   render() {
-    const { classes, loggedIn, videoTags, error, loading, hasMore, videos } =
-      this.props;
+    const {
+      classes,
+      loggedIn,
+      videoTags,
+      error,
+      loading,
+      hasMore,
+      videos,
+      loadTags,
+      clickedTag,
+      handleClickedTag,
+    } = this.props;
 
     return (
       <React.Fragment>
@@ -47,6 +57,9 @@ export class Home extends Component {
             videoTags={videoTags}
             videos={videos}
             loading={loading}
+            loadTags={loadTags}
+            clickedTag={clickedTag}
+            handleClickedTag={handleClickedTag}
           />
 
           {!hasMore && (

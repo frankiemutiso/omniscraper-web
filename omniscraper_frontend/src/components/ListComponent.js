@@ -137,7 +137,7 @@ export class ListComponent extends Component {
           if (response.status === 201) {
             this.setState({ creatingTag: false });
             this.handleCreateDialogClose();
-            loadTags();
+            // loadTags();
           }
         })
         .catch((err) => {
