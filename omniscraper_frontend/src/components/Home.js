@@ -45,8 +45,6 @@ export class Home extends Component {
       hasMore,
       videos,
       loadTags,
-      clickedTag,
-      handleClickedTag,
     } = this.props;
 
     return (
@@ -58,10 +56,7 @@ export class Home extends Component {
             videos={videos}
             loading={loading}
             loadTags={loadTags}
-            clickedTag={clickedTag}
-            handleClickedTag={handleClickedTag}
           />
-
           {!hasMore && (
             <div style={{ textAlign: "center" }}>No more videos</div>
           )}

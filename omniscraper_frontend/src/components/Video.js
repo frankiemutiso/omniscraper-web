@@ -11,6 +11,7 @@ import { withRouter } from "react-router";
 import Download from "@material-ui/icons/ArrowDownward";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import JSONbig from "json-bigint";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 const styles = (theme) => ({
   root: {
@@ -44,6 +45,7 @@ export class Video extends Component {
         .then((res) => {
           this.setState({
             video: res.data,
+            loading: false,
           });
         })
         .catch((err) =>
@@ -81,7 +83,7 @@ export class Video extends Component {
 
   render() {
     const { downloadVideo } = this;
-    const { video } = this.state;
+    const { video, loading } = this.state;
     const { classes } = this.props;
 
     return (
@@ -90,39 +92,56 @@ export class Video extends Component {
         <Hidden mdDown>
           <Card style={{ width: 640 }}>
             <CardActionArea>
-              <CardMedia
-                component="video"
-                height="360"
-                src={video.url}
-                style={{ objectFit: "contain" }}
-                controls
-                disablePictureInPicture
-                controlsList="nodownload"
-                onContextMenu={(e) => e.preventDefault()}
-              />
+              {loading ? (
+                <Skeleton
+                  animation="wave"
+                  variant="rect"
+                  style={{ height: 360 }}
+                />
+              ) : (
+                <CardMedia
+                  component="video"
+                  height="360"
+                  src={video.url}
+                  style={{ objectFit: "contain" }}
+                  controls
+                  disablePictureInPicture
+                  controlsList="nodownload"
+                  onContextMenu={(e) => e.preventDefault()}
+                />
+              )}
             </CardActionArea>
             <CardActions
               style={{ display: "flex", justifyContent: "space-between" }}
             >
-              <Button
-                size="small"
-                color="primary"
-                startIcon={<TwitterIcon />}
-                target="_blank"
-                rel="noopener noreferrer"
-                href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
-              >
-                Source
-              </Button>
-              <Button
-                size="small"
-                color="primary"
-                variant="contained"
-                startIcon={<Download />}
-                onClick={() => downloadVideo(video)}
-              >
-                Download
-              </Button>
+              {loading ? (
+                <>
+                  <Skeleton animation="wave" height={45} width={80} />
+                  <Skeleton animation="wave" height={45} width={80} />
+                </>
+              ) : (
+                <>
+                  <Button
+                    size="small"
+                    color="primary"
+                    startIcon={<TwitterIcon />}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
+                  >
+                    Source
+                  </Button>
+                  <Button
+                    size="small"
+                    color="primary"
+                    variant="contained"
+                    startIcon={<Download />}
+                    onClick={() => downloadVideo(video)}
+                  >
+                    Download
+                  </Button>
+                </>
+              )}
             </CardActions>
           </Card>
         </Hidden>
@@ -131,45 +150,62 @@ export class Video extends Component {
         <Hidden mdUp>
           <Card style={{ width: "100%" }}>
             <CardActionArea>
-              <CardMedia
-                component="video"
-                // height="60vh"
-                src={video.url}
-                style={{ objectFit: "contain", height: "70vh" }}
-                controls
-                disablePictureInPicture
-                controlsList="nodownload"
-                onContextMenu={(e) => e.preventDefault()}
-              />
+              {loading ? (
+                <Skeleton
+                  animation="wave"
+                  variant="rect"
+                  style={{ height: "70vh" }}
+                />
+              ) : (
+                <CardMedia
+                  component="video"
+                  // height="60vh"
+                  src={video.url}
+                  style={{ objectFit: "contain", height: "70vh" }}
+                  controls
+                  disablePictureInPicture
+                  controlsList="nodownload"
+                  onContextMenu={(e) => e.preventDefault()}
+                />
+              )}
             </CardActionArea>
             <CardActions
               style={{ display: "flex", justifyContent: "space-between" }}
             >
-              <Button
-                size="small"
-                color="primary"
-                style={{
-                  color: "#185adb",
-                  fontFamily: "inherit",
-                }}
-                startIcon={<TwitterIcon />}
-                href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Source
-              </Button>
-              <Button
-                size="small"
-                color="primary"
-                variant="contained"
-                className={classes.buttons}
-                style={{ fontFamily: "inherit" }}
-                startIcon={<Download />}
-                onClick={() => downloadVideo(video)}
-              >
-                Download
-              </Button>
+              {loading ? (
+                <>
+                  <Skeleton animation="wave" height={45} width={80} />
+                  <Skeleton animation="wave" height={45} width={80} />
+                </>
+              ) : (
+                <>
+                  <Button
+                    size="small"
+                    color="primary"
+                    style={{
+                      color: "#185adb",
+                      fontFamily: "inherit",
+                    }}
+                    startIcon={<TwitterIcon />}
+                    href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Source
+                  </Button>
+                  <Button
+                    size="small"
+                    color="primary"
+                    variant="contained"
+                    className={classes.buttons}
+                    style={{ fontFamily: "inherit" }}
+                    startIcon={<Download />}
+                    onClick={() => downloadVideo(video)}
+                  >
+                    Download
+                  </Button>
+                </>
+              )}
             </CardActions>
           </Card>
         </Hidden>
