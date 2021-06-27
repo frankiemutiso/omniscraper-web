@@ -26,6 +26,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import Skeleton from "@material-ui/lab/Skeleton";
+
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { axiosInstance } from "../axiosInstance";
@@ -147,7 +149,7 @@ export class ListComponent extends Component {
     });
   };
 
-  handleMenuClick = (video, e) => {
+  handleMenuClick = (e, video) => {
     const { videoTags } = this.props;
     this.handleCheckedTags(videoTags, video);
 
@@ -463,19 +465,15 @@ export class ListComponent extends Component {
               clickable
               color="primary"
               variant={
-                this.props.clickedTag !== null &&
-                this.props.clickedTag.id == tag.id
-                  ? "default"
-                  : "outlined"
+                this.props.clickedTag == tag.slug ? "default" : "outlined"
               }
               style={{ margin: 5 }}
-              onClick={() => this.props.handleClickedTag(tag)}
             />
           ))}
         </div>
         <Grid container spacing={6} style={{ marginTop: 10 }}>
-          {videos.map((video) => (
-            <Grid item lg={3} md={6} sm={6} xs={12} key={video.id}>
+          {videos.map((video, index) => (
+            <Grid item lg={3} md={6} sm={6} xs={12} key={index}>
               <Card style={{ maxWidth: 380 }}>
                 <CardActionArea component={Link} to={`/${video.slug}`}>
                   <CardMedia
@@ -486,7 +484,7 @@ export class ListComponent extends Component {
                     src={video.url}
                     style={{ objectFit: "cover" }}
                     onContextMenu={(e) => e.preventDefault()}
-                  ></CardMedia>
+                  />
                 </CardActionArea>
                 <CardActions
                   style={{ display: "flex", justifyContent: "space-between" }}
@@ -495,7 +493,7 @@ export class ListComponent extends Component {
                     <IconButton
                       size="small"
                       color="primary"
-                      onClick={(e) => handleMenuClick(video, e)}
+                      onClick={(e) => handleMenuClick(e, video)}
                     >
                       <MoreIcon />
                     </IconButton>
@@ -522,6 +520,41 @@ export class ListComponent extends Component {
             </Grid>
           ))}
         </Grid>
+        {loading && (
+          <Grid container spacing={6} style={{ marginTop: 10 }}>
+            {Array.from(new Array(12)).map((item, index) => (
+              <Grid item lg={3} md={6} sm={6} xs={12} key={index}>
+                <Card style={{ maxWidth: 380 }}>
+                  <CardActionArea component={Link} to="">
+                    <Skeleton
+                      animation="wave"
+                      variant="rect"
+                      style={{ height: 160 }}
+                    />
+                  </CardActionArea>
+                  <CardActions
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    {loggedIn && (
+                      <Skeleton
+                        animation="wave"
+                        height={35}
+                        width={5}
+                        style={{ marginLeft: 10 }}
+                      />
+                    )}
+                    <Skeleton
+                      animation="wave"
+                      height={45}
+                      width={80}
+                      style={{ marginLeft: "auto" }}
+                    />
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        )}
         {loggedIn && (
           <React.Fragment>
             <Hidden mdDown>
@@ -546,19 +579,6 @@ export class ListComponent extends Component {
               </Fab>
             </Hidden>
           </React.Fragment>
-        )}
-        {loading && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "50px",
-              margin: "30px",
-            }}
-          >
-            <CircularProgress className={classes.spinner} />
-          </div>
         )}
       </div>
     );

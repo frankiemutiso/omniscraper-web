@@ -13,8 +13,7 @@ const styles = (theme) => ({
 
 export class Nav extends Component {
   render() {
-    const { loggedIn, handleLogout, classes, handleClearClickedTag } =
-      this.props;
+    const { loggedIn, handleLogout, classes } = this.props;
 
     return (
       <div style={{ flexGrow: 1, margin: 0 }}>
@@ -26,7 +25,6 @@ export class Nav extends Component {
                 textTransform: "uppercase",
                 letterSpacing: "0.1em",
               }}
-              onClick={handleClearClickedTag}
             >
               <Link
                 to="/"
@@ -53,7 +51,6 @@ export class Nav extends Component {
                     Logout
                   </Button>
                 </React.Fragment>
-              
               )}
             </div>
           </Toolbar>

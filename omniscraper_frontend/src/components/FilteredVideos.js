@@ -64,14 +64,10 @@ export class FilteredVideos extends Component {
 
   render() {
     const { loading, videos } = this.state;
-    const {
-      classes,
-      loggedIn,
-      videoTags,
-      loadTags,
-      clickedTag,
-      handleClickedTag,
-    } = this.props;
+    const { classes, loggedIn, videoTags, loadTags } = this.props;
+
+    const pathParams = location.pathname.split("/");
+    const clickedTag = pathParams[pathParams.length - 1];
 
     return (
       <div className={classes.root}>
@@ -82,7 +78,6 @@ export class FilteredVideos extends Component {
           loading={loading}
           loadTags={loadTags}
           clickedTag={clickedTag}
-          handleClickedTag={handleClickedTag}
         />
 
         {/* {!hasMore && <div>No more videos</div>} */}

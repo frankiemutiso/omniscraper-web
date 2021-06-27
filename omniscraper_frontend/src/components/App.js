@@ -39,7 +39,6 @@ class App extends Component {
     loggedIn: localStorage.getItem("access_token") ? true : false,
     loginLoading: false,
     error: null,
-    clickedTag: parseInt(localStorage.getItem("clicked_tag")) || null,
     tagsLoading: false,
     videoTags: [],
     videosLoadingError: false,
@@ -107,18 +106,6 @@ class App extends Component {
     });
   };
 
-  handleClickedTag = (tag) => {
-    this.setState({ clickedTag: tag }, () =>
-      localStorage.setItem("clicked_tag", this.state.clickedTag)
-    );
-  };
-
-  handleClearClickedTag = () => {
-    localStorage.removeItem("clicked_tag");
-
-    this.setState({ clickedTag: null });
-  };
-
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -172,15 +159,8 @@ class App extends Component {
   };
 
   render() {
-    const {
-      handleChange,
-      handleLogin,
-      handleLogout,
-      handleClickedTag,
-      handleClearClickedTag,
-      loadTags,
-      loadVideos,
-    } = this;
+    const { handleChange, handleLogin, handleLogout, loadTags, loadVideos } =
+      this;
     const {
       username,
       password,
@@ -188,7 +168,6 @@ class App extends Component {
       loggedIn,
       loginLoading,
       videoTags,
-      clickedTag,
       tagsLoading,
 
       videosLoadingError,
@@ -214,11 +193,7 @@ class App extends Component {
                 </div>
               }
             >
-              <Nav
-                loggedIn={loggedIn}
-                handleLogout={handleLogout}
-                handleClearClickedTag={handleClearClickedTag}
-              />
+              <Nav loggedIn={loggedIn} handleLogout={handleLogout} />
 
               <Switch>
                 {loggedIn ? <Redirect from="/login" to="/" /> : ""}
@@ -230,8 +205,6 @@ class App extends Component {
                       {...props}
                       loggedIn={loggedIn}
                       videoTags={videoTags}
-                      handleClickedTag={handleClickedTag}
-                      clickedTag={clickedTag}
                       tagsLoading={tagsLoading}
                       loadTags={loadTags}
                       error={videosLoadingError}
@@ -250,13 +223,12 @@ class App extends Component {
                       {...props}
                       videoTags={videoTags}
                       loggedIn={loggedIn}
-                      handleClickedTag={handleClickedTag}
-                      clickedTag={clickedTag}
                       tagsLoading={tagsLoading}
                       loadTags={loadTags}
                     />
                   )}
                 />
+
                 <Route
                   path="/login"
                   render={(props) => (

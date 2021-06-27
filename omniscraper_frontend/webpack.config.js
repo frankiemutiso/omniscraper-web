@@ -4,6 +4,7 @@ const BundleTracker = require("webpack-bundle-tracker");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserWebpackPlugin = require("terser-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = function (env, argv) {
   const isProd = argv.mode === "production";
@@ -79,6 +80,7 @@ module.exports = function (env, argv) {
           chunkFilename: "[name].[contenthash:8].chunk.css",
         }),
       new webpack.DefinePlugin(envKeys),
+      new CleanWebpackPlugin(),
     ].filter(Boolean),
     optimization: {
       moduleIds: "deterministic",
