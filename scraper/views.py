@@ -6,6 +6,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.utils.decorators import method_decorator
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 def infinite_filter(request):
@@ -76,7 +78,7 @@ class TwitterVideoDetail(APIView):
         serializer = TwitterVideoSerializer(
             video, data=request.data, partial=True)
 
-        if serializer.is_valid():
+        if serializer.is_valid() and request.user.is_authenticated:
             serializer.save()
             return Response(serializer.data)
 
@@ -87,7 +89,6 @@ class VideoTagsList(APIView):
     def get(self, request):
         video_tags = VideoTag.objects.all().order_by("tag_name")
         serializer = VideoTagSerializer(video_tags, many=True)
-
         return Response({"tags": serializer.data})
 
     def post(self, request):

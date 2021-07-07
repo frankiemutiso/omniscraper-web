@@ -29,7 +29,6 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import Skeleton from "@material-ui/lab/Skeleton";
 
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { axiosInstance } from "../axiosInstance";
 
 const styles = (theme) => ({
@@ -206,7 +205,7 @@ export class ListComponent extends Component {
     const url = `${process.env.API_URL}/api/${clickedVideo.slug}`;
 
     this.setState({ editingVideoTags: true }, () => {
-      axios
+      axiosInstance
         .patch(url, {
           tags: selectedTagsIds,
         })
