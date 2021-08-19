@@ -2,10 +2,11 @@
   "name": "omniscraper_frontend",
   "version": "1.0.0",
   "description": "",
+  "proxy": "https://omniscraper-dev.herokuapp.com",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --env API_URL=http://localhost:8000 --mode development --watch",
-    "build": "webpack --env API_URL=https://omniscraper.herokuapp.com --mode production ",
+    "dev": "webpack --mode development --watch",
+    "build": "webpack --mode production",
     "help": "webpack --help"
   },
   "keywords": [],
