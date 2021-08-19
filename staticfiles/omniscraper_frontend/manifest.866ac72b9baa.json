@@ -1,6 +1,6 @@
 {
   "short_name": "Omniscraper",
-  "name": "Omniscraper - Smart Content Delivery",
+  "name": "Omniscraper",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,7 +8,7 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "maskable_icon_192.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any"
@@ -20,7 +20,7 @@
       "purpose": "maskable"
     },
     {
-      "src": "logo512.png",
+      "src": "maskable_icon_512.png",
       "type": "image/png",
       "sizes": "512x512", 
       "purpose": "any"
@@ -32,7 +32,8 @@
       "purpose": "maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "/index.html",
+  "scope": ".",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
