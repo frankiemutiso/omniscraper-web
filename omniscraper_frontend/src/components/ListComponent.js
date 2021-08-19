@@ -83,6 +83,8 @@ export class ListComponent extends Component {
     checkedTags: [],
     scrollPosition: 0,
     snackBarOpen: false,
+    shareSupportedError: false,
+    shareError: null,
   };
 
   componentDidMount() {
@@ -235,16 +237,14 @@ export class ListComponent extends Component {
           url: video.slug,
         })
         .then(() => {
-          this.setState({ snackBarOpen: true, shareSuccessful: true });
-          // console.log("Thanks fro sharing");
+          // this.setState({ snackBarOpen: true, shareSuccessful: true });
+          console.log("Thanks for sharing");
         })
         .catch((err) => {
-          this.setState({ snackBarOpen: true, shareSuccessful: false });
-          // console.log(`Couldn't share url because of ${err.message}`);
+          this.setState({ snackBarOpen: true, shareError: err.message });
         });
     } else {
-      this.setState({ snackBarOpen: true, shareSupported: false });
-      // console.log("Web share not supported!");
+      this.setState({ snackBarOpen: true, shareSupportedError: true });
     }
   };
 
@@ -253,7 +253,11 @@ export class ListComponent extends Component {
       return;
     }
 
-    this.setState({ snackBarOpen: false });
+    this.setState({
+      snackBarOpen: false,
+      shareSupportedError: false,
+      shareError: null,
+    });
   };
 
   render() {
@@ -271,6 +275,8 @@ export class ListComponent extends Component {
       editingVideoTags,
       checkedTags,
       snackBarOpen,
+      shareSupportedError,
+      shareError,
     } = this.state;
 
     const { classes, loading, videos, loggedIn, videoTags } = this.props;
@@ -493,7 +499,13 @@ export class ListComponent extends Component {
           open={snackBarOpen}
           autoHideDuration={3000}
           onClose={handleSnackBarClose}
-          message="Thanks for sharing"
+          message={
+            shareSupportedError
+              ? "Web share not supported!"
+              : shareError !== null
+              ? `${shareError}`
+              : ""
+          }
           action={
             <IconButton
               size="small"
@@ -513,6 +525,7 @@ export class ListComponent extends Component {
           spacing={4}
           style={{
             marginTop: 1,
+  
           }}
         >
           {videos.map((video, index) => (
