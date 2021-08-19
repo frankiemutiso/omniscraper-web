@@ -10,7 +10,7 @@ const styles = (theme) => ({
     flex: 1,
     marginRight: theme.spacing(3),
     marginLeft: theme.spacing(3),
-    paddingTop: 100,
+    paddingTop: 72,
   },
 });
 
