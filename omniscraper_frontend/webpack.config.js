@@ -84,6 +84,7 @@ module.exports = function (env, argv) {
     ].filter(Boolean),
     optimization: {
       moduleIds: "deterministic",
+      concatenateModules: true,
       minimize: isProd,
       minimizer: [
         new TerserWebpackPlugin({

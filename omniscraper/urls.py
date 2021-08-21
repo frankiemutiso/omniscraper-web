@@ -8,5 +8,5 @@ urlpatterns = [
     path('service-worker.js', (TemplateView.as_view(template_name="omniscraper_frontend/service-worker.js",
                                                     content_type='application/javascript', )), name='service-worker.js'),
     path('', include('omniscraper_frontend.urls')),
-
+    
 ]

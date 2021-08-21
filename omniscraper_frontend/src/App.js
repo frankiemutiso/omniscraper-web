@@ -18,7 +18,8 @@ const theme = createMuiTheme({
   },
   palette: {
     primary: {
-      main: "#185adb",
+      // main: "#185adb",
+      main: '#000000'
     },
     secondary: {
       main: "#cf0000",
@@ -83,40 +84,41 @@ class App extends Component {
 
       const url = `/api/videos/?limit=${limit}&offset=${offset}`;
       // const worker = new Worker("/worker.js");
+      const worker = new Worker(new URL("./worker.js", import.meta.url));
 
-      // worker.postMessage(url);
+      worker.postMessage(url);
 
-      // worker.onmessage = (e) => {
-      //   const newVideos = e.data.videos;
-      //   const hasMore = e.data.has_more;
+      worker.onmessage = (e) => {
+        const newVideos = e.data.videos;
+        const hasMore = e.data.has_more;
 
-      //   this.setState({
-      //     hasMore,
-      //     loading: false,
-      //     videos: [...this.state.videos, ...newVideos],
-      //     offset: offset + limit,
-      //   });
-      // };
-
-      axios
-        .get(url)
-        .then((res) => {
-          const newVideos = res.data.videos;
-          const hasMore = res.data.has_more;
-
-          this.setState({
-            hasMore,
-            loading: false,
-            videos: [...this.state.videos, ...newVideos],
-            offset: offset + limit,
-          });
-        })
-        .catch((err) => {
-          this.setState({
-            videosLoadingError: err.message,
-            loading: false,
-          });
+        this.setState({
+          hasMore,
+          loading: false,
+          videos: [...this.state.videos, ...newVideos],
+          offset: offset + limit,
         });
+      };
+
+      // axios
+      //   .get(url)
+      //   .then((res) => {
+      //     const newVideos = res.data.videos;
+      //     const hasMore = res.data.has_more;
+
+      //     this.setState({
+      //       hasMore,
+      //       loading: false,
+      //       videos: [...this.state.videos, ...newVideos],
+      //       offset: offset + limit,
+      //     });
+      //   })
+      //   .catch((err) => {
+      //     this.setState({
+      //       videosLoadingError: err.message,
+      //       loading: false,
+      //     });
+      //   });
     });
   };
 
@@ -124,33 +126,35 @@ class App extends Component {
     this.setState({ tagsLoading: true }, () => {
       const url = "/api/tags/";
       // const worker = new Worker("/tagsWorker.js");
+      const worker = new Worker(new URL("./tagsWorker.js", import.meta.url));
 
-      // worker.postMessage(url);
 
-      // worker.onmessage = (e) => {
-      //   const newTags = e.data.tags;
+      worker.postMessage(url);
 
-      //   this.setState({
-      //     videoTags: newTags,
-      //     tagsLoading: false,
-      //   });
-      // };
+      worker.onmessage = (e) => {
+        const newTags = e.data.tags;
 
-      axios
-        .get(url)
-        .then((res) => {
-          const newTags = res.data.tags;
-
-          this.setState({
-            videoTags: newTags,
-            tagsLoading: false,
-          });
-        })
-        .catch((err) => {
-          this.setState({
-            tagsLoading: false,
-          });
+        this.setState({
+          videoTags: newTags,
+          tagsLoading: false,
         });
+      };
+
+      // axios
+      //   .get(url)
+      //   .then((res) => {
+      //     const newTags = res.data.tags;
+
+      //     this.setState({
+      //       videoTags: newTags,
+      //       tagsLoading: false,
+      //     });
+      //   })
+      //   .catch((err) => {
+      //     this.setState({
+      //       tagsLoading: false,
+      //     });
+      //   });
     });
   };
 

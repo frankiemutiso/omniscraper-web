@@ -30,6 +30,7 @@ import ViewIcon from "@material-ui/icons/PlayArrow";
 import Snackbar from "@material-ui/core/Snackbar";
 import { Link } from "react-router-dom";
 import { axiosInstance } from "../utils/axiosInstance";
+
 const Tags = React.lazy(() => import("./Tags"));
 
 const styles = (theme) => ({
@@ -241,7 +242,8 @@ export class ListComponent extends Component {
           console.log("Thanks for sharing");
         })
         .catch((err) => {
-          this.setState({ snackBarOpen: true, shareError: err.message });
+          // this.setState({ snackBarOpen: true, shareError: err.message });
+          console.log(err.message)
         });
     } else {
       this.setState({ snackBarOpen: true, shareSupportedError: true });
