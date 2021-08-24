@@ -29,7 +29,7 @@ const styles = (theme) => ({
       width: "85vw",
       paddingTop: 80,
     },
-    paddingTop: "7.1vh",
+    paddingTop: "7.2vh",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -276,7 +276,7 @@ export class Video extends React.PureComponent {
                 src={video.url}
                 style={{
                   objectFit: "contain",
-                  height: "92.9vh",
+                  height: "92.8vh",
                   position: "relative",
                 }}
                 onClick={handleToggle}
@@ -309,14 +309,14 @@ export class Video extends React.PureComponent {
             </CardActionArea>
           </Card>
           <SpeedDial
-            ariaLabel="SpeedDial example"
+            ariaLabel="Twitter Video SpeedDial"
             className={classes.speedDial}
-            // hidden={hidden}
             icon={<SpeedDialIcon />}
             onClose={handleSpeedDialClose}
             onOpen={handleSpeedDialOpen}
             open={speedDialOpen}
             direction="up"
+            color="secondary"
           >
             {actions.map((action) => (
               <SpeedDialAction

@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Chip from "@material-ui/core/Chip";
+import "./Tags.css";
 
 function Tags({ videoTags, clickedTag }) {
   return (
-    <div>
+    <div className="tags">
       {videoTags.map((tag) => (
         <Chip
           component={Link}

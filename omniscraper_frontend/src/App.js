@@ -1,11 +1,11 @@
 import React, { Suspense, Component } from "react";
 import { Router, Switch, Route, Redirect } from "react-router-dom";
-import { ThemeProvider } from "@material-ui/core";
+import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import createHistory from "history/createBrowserHistory";
-import axios from "axios";
+// import axios from "axios";
+import { ThreeDots } from "@bit/mhnpd.react-loader-spinner.three-dots";
 import { axiosInstance } from "./utils/axiosInstance";
-import Loaders from "./utils/Loaders";
 const Nav = React.lazy(() => import("./components/Nav"));
 const Video = React.lazy(() => import("./pages/Video"));
 const Home = React.lazy(() => import("./pages/Home"));
@@ -19,9 +19,13 @@ const theme = createMuiTheme({
   palette: {
     primary: {
       // main: "#185adb",
-      main: '#000000'
+      main: "#000000",
     },
     secondary: {
+      // main: "#cf0000",
+      main: "#185adb",
+    },
+    delete: {
       main: "#cf0000",
     },
   },
@@ -127,7 +131,6 @@ class App extends Component {
       const url = "/api/tags/";
       // const worker = new Worker("/tagsWorker.js");
       const worker = new Worker(new URL("./tagsWorker.js", import.meta.url));
-
 
       worker.postMessage(url);
 
@@ -241,8 +244,7 @@ class App extends Component {
                     placeItems: "center",
                   }}
                 >
-                  {/* <p>Loading...</p> */}
-                  <Loaders />
+                  <ThreeDots color="#000" height={50} width={50} />
                 </div>
               }
             >

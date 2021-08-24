@@ -42,7 +42,7 @@
     <div id="app"></div>
     {% render_bundle 'main' 'js' %}
 
-    <script >
+    <script defer>
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", () => {
                 navigator.serviceWorker.register("{% url 'service-worker.js' %}", {scope: "/"});

@@ -46,7 +46,7 @@ const Nav = ({ loggedIn, handleLogout }) => {
               <React.Fragment>
                 <Button
                   size="small"
-                  variant="contained"
+                  variant="outlined"
                   component={Link}
                   to="/"
                   className={classes.navLink}

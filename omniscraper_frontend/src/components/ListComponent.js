@@ -40,9 +40,8 @@ const styles = (theme) => ({
     fontFamily: "Montserrat",
   },
   title: {
-    "& h2": {
+    "&h2": {
       fontFamily: "inherit",
-      fontWeight: 600,
     },
   },
   menuItemText: {
@@ -235,7 +234,7 @@ export class ListComponent extends Component {
     if (navigator.share) {
       navigator
         .share({
-          url: video.slug,
+          url: `/${video.slug}`,
         })
         .then(() => {
           // this.setState({ snackBarOpen: true, shareSuccessful: true });
@@ -243,7 +242,7 @@ export class ListComponent extends Component {
         })
         .catch((err) => {
           // this.setState({ snackBarOpen: true, shareError: err.message });
-          console.log(err.message)
+          console.log(err.message);
         });
     } else {
       this.setState({ snackBarOpen: true, shareSupportedError: true });
@@ -302,7 +301,11 @@ export class ListComponent extends Component {
       handleSnackBarClose,
     } = this;
     const reportDialog = (
-      <Dialog open={open} onClose={handlePromptClose}>
+      <Dialog
+        open={open}
+        onClose={handlePromptClose}
+        style={{ paddingBottom: 8 }}
+      >
         <DialogTitle className={classes.title}>
           Are you sure you want to report this video?
         </DialogTitle>
@@ -316,10 +319,13 @@ export class ListComponent extends Component {
           </Button>
           <Button
             onClick={() => flagVideo(clickedVideo)}
-            color="secondary"
             variant="contained"
             autoFocus
-            style={{ fontFamily: "inherit" }}
+            style={{
+              fontFamily: "inherit",
+              backgroundColor: "#cf0000",
+              color: "#fff",
+            }}
             endIcon={
               flagging ? <CircularProgress size={16} color="white" /> : ""
             }
@@ -376,8 +382,7 @@ export class ListComponent extends Component {
         </DialogContent>
         <DialogActions>
           <Button
-            color="secondary"
-            style={{ fontFamily: "inherit", fontWeight: 600 }}
+            style={{ fontFamily: "inherit", fontWeight: 600, color: "#fff" }}
             onClick={handleTagsDialogClose}
           >
             Cancel
@@ -445,7 +450,7 @@ export class ListComponent extends Component {
         </DialogContent>
         <DialogActions>
           <Button
-            color="secondary"
+            color="primary"
             style={{ fontFamily: "inherit", fontWeight: 600 }}
             onClick={handleCreateDialogClose}
           >
@@ -527,7 +532,6 @@ export class ListComponent extends Component {
           spacing={4}
           style={{
             marginTop: 1,
-  
           }}
         >
           {videos.map((video, index) => (
