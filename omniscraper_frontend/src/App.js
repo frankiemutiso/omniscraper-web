@@ -1,7 +1,7 @@
 import React, { Suspense, Component } from "react";
 import { Router, Switch, Route, Redirect } from "react-router-dom";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import createTheme from "@material-ui/core/styles/createTheme";
 import createHistory from "history/createBrowserHistory";
 // import axios from "axios";
 import { ThreeDots } from "@bit/mhnpd.react-loader-spinner.three-dots";
@@ -12,7 +12,7 @@ const Home = React.lazy(() => import("./pages/Home"));
 const Login = React.lazy(() => import("./pages/Login"));
 const FilteredVideos = React.lazy(() => import("./pages/FilteredVideos"));
 
-const theme = createMuiTheme({
+const theme = createTheme({
   typography: {
     // fontFamily: ["Montserrat"].join(","),
     fontFamily: ["Inter"].join(","),
@@ -245,7 +245,7 @@ class App extends Component {
                     placeItems: "center",
                   }}
                 >
-                  <ThreeDots color="#000" height={50} width={50} />
+                  <ThreeDots color="#185adb" height={50} width={50} />
                 </div>
               }
             >
