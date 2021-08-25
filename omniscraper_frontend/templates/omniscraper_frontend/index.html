@@ -8,22 +8,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000" />
+    
     <meta name="description" content="The most reliable and efficient downloader for Twitter videos and GIFs. Mention '@omniscraper' a tweet with a video and get a download link in 500ms.">
-    <meta name="keywords" content="Twitter Videos Downloader, Twitter GIFs Downloader, Download Videos from Twitter, How to download videos and GIFs from Twitter, Download Twitter Videos and GIFs easily">
+    <meta name="keywords" content="Twitter download video. Download Twitter video. Twitter download. Twitter downloader. Twitter download GIF. Twitter to download">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Smart content delivery">
     <meta name="twitter:description" content="Mention @omniscraper under a tweet with a video to get a download link">
-    <meta name="twitter:image" content="{% static 'logo.png' %}">
+    <meta name="twitter:image" content="{% static 'maskable_icon_512.png' %}">
     <meta name="twitter:site" content="@omniscraper">
     
-    <title>Omniscraper - The #1 downloader for Twitter Videos and GIFs</title>
+    <title>Omniscraper: Download Twitter videos now!</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" href="{% static 'omniscraper_frontend/maskable_icon_192.png' %}" />
+    <link rel="manifest" href="{% static 'omniscraper_frontend/manifest.json' %}" />
+    <link crossorigin="anonymous" rel="preconnect" href="https://fonts.googleapis.com">
+    <link crossorigin="anonymous" rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link crossorigin="anonymous" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" >
+    <!-- <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"> -->
+    <noscript>
+            <!-- <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet" type="text/css"> -->
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet" type="text/css">
+    </noscript>
     <link rel="shortcut icon" type="image/png" href="{% static 'omniscraper_frontend/favicon.ico' %}"/>
     {% render_bundle 'main' 'css' %}
-    <script>
+
+    <script defer>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -33,5 +43,14 @@
 <body>
     <div id="app"></div>
     {% render_bundle 'main' 'js' %}
+
+    <script defer>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("{% url 'service-worker.js' %}", {scope: "/"});
+                
+            });
+        }
+    </script>
 </body>
 </html>

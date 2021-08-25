@@ -5,6 +5,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserWebpackPlugin = require("terser-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = function (env, argv) {
   const isProd = argv.mode === "production";
@@ -81,9 +83,11 @@ module.exports = function (env, argv) {
         }),
       new webpack.DefinePlugin(envKeys),
       new CleanWebpackPlugin(),
+      isProd ? new BundleAnalyzerPlugin() : "",
     ].filter(Boolean),
     optimization: {
       moduleIds: "deterministic",
+      concatenateModules: true,
       minimize: isProd,
       minimizer: [
         new TerserWebpackPlugin({

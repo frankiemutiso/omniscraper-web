@@ -1,0 +1,8 @@
+.tags{
+    overflow-x: auto;
+    display: flex;
+}
+
+.tags::-webkit-scrollbar{
+    width: 0
+}

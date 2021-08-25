@@ -1,63 +1,68 @@
 import React, { Component } from "react";
 import AppBar from "@material-ui/core/AppBar";
-import { Button, Toolbar, withStyles } from "@material-ui/core";
-
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import useTheme from "@material-ui/core/styles/useTheme";
+import Button from "@material-ui/core/Button";
+import Toolbar from "@material-ui/core/Toolbar";
 import { Link } from "react-router-dom";
+import Typography from "@material-ui/core/Typography";
+// import useMediaQuery from "@material-ui/core/useMediaQuery";
 
-const styles = (theme) => ({
+const useStyles = makeStyles({
   navLink: {
     textDecoration: "none",
     cursor: "pointer",
+    color: "#fff",
+    border: "1px solid #fff",
   },
 });
 
-export class Nav extends Component {
-  render() {
-    const { loggedIn, handleLogout, classes } = this.props;
+const Nav = ({ loggedIn, handleLogout }) => {
+  const classes = useStyles();
+  const theme = useTheme();
+  // const matches = useMediaQuery(theme.breakpoints.down("md"));
 
-    return (
-      <div style={{ flexGrow: 1, margin: 0 }}>
-        <AppBar position="fixed" style={{ backgroundColor: "#1a1c20" }}>
-          <Toolbar>
-            <h3
-              style={{
-                flexGrow: 1,
-                textTransform: "uppercase",
-                letterSpacing: "0.1em",
-              }}
-            >
-              <Link
-                to="/"
-                style={{
-                  color: "white",
-                  textDecoration: "none",
-                  cursor: "pointer",
-                }}
-              >
-                Omniscraper
-              </Link>
-            </h3>
-            <div>
-              {loggedIn && (
-                <React.Fragment>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    component={Link}
-                    to="/"
-                    className={classes.navLink}
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </Button>
-                </React.Fragment>
-              )}
-            </div>
-          </Toolbar>
-        </AppBar>
-      </div>
-    );
-  }
-}
+  return (
+    <div style={{ flexGrow: 1, margin: 0 }}>
+      <AppBar position="fixed" style={{ backgroundColor: "#000" }}>
+        <Toolbar>
+          <Typography
+            variant="h6"
+            component={Link}
+            to="/"
+            style={{
+              textTransform: "uppercase",
+              color: "#fff",
+              textDecoration: "none",
+              fontWeight: 600,
+              fontSize: 18,
+              marginRight: "auto",
+            }}
+            onClick={() => window.scrollTo({ top: 0, behaviour: "smooth" })}
+          >
+            Omniscraper
+          </Typography>
 
-export default withStyles(styles)(Nav);
+          <div>
+            {loggedIn && (
+              <React.Fragment>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  component={Link}
+                  to="/"
+                  className={classes.navLink}
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
+              </React.Fragment>
+            )}
+          </div>
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
+};
+
+export default React.memo(Nav);
