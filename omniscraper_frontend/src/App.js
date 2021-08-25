@@ -14,16 +14,17 @@ const FilteredVideos = React.lazy(() => import("./pages/FilteredVideos"));
 
 const theme = createMuiTheme({
   typography: {
-    fontFamily: ["Montserrat"].join(","),
+    // fontFamily: ["Montserrat"].join(","),
+    fontFamily: ["Inter"].join(","),
   },
   palette: {
     primary: {
-      // main: "#185adb",
-      main: "#000000",
+      main: "#185adb",
+      // main: "#000000",
     },
     secondary: {
       // main: "#cf0000",
-      main: "#185adb",
+      main: "#FF4848",
     },
     delete: {
       main: "#cf0000",

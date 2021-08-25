@@ -12,6 +12,8 @@ const useStyles = makeStyles({
   navLink: {
     textDecoration: "none",
     cursor: "pointer",
+    color: "#fff",
+    border: "1px solid #fff",
   },
 });
 

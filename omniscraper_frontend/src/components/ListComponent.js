@@ -42,6 +42,7 @@ const styles = (theme) => ({
   title: {
     "&h2": {
       fontFamily: "inherit",
+      fontWeight: 600,
     },
   },
   menuItemText: {
@@ -323,7 +324,7 @@ export class ListComponent extends Component {
             autoFocus
             style={{
               fontFamily: "inherit",
-              backgroundColor: "#cf0000",
+              backgroundColor: "#FF4848",
               color: "#fff",
             }}
             endIcon={

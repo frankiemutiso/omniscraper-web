@@ -22,11 +22,13 @@
 
     <link rel="apple-touch-icon" href="{% static 'omniscraper_frontend/maskable_icon_192.png' %}" />
     <link rel="manifest" href="{% static 'omniscraper_frontend/manifest.json' %}" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap">
+    <link crossorigin="anonymous" rel="preconnect" href="https://fonts.googleapis.com">
+    <link crossorigin="anonymous" rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link crossorigin="anonymous" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" >
+    <!-- <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"> -->
     <noscript>
-            <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet" type="text/css">
+            <!-- <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet" type="text/css"> -->
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet" type="text/css">
     </noscript>
     <link rel="shortcut icon" type="image/png" href="{% static 'omniscraper_frontend/favicon.ico' %}"/>
     {% render_bundle 'main' 'css' %}
