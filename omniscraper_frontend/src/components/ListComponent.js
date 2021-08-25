@@ -206,7 +206,7 @@ export class ListComponent extends Component {
   handleEditVideoTags = () => {
     const { selectedTagsIds, clickedVideo } = this.state;
 
-    const url = `/api/${clickedVideo.slug}`;
+    const url = `/${clickedVideo.slug}`;
 
     this.setState({ editingVideoTags: true }, () => {
       axiosInstance
