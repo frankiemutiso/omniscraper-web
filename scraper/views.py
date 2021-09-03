@@ -10,18 +10,27 @@ from django.utils.decorators import method_decorator
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
-def infinite_filter(request):
+def get_infinite_videos(request, slug=None):
     limit = request.GET.get("limit")
     offset = request.GET.get("offset")
 
-    return TwitterVideo.objects.exclude(flagged=True).order_by('-date_saved_utc')[int(offset): int(offset) + int(limit)]
+    try:
+        if slug is None:
+            return TwitterVideo.objects.exclude(flagged=True).order_by('-date_saved_utc')[int(offset): int(offset) + int(limit)]
+        return VideoTag.objects.get(slug=slug).twitter_videos.all().order_by('-date_saved_utc')[int(offset): int(offset) + int(limit)]
+    except:
+        raise Http404
 
 
-def is_there_more_data(request):
+def is_there_more_data(request, slug=None):
     offset = request.GET.get("offset")
 
-    if int(offset) > TwitterVideo.objects.exclude(flagged=True).count():
+    if slug == None and int(offset) > TwitterVideo.objects.exclude(flagged=True).count() - int(offset):
         return False
+
+    if slug != None and int(offset) > VideoTag.objects.get(slug=slug).twitter_videos.all().count() - int(offset):
+        return False
+
     return True
 
 
@@ -41,7 +50,7 @@ class LogoutAndBlacklistToken(APIView):
 
 class TwitterVideosList(APIView):
     def get(self, request):
-        videos = infinite_filter(self.request)
+        videos = get_infinite_videos(request)
         serializer = TwitterVideoSerializer(videos, many=True)
 
         return Response({
@@ -100,14 +109,8 @@ class VideoTagsList(APIView):
 
 
 class VideoTagDetail(APIView):
-    def get_object(self, slug):
-        try:
-            return VideoTag.objects.get(slug=slug).twitter_videos.all().order_by('-date_saved_utc')
-        except VideoTag.DoesNotExist:
-            raise Http404
-
     def get(self, request, slug):
-        videos = self.get_object(slug)
+        videos = get_infinite_videos(request, slug)
         serializer = TwitterVideoSerializer(videos, many=True)
 
-        return Response({"videos": serializer.data})
+        return Response({"videos": serializer.data, "has_more": is_there_more_data(request, slug)})

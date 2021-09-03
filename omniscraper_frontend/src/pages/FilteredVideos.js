@@ -1,23 +1,7 @@
 import React, { Component } from "react";
-import withStyles from "@material-ui/core/styles/withStyles";
 import axios from "axios";
 import { withRouter } from "react-router";
 const ListComponent = React.lazy(() => import("../components/ListComponent"));
-
-const styles = (theme) => ({
-  root: {
-    color: "#185adb",
-    flex: 1,
-    marginRight: theme.spacing(3),
-    marginLeft: theme.spacing(3),
-    paddingTop: 72,
-  },
-});
-
-// const API_URL =
-//   process.env.NODE_ENV === "production"
-//     ? process.env.REACT_APP_PROD_API_URL
-//     : process.env.REACT_APP_DEV_API_URL;
 
 export class FilteredVideos extends Component {
   constructor(props) {
@@ -28,24 +12,30 @@ export class FilteredVideos extends Component {
       videos: [],
       loadingTags: false,
       slug: this.props.match.params.slug,
+      limit: 12,
+      offset: 0,
+      hasMore: true,
+      videosLoadingError: false,
     };
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     this.loadVideos();
-  };
+  }
 
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.slug !== this.props.match.params.slug) {
-      this.setState({ slug: this.props.match.params.slug, videos: [] }, () =>
-        this.loadVideos()
+      this.setState(
+        { slug: this.props.match.params.slug, videos: [], offset: 0 },
+        () => this.loadVideos()
       );
     }
   }
 
   loadVideos = () => {
+    const { limit, offset } = this.state;
     const slug = this.props.match.params.slug;
-    const url = `/api/tags/${slug}`;
+    const url = `/api/tags/${slug}?limit=${limit}&offset=${offset}`;
 
     this.setState({ loading: true }, () => {
       axios
@@ -56,6 +46,8 @@ export class FilteredVideos extends Component {
           this.setState({
             loading: false,
             videos: [...this.state.videos, ...newVideos],
+            offset: offset + limit,
+            hasMore: res.data.has_more,
           });
         })
         .catch((err) => {
@@ -68,27 +60,30 @@ export class FilteredVideos extends Component {
   };
 
   render() {
-    const { loading, videos } = this.state;
+    const { loading, videos, hasMore, videosLoadingError } = this.state;
     const { classes, loggedIn, videoTags, loadTags, location } = this.props;
 
     const pathParams = location.pathname.split("/");
     const clickedTag = pathParams[pathParams.length - 1];
 
     return (
-      <div className={classes.root}>
+      <>
         <ListComponent
           loggedIn={loggedIn}
           videos={videos}
           videoTags={videoTags}
           loading={loading}
+          hasMore={hasMore}
+          error={videosLoadingError}
+          loadVideos={this.loadVideos}
           loadTags={loadTags}
           clickedTag={clickedTag}
         />
 
         {/* {!hasMore && <div>No more videos</div>} */}
-      </div>
+      </>
     );
   }
 }
 
-export default withRouter(withStyles(styles)(FilteredVideos));
+export default withRouter(FilteredVideos);
