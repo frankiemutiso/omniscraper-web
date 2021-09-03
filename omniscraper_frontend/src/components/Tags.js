@@ -8,6 +8,7 @@ function Tags({ videoTags, clickedTag }) {
     <div className="tags">
       {videoTags.map((tag) => (
         <Chip
+          onContextMenu={(e) => e.preventDefault()}
           component={Link}
           to={`/tags/${tag.slug}`}
           key={tag.tag_name}

@@ -28,12 +28,20 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import Skeleton from "@material-ui/lab/Skeleton";
 import ViewIcon from "@material-ui/icons/PlayArrow";
 import Snackbar from "@material-ui/core/Snackbar";
+import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import { axiosInstance } from "../utils/axiosInstance";
 
 const Tags = React.lazy(() => import("./Tags"));
 
 const styles = (theme) => ({
+  root: {
+    color: "#185adb",
+    flex: 1,
+    marginRight: theme.spacing(3),
+    marginLeft: theme.spacing(3),
+    paddingTop: 72,
+  },
   buttons: {
     border: "1px solid #185adb",
     color: "#185adb",
@@ -89,8 +97,24 @@ export class ListComponent extends Component {
   };
 
   componentDidMount() {
+    window.addEventListener("scroll", this.handleInfiniteScroll);
     window.scrollTo(0, this.state.scrollPosition);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleInfiniteScroll);
+  }
+
+  handleInfiniteScroll = () => {
+    const { error, loading, hasMore, loadVideos } = this.props;
+    const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
+
+    if (error || loading || !hasMore) return;
+
+    if (scrollTop >= scrollHeight - clientHeight - 200) {
+      loadVideos();
+    }
+  };
 
   handleScrollPosition = () => {
     this.setState({
@@ -281,7 +305,8 @@ export class ListComponent extends Component {
       shareError,
     } = this.state;
 
-    const { classes, loading, videos, loggedIn, videoTags } = this.props;
+    const { classes, loading, videos, loggedIn, videoTags, hasMore } =
+      this.props;
 
     const {
       flagVideo,
@@ -474,7 +499,7 @@ export class ListComponent extends Component {
     );
 
     return (
-      <>
+      <div className={classes.root} onScroll={this.handleInfiniteScroll}>
         {tagsDialog}
         {createTagDialog}
         {reportDialog}
@@ -680,9 +705,27 @@ export class ListComponent extends Component {
                 <AddIcon />
               </Fab>
             </Hidden>
+            {!hasMore && (
+              <div
+                style={{
+                  textAlign: "center",
+                  marginTop: 32,
+                  marginBottom: 80,
+                }}
+              >
+                <Typography
+                  variant="body1"
+                  color="textSecondary"
+                  style={{ color: "#000" }}
+                >
+                  "There is no real ending. It's just the place where you stop
+                  the story."
+                </Typography>
+              </div>
+            )}
           </React.Fragment>
         )}
-      </>
+      </div>
     );
   }
 }
