@@ -29,6 +29,7 @@ import Skeleton from "@material-ui/lab/Skeleton";
 import ViewIcon from "@material-ui/icons/PlayArrow";
 import Snackbar from "@material-ui/core/Snackbar";
 import Typography from "@material-ui/core/Typography";
+import withMobileDialog from "@material-ui/core/withMobileDialog";
 import { Link } from "react-router-dom";
 import { axiosInstance } from "../utils/axiosInstance";
 
@@ -50,7 +51,7 @@ const styles = (theme) => ({
   title: {
     "&h2": {
       fontFamily: "inherit",
-      fontWeight: 600,
+      fontWeight: 700,
     },
   },
   menuItemText: {
@@ -305,8 +306,15 @@ export class ListComponent extends Component {
       shareError,
     } = this.state;
 
-    const { classes, loading, videos, loggedIn, videoTags, hasMore } =
-      this.props;
+    const {
+      classes,
+      loading,
+      videos,
+      loggedIn,
+      videoTags,
+      hasMore,
+      fullScreen,
+    } = this.props;
 
     const {
       flagVideo,
@@ -336,22 +344,17 @@ export class ListComponent extends Component {
           Are you sure you want to report this video?
         </DialogTitle>
         <DialogActions>
-          <Button
-            onClick={handlePromptClose}
-            color="primary"
-            style={{ fontFamily: "inherit" }}
-          >
-            Cancel
-          </Button>
+          <Button onClick={handlePromptClose}>Cancel</Button>
           <Button
             onClick={() => flagVideo(clickedVideo)}
             variant="contained"
             autoFocus
-            style={{
-              fontFamily: "inherit",
-              backgroundColor: "#FF4848",
-              color: "#fff",
-            }}
+            // style={{
+            //   fontFamily: "inherit",
+            //   backgroundColor: "#FF4848",
+            //   color: "#fff",
+            // }}
+            color="secondary"
             endIcon={
               flagging ? <CircularProgress size={16} color="white" /> : ""
             }
@@ -367,6 +370,7 @@ export class ListComponent extends Component {
         open={tagsDialogOpen}
         onClose={handleTagsDialogClose}
         fullWidth={true}
+        fullScreen={fullScreen}
       >
         <DialogTitle className={classes.title}>
           Edit video tags
@@ -408,7 +412,7 @@ export class ListComponent extends Component {
         </DialogContent>
         <DialogActions>
           <Button
-            style={{ fontFamily: "inherit", fontWeight: 600, color: "#fff" }}
+            // style={{ fontFamily: "inherit", fontWeight: 600, color: "#fff" }}
             onClick={handleTagsDialogClose}
           >
             Cancel
@@ -438,12 +442,10 @@ export class ListComponent extends Component {
         fullWidth={true}
         open={createTagDialogOpen}
         onClose={handleCreateDialogClose}
+        fullScreen={fullScreen}
       >
-        <DialogTitle
-          className={classes.title}
-          style={{ flex: 1, display: "flex", justifyContent: "space-between" }}
-        >
-          Create a tag
+        <DialogTitle className={classes.title}>
+          Create tag
           <IconButton
             className={classes.closeButton}
             onClick={handleCreateDialogClose}
@@ -451,6 +453,15 @@ export class ListComponent extends Component {
             <CloseIcon />
           </IconButton>
         </DialogTitle>
+        {/* <DialogTitle
+          className={classes.title}
+          style={{ flex: 1, display: "flex", justifyContent: "space-between" }}
+        >
+          
+          <IconButton className={classes.closeButton}>
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle> */}
 
         <DialogContent>
           <TextField
@@ -469,6 +480,7 @@ export class ListComponent extends Component {
             fullWidth
             label="Description (optional)"
             multiline={true}
+            minRows={3}
             name="description"
             onChange={handleTagChange}
             value={description}
@@ -730,4 +742,4 @@ export class ListComponent extends Component {
   }
 }
 
-export default withStyles(styles)(ListComponent);
+export default withStyles(styles)(withMobileDialog()(ListComponent));
