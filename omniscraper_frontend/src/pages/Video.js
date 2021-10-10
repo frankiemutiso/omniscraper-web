@@ -83,7 +83,7 @@ function LinearProgressWithLabel(props) {
         />
       </Box>
       <Box sx={{ minWidth: 35 }}>
-        <Typography variant="body2" color="priimary">{`${Math.round(
+        <Typography variant="body2" color="primary">{`${Math.round(
           props.value
         )}%`}</Typography>
         {/* <Chip label={`${Math.round(props.value)}%`} color="primary" /> */}
