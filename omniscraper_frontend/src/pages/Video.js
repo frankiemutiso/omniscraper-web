@@ -8,7 +8,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import IconButton from "@material-ui/core/IconButton";
 import ViewIcon from "@material-ui/icons/PlayArrow";
 import ShareIcon from "@material-ui/icons/Share";
-
 import axios from "axios";
 import React from "react";
 import { withRouter } from "react-router";
@@ -20,6 +19,12 @@ import SpeedDial from "@material-ui/lab/SpeedDial";
 import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
 import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
 import Link from "@material-ui/core/Link";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import Typography from "@material-ui/core/Typography";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import Box from "@material-ui/core/Box";
 
 const styles = (theme) => ({
   root: {
@@ -52,7 +57,40 @@ const styles = (theme) => ({
       left: theme.spacing(2),
     },
   },
+  // title: {
+  //   "&h2": {
+  //     fontFamily: "inherit",
+  //     fontWeight: 700,
+  //   },
+  // },
 });
+
+function LinearProgressWithLabel(props) {
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+      }}
+    >
+      <Box sx={{ width: "100%", mr: 2 }}>
+        <LinearProgress
+          variant="determinate"
+          {...props}
+          style={{ height: 8, borderRadius: 5 }}
+        />
+      </Box>
+      <Box sx={{ minWidth: 35 }}>
+        <Typography variant="body2" color="primary">{`${Math.round(
+          props.value
+        )}%`}</Typography>
+        {/* <Chip label={`${Math.round(props.value)}%`} color="primary" /> */}
+      </Box>
+    </Box>
+  );
+}
 
 export class Video extends React.PureComponent {
   constructor(props) {
@@ -64,6 +102,8 @@ export class Video extends React.PureComponent {
       video: {},
       speedDialOpen: true,
       play: true,
+      progressDialogOpen: false,
+      downloadProgress: 0,
     };
 
     this.vidRef = React.createRef();
@@ -103,6 +143,20 @@ export class Video extends React.PureComponent {
       url: videoURL,
       method: "GET",
       responseType: "blob",
+      onDownloadProgress: (progressEvent) => {
+        let downloadProgress = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+
+        this.setState({
+          progressDialogOpen: true,
+          downloadProgress: downloadProgress,
+        });
+
+        if (downloadProgress === 100) {
+          this.handleProgressDialogClose();
+        }
+      },
     }).then((response) => {
       const url = window.URL.createObjectURL(
         new Blob([response.data], {
@@ -157,6 +211,13 @@ export class Video extends React.PureComponent {
     }
   };
 
+  handleProgressDialogClose = () => {
+    this.setState({
+      progressDialogOpen: false,
+      downloadProgress: 0,
+    });
+  };
+
   render() {
     const {
       downloadVideo,
@@ -164,6 +225,7 @@ export class Video extends React.PureComponent {
       handleSpeedDialClose,
       handleToggle,
       handleShare,
+      handleProgressDialogClose,
     } = this;
     const { video, loading, speedDialOpen, play } = this.state;
     const { classes } = this.props;
@@ -202,6 +264,21 @@ export class Video extends React.PureComponent {
         name: "Share",
       },
     ];
+
+    const downloadProgress = (
+      <Dialog
+        // style={{ maxWidth: "100vh" }}
+        onClose={handleProgressDialogClose}
+        minWidth="sm"
+        maxWidth="sm"
+        open={this.state.progressDialogOpen}
+      >
+        <DialogTitle className={classes.title}>Download Progress</DialogTitle>
+        <DialogContent style={{ marginBottom: 8 }}>
+          <LinearProgressWithLabel value={this.state.downloadProgress} />
+        </DialogContent>
+      </Dialog>
+    );
 
     return (
       <div className={classes.root}>
@@ -267,6 +344,7 @@ export class Video extends React.PureComponent {
 
         {/* mobile UI */}
         <Hidden mdUp>
+          {downloadProgress}
           <Card style={{ width: "100vw" }}>
             <CardActionArea>
               <CardMedia
