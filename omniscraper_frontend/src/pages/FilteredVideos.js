@@ -59,10 +59,14 @@ export class FilteredVideos extends Component {
     });
   };
 
+  handleScrollPosition = () => {
+    return;
+  };
+
   render() {
     const { loading, videos, hasMore, videosLoadingError } = this.state;
     const { classes, loggedIn, videoTags, loadTags, location } = this.props;
-
+    const { handleScrollPosition } = this;
     const pathParams = location.pathname.split("/");
     const clickedTag = pathParams[pathParams.length - 1];
 
@@ -78,6 +82,8 @@ export class FilteredVideos extends Component {
           loadVideos={this.loadVideos}
           loadTags={loadTags}
           clickedTag={clickedTag}
+          scrollPosition={0}
+          handleScrollPosition={handleScrollPosition}
         />
 
         {/* {!hasMore && <div>No more videos</div>} */}

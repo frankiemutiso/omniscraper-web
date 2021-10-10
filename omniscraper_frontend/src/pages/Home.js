@@ -38,6 +38,8 @@ export class Home extends Component {
           videos={videos}
           loading={loading}
           loadTags={loadTags}
+          scrollPosition={this.props.scrollPosition}
+          handleScrollPosition={this.props.handleScrollPosition}
         />
       </React.Fragment>
     );

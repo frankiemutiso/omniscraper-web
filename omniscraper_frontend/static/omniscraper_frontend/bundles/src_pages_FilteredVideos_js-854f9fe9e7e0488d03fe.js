@@ -41,7 +41,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 var ListComponent = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8__.lazy(function () {
-  return __webpack_require__.e(/*! import() */ "src_components_ListComponent_js-_30d80").then(__webpack_require__.bind(__webpack_require__, /*! ../components/ListComponent */ 7397));
+  return __webpack_require__.e(/*! import() */ "src_components_ListComponent_js-_50190").then(__webpack_require__.bind(__webpack_require__, /*! ../components/ListComponent */ 91));
 });
 var FilteredVideos = /*#__PURE__*/function (_Component) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__.default)(FilteredVideos, _Component);
@@ -81,6 +81,10 @@ var FilteredVideos = /*#__PURE__*/function (_Component) {
           });
         });
       });
+    });
+
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__.default)((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__.default)(_this), "handleScrollPosition", function () {
+      return;
     });
 
     _this.state = {
@@ -131,6 +135,7 @@ var FilteredVideos = /*#__PURE__*/function (_Component) {
           videoTags = _this$props.videoTags,
           loadTags = _this$props.loadTags,
           location = _this$props.location;
+      var handleScrollPosition = this.handleScrollPosition;
       var pathParams = location.pathname.split("/");
       var clickedTag = pathParams[pathParams.length - 1];
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8__.createElement(react__WEBPACK_IMPORTED_MODULE_8__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8__.createElement(ListComponent, {
@@ -142,7 +147,9 @@ var FilteredVideos = /*#__PURE__*/function (_Component) {
         error: videosLoadingError,
         loadVideos: this.loadVideos,
         loadTags: loadTags,
-        clickedTag: clickedTag
+        clickedTag: clickedTag,
+        scrollPosition: 0,
+        handleScrollPosition: handleScrollPosition
       }));
     }
   }]);
@@ -154,4 +161,4 @@ var FilteredVideos = /*#__PURE__*/function (_Component) {
 /***/ })
 
 }]);
-//# sourceMappingURL=src_pages_FilteredVideos_js-e21595350c8cb117fe40.js.map
+//# sourceMappingURL=src_pages_FilteredVideos_js-854f9fe9e7e0488d03fe.js.map

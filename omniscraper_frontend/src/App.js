@@ -59,6 +59,7 @@ class App extends Component {
     limit: 12,
     videos: [],
     hasMore: true,
+    scrollPosition: 0,
   };
 
   componentDidMount() {
@@ -214,9 +215,21 @@ class App extends Component {
       });
   };
 
+  handleScrollPosition = () => {
+    this.setState({
+      scrollPosition: window.pageYOffset,
+    });
+  };
+
   render() {
-    const { handleChange, handleLogin, handleLogout, loadTags, loadVideos } =
-      this;
+    const {
+      handleChange,
+      handleLogin,
+      handleLogout,
+      loadTags,
+      loadVideos,
+      handleScrollPosition,
+    } = this;
     const {
       username,
       password,
@@ -230,6 +243,7 @@ class App extends Component {
       loading,
       hasMore,
       videos,
+      scrollPosition,
     } = this.state;
 
     return (
@@ -268,6 +282,8 @@ class App extends Component {
                       hasMore={hasMore}
                       videos={videos}
                       loadVideos={loadVideos}
+                      scrollPosition={scrollPosition}
+                      handleScrollPosition={handleScrollPosition}
                     />
                   )}
                 />
@@ -281,6 +297,8 @@ class App extends Component {
                       loggedIn={loggedIn}
                       tagsLoading={tagsLoading}
                       loadTags={loadTags}
+                      scrollPosition={scrollPosition}
+                      handleScrollPosition={handleScrollPosition}
                     />
                   )}
                 />

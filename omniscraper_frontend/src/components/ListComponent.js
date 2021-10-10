@@ -97,9 +97,14 @@ export class ListComponent extends Component {
     shareError: null,
   };
 
+  componentWillMount = () => {
+    this.setState({ scrollPosition: this.props.scrollPosition });
+  }
+
   componentDidMount() {
     window.addEventListener("scroll", this.handleInfiniteScroll);
     window.scrollTo(0, this.state.scrollPosition);
+   
   }
 
   componentWillUnmount() {
@@ -117,11 +122,7 @@ export class ListComponent extends Component {
     }
   };
 
-  handleScrollPosition = () => {
-    this.setState({
-      scrollPosition: window.pageYOffset,
-    });
-  };
+
 
   flagVideo = (video) => {
     const url = `${video.slug}`;
@@ -287,6 +288,8 @@ export class ListComponent extends Component {
     });
   };
 
+
+
   render() {
     const {
       open,
@@ -314,6 +317,7 @@ export class ListComponent extends Component {
       videoTags,
       hasMore,
       fullScreen,
+      handleScrollPosition,
     } = this.props;
 
     const {
@@ -330,7 +334,7 @@ export class ListComponent extends Component {
       handleCreateTag,
       handleSelectedTagsChange,
       handleEditVideoTags,
-      handleScrollPosition,
+     
       handleShare,
       handleSnackBarClose,
     } = this;
