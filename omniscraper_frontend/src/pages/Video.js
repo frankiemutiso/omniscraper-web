@@ -20,6 +20,12 @@ import SpeedDial from "@material-ui/lab/SpeedDial";
 import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
 import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
 import Link from "@material-ui/core/Link";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import Typography from "@material-ui/core/Typography";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import Box from "@material-ui/core/Box";
 
 const styles = (theme) => ({
   root: {
@@ -50,6 +56,12 @@ const styles = (theme) => ({
     "&.MuiSpeedDial-directionDown, &.MuiSpeedDial-directionRight": {
       top: theme.spacing(2),
       left: theme.spacing(2),
+    },
+  },
+  title: {
+    "&h2": {
+      fontFamily: "inherit",
+      fontWeight: 700,
     },
   },
 });
