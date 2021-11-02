@@ -99,12 +99,11 @@ export class ListComponent extends Component {
 
   componentWillMount = () => {
     this.setState({ scrollPosition: this.props.scrollPosition });
-  }
+  };
 
   componentDidMount() {
     window.addEventListener("scroll", this.handleInfiniteScroll);
     window.scrollTo(0, this.state.scrollPosition);
-   
   }
 
   componentWillUnmount() {
@@ -121,8 +120,6 @@ export class ListComponent extends Component {
       loadVideos();
     }
   };
-
-
 
   flagVideo = (video) => {
     const url = `${video.slug}`;
@@ -154,7 +151,7 @@ export class ListComponent extends Component {
   };
 
   handleCreateTag = () => {
-    const url = "/api/tags/";
+    const url = "tags/";
 
     const { tagName, description } = this.state;
 
@@ -288,8 +285,6 @@ export class ListComponent extends Component {
     });
   };
 
-
-
   render() {
     const {
       open,
@@ -334,7 +329,7 @@ export class ListComponent extends Component {
       handleCreateTag,
       handleSelectedTagsChange,
       handleEditVideoTags,
-     
+
       handleShare,
       handleSnackBarClose,
     } = this;
