@@ -151,7 +151,7 @@ export class ListComponent extends Component {
   };
 
   handleCreateTag = () => {
-    const url = "tags";
+    const url = "tags/";
 
     const { tagName, description } = this.state;
 
