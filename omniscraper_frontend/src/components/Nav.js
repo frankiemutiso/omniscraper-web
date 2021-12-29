@@ -20,7 +20,6 @@ const useStyles = makeStyles({
 const Nav = ({ loggedIn, handleLogout }) => {
   const classes = useStyles();
   const theme = useTheme();
-  // const matches = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <div style={{ flexGrow: 1, margin: 0 }}>

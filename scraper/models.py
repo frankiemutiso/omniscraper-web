@@ -10,6 +10,7 @@ class TwitterVideo(models.Model):
     parent_tweet_id = models.BigIntegerField()
     slug = models.TextField(unique=True, blank=True, null=True)
     flagged = models.BooleanField(blank=True, null=True)
+    video_thumbnail_link_https = models.TextField(blank=True, null=True)
 
     class Meta:
         db_table = 'twitter_videos'

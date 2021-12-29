@@ -85,16 +85,22 @@ export class ListComponent extends Component {
     mouseX: null,
     mouseY: null,
     tagsDialogOpen: false,
-    createTagDialogOpen: false,
+    tagDialogOpen: false,
     tagName: "",
     description: "",
     selectedTagsIds: [],
     editingVideoTags: false,
+    editingTag: false,
     checkedTags: [],
     scrollPosition: 0,
     snackBarOpen: false,
     shareSupportedError: false,
     shareError: null,
+    tagMenuMouseX: null,
+    tagMenuMouseY: null,
+    tagSlug: "",
+    tag: {},
+    editingDialogOpen: false,
   };
 
   componentWillMount = () => {
@@ -209,11 +215,34 @@ export class ListComponent extends Component {
   };
 
   handleCreateDialogOpen = () => {
-    this.setState({ createTagDialogOpen: true });
+    this.setState({ tagDialogOpen: true });
   };
 
   handleCreateDialogClose = () => {
-    this.setState({ createTagDialogOpen: false, tagName: "", description: "" });
+    this.setState({ tagDialogOpen: false, tagName: "", description: "" });
+  };
+
+  handleEditTagDialogOpen = () => {
+    const tag = this.props.videoTags.find((x) => x.slug === this.state.tagSlug);
+    this.setState({
+      tagDialogOpen: true,
+      editingDialogOpen: true,
+      tagName: tag.tag_name,
+      description: tag.description,
+      tag: tag,
+    });
+  };
+
+  handleEditTagDialogClose = () => {
+    this.setState({
+      tagDialogOpen: false,
+      tagName: "",
+      description: "",
+      editingDialogOpen: false,
+      tag: {},
+    });
+
+    this.handleTagMenuClose();
   };
 
   handleTagChange = (e) => {
@@ -224,6 +253,48 @@ export class ListComponent extends Component {
     this.setState({
       selectedTagsIds: values.map((value) => value.id),
     });
+  };
+
+  handleEditTag = () => {
+    const { tag, tagName, description } = this.state;
+    const splitSlug = tagName.toLowerCase().split(" ");
+    const joinedSlug = splitSlug.join("-");
+
+    console.log(joinedSlug);
+    const url = `/tags/${tag.slug}`;
+
+    this.setState({ editingTag: true }, () => {
+      axiosInstance
+        .patch(url, {
+          id: tag.id,
+          tag_name: tagName,
+          description: description,
+          slug: joinedSlug,
+        })
+        .then((res) => {
+          console.log(res.status);
+          this.setState({ editingTag: false });
+          this.handleEditTagDialogClose();
+        })
+        .catch((err) => {
+          console.log(err.message);
+          this.setState({ editingTag: false });
+          this.handleEditTagDialogClose();
+        });
+    });
+  };
+
+  handleRightClick = (e, tag) => {
+    e.preventDefault();
+    this.setState({
+      tagMenuMouseX: e.clientX - 2,
+      tagMenuMouseY: e.clientY - 4,
+      tagSlug: tag.slug,
+    });
+  };
+
+  handleTagMenuClose = () => {
+    this.setState({ tagSlug: "", tagMenuMouseX: null, tagMenuMouseY: null });
   };
 
   handleEditVideoTags = () => {
@@ -293,7 +364,7 @@ export class ListComponent extends Component {
       mouseX,
       mouseY,
       tagsDialogOpen,
-      createTagDialogOpen,
+      tagDialogOpen,
       tagName,
       description,
       creatingTag,
@@ -302,6 +373,11 @@ export class ListComponent extends Component {
       snackBarOpen,
       shareSupportedError,
       shareError,
+      tagMenuMouseX,
+      tagMenuMouseY,
+      tagSlug,
+      editingTag,
+      editingDialogOpen,
     } = this.state;
 
     const {
@@ -329,9 +405,13 @@ export class ListComponent extends Component {
       handleCreateTag,
       handleSelectedTagsChange,
       handleEditVideoTags,
-
+      handleEditTagDialogOpen,
+      handleEditTagDialogClose,
       handleShare,
       handleSnackBarClose,
+      handleEditTag,
+      handleRightClick,
+      handleTagMenuClose,
     } = this;
     const reportDialog = (
       <Dialog
@@ -348,11 +428,6 @@ export class ListComponent extends Component {
             onClick={() => flagVideo(clickedVideo)}
             variant="contained"
             autoFocus
-            // style={{
-            //   fontFamily: "inherit",
-            //   backgroundColor: "#FF4848",
-            //   color: "#fff",
-            // }}
             color="secondary"
             endIcon={
               flagging ? <CircularProgress size={16} color="white" /> : ""
@@ -439,29 +514,27 @@ export class ListComponent extends Component {
     const createTagDialog = (
       <Dialog
         fullWidth={true}
-        open={createTagDialogOpen}
-        onClose={handleCreateDialogClose}
+        open={tagDialogOpen}
+        onClose={
+          editingDialogOpen ? handleEditTagDialogClose : handleCreateDialogClose
+        }
         fullScreen={fullScreen}
       >
         <DialogTitle className={classes.title}>
-          Create tag
+          <Typography variant="body1">
+            {editingDialogOpen ? "Edit tag" : "Create tag"}
+          </Typography>
           <IconButton
             className={classes.closeButton}
-            onClick={handleCreateDialogClose}
+            onClick={
+              editingDialogOpen
+                ? handleEditTagDialogClose
+                : handleCreateDialogClose
+            }
           >
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        {/* <DialogTitle
-          className={classes.title}
-          style={{ flex: 1, display: "flex", justifyContent: "space-between" }}
-        >
-          
-          <IconButton className={classes.closeButton}>
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle> */}
-
         <DialogContent>
           <TextField
             required
@@ -489,7 +562,11 @@ export class ListComponent extends Component {
           <Button
             color="primary"
             style={{ fontFamily: "inherit", fontWeight: 600 }}
-            onClick={handleCreateDialogClose}
+            onClick={
+              editingDialogOpen
+                ? handleEditTagDialogClose
+                : handleCreateDialogClose
+            }
           >
             Cancel
           </Button>
@@ -498,9 +575,13 @@ export class ListComponent extends Component {
             variant="contained"
             autoFocus
             style={{ fontFamily: "inherit", fontWeight: 600 }}
-            onClick={handleCreateTag}
+            onClick={editingDialogOpen ? handleEditTag : handleCreateTag}
             endIcon={
-              creatingTag ? <CircularProgress size={16} color="white" /> : ""
+              creatingTag || editingTag ? (
+                <CircularProgress size={16} color="white" />
+              ) : (
+                ""
+              )
             }
           >
             Save
@@ -532,7 +613,7 @@ export class ListComponent extends Component {
             className={classes.menuItemText}
             onClick={handleTagsDialogOpen}
           >
-            Edit video tags
+            Add/Remove tags
           </MenuItem>
         </Menu>
         <Snackbar
@@ -562,7 +643,20 @@ export class ListComponent extends Component {
           }
         ></Snackbar>
 
-        <Tags videoTags={videoTags} clickedTag={this.props.clickedTag} />
+        <Tags
+          videoTags={videoTags}
+          clickedTag={this.props.clickedTag}
+          handleEditTagDialogOpen={handleEditTagDialogOpen}
+          handleEditTagDialogClose={handleEditTagDialogClose}
+          handleEditTag={handleEditTag}
+          mouseX={tagMenuMouseX}
+          mouseY={tagMenuMouseY}
+          tagSlug={tagSlug}
+          handleRightClick={handleRightClick}
+          handleClose={handleTagMenuClose}
+          loggedIn={loggedIn}
+          loading={loading}
+        />
 
         <Grid
           container
@@ -571,78 +665,87 @@ export class ListComponent extends Component {
             marginTop: 1,
           }}
         >
-          {videos.map((video, index) => (
-            <Grid item lg={3} md={6} sm={6} xs={12} key={index}>
-              <Card
-                style={{
-                  maxWidth: 380,
-                }}
-              >
-                <CardActionArea
-                  component={Link}
-                  to={`/${video.slug}`}
-                  onClick={handleScrollPosition}
+          {videos.map((video, index) => {
+            const url =
+              video.video_thumbnail_link_https !== null
+                ? video.video_thumbnail_link_https
+                : video.url;
+
+            return (
+              <Grid item lg={3} md={6} sm={6} xs={12} key={index}>
+                <Card
+                  style={{
+                    maxWidth: 380,
+                  }}
                 >
-                  <CardMedia
-                    component="video"
-                    height="180"
-                    disablePictureInPicture
-                    controlsList="nodownload"
-                    crossOrigin="anonymous"
-                    src={video.url}
-                    style={{ objectFit: "cover", position: "relative" }}
-                    onContextMenu={(e) => e.preventDefault()}
-                  />
-                  <IconButton
+                  <CardActionArea
                     component={Link}
                     to={`/${video.slug}`}
-                    style={{
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                    }}
                     onClick={handleScrollPosition}
                   >
-                    <ViewIcon
-                      style={{
-                        color: "white",
-                        fontSize: 60,
-                        opacity: 0.8,
-                      }}
+                    <CardMedia
+                      component={
+                        video.video_thumbnail_link_https ? "img" : "video"
+                      }
+                      height="180"
+                      disablePictureInPicture
+                      controlsList="nodownload"
+                      crossOrigin="anonymous"
+                      image={url}
+                      style={{ objectFit: "cover", position: "relative" }}
+                      onContextMenu={(e) => e.preventDefault()}
                     />
-                  </IconButton>
-                </CardActionArea>
-
-                <CardActions>
-                  <div
-                    style={{
-                      marginLeft: "auto",
-                    }}
-                  >
                     <IconButton
-                      size="small"
-                      color="primary"
-                      onClick={() => handleShare(video)}
-                      style={{ marginRight: 8 }}
+                      component={Link}
+                      to={`/${video.slug}`}
+                      style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                      }}
+                      onClick={handleScrollPosition}
                     >
-                      <ShareIcon size="small" />
+                      <ViewIcon
+                        style={{
+                          color: "white",
+                          fontSize: 60,
+                          opacity: 0.8,
+                        }}
+                      />
                     </IconButton>
-                    {loggedIn && (
+                  </CardActionArea>
+
+                  <CardActions>
+                    <div
+                      style={{
+                        marginLeft: "auto",
+                      }}
+                    >
                       <IconButton
                         size="small"
                         color="primary"
-                        onClick={(e) => handleMenuClick(e, video)}
+                        onClick={() => handleShare(video)}
                         style={{ marginRight: 8 }}
                       >
-                        <MoreIcon />
+                        <ShareIcon size="small" />
                       </IconButton>
-                    )}
-                  </div>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
+                      {loggedIn && (
+                        <IconButton
+                          size="small"
+                          color="primary"
+                          onClick={(e) => handleMenuClick(e, video)}
+                          style={{ marginRight: 8 }}
+                        >
+                          <MoreIcon />
+                        </IconButton>
+                      )}
+                    </div>
+                  </CardActions>
+                </Card>
+              </Grid>
+            );
+          })}
         </Grid>
 
         {loading && (

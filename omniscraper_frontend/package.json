@@ -2,7 +2,7 @@
   "name": "omniscraper_frontend",
   "version": "1.0.0",
   "description": "",
-  "proxy": "https://omniscraper.herokuapp.com/",
+  "proxy": "http://127.0.0.1:8000/",
   "main": "index.js",
   "scripts": {
     "dev": "webpack --mode development --watch",

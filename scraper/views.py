@@ -106,11 +106,30 @@ class VideoTagsList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
 
 
 class VideoTagDetail(APIView):
+    def get_object(self, slug):
+        try:
+            return VideoTag.objects.get(slug=slug)
+        except VideoTag.DoesNotExist:
+            raise Http404
+        
     def get(self, request, slug):
         videos = get_infinite_videos(request, slug)
         serializer = TwitterVideoSerializer(videos, many=True)
 
         return Response({"videos": serializer.data, "has_more": is_there_more_data(request, slug)})
+    
+    def patch(self, request, slug):
+        tag = self.get_object(slug)
+        serializer = VideoTagSerializer(tag, data=request.data, partial=True)
+        
+        if serializer.is_valid() and request.user.is_authenticated:
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+        
