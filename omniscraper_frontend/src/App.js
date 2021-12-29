@@ -199,7 +199,7 @@ class App extends Component {
 
   handleLogout = () => {
     axiosInstance
-      .post("/blacklist/", {
+      .post("blacklist/", {
         refresh_token: localStorage.getItem("refresh_token"),
       })
       .then((response) => {
@@ -211,7 +211,10 @@ class App extends Component {
         }
       })
       .catch((e) => {
-        this.setState({ loggedIn: true });
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        axiosInstance.defaults.headers["Authorization"] = null;
+        this.setState({ loggedIn: false });
       });
   };
 
