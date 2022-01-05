@@ -1,30 +1,30 @@
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardMedia from "@material-ui/core/CardMedia";
-import Hidden from "@material-ui/core/Hidden";
-import withStyles from "@material-ui/core/styles/withStyles";
-import IconButton from "@material-ui/core/IconButton";
-import ViewIcon from "@material-ui/icons/PlayArrow";
-import ShareIcon from "@material-ui/icons/Share";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardActions from "@mui/material/CardActions";
+import CardMedia from "@mui/material/CardMedia";
+import Hidden from "@mui/material/Hidden";
+import withStyles from "@mui/styles/withStyles";
+import IconButton from "@mui/material/IconButton";
+import ViewIcon from "@mui/icons-material/PlayArrow";
+import ShareIcon from "@mui/icons-material/Share";
 import axios from "axios";
 import React from "react";
 import { withRouter } from "react-router";
-import Download from "@material-ui/icons/ArrowDownward";
-import TwitterIcon from "@material-ui/icons/Twitter";
+import Download from "@mui/icons-material/ArrowDownward";
+import TwitterIcon from "@mui/icons-material/Twitter";
 import JSONbig from "json-bigint";
-import Skeleton from "@material-ui/lab/Skeleton";
-import SpeedDial from "@material-ui/lab/SpeedDial";
-import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
-import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
-import Link from "@material-ui/core/Link";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import Typography from "@material-ui/core/Typography";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import LinearProgress from "@material-ui/core/LinearProgress";
-import Box from "@material-ui/core/Box";
+import Skeleton from "@mui/material/Skeleton";
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialIcon from "@mui/material/SpeedDialIcon";
+import SpeedDialAction from "@mui/material/SpeedDialAction";
+import Link from "@mui/material/Link";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import Typography from "@mui/material/Typography";
+import DialogTitle from "@mui/material/DialogTitle";
+import LinearProgress from "@mui/material/LinearProgress";
+import Box from "@mui/material/Box";
 
 const styles = (theme) => ({
   root: {
@@ -117,21 +117,27 @@ export class Video extends React.PureComponent {
     this.setState({ loading: true }, () => {
       const slug = this.props.match.params.slug;
       const url = `/api/${slug}`;
+      const { history } = this.props;
 
       axios
         .get(url, { transformResponse: (data) => JSONbig.parse(data) })
         .then((res) => {
-          this.setState({
-            video: res.data,
-            loading: false,
-          });
+          if (res.status === 200) {
+            this.setState({
+              video: res.data,
+              loading: false,
+            });
+          }
+
+          history.push({ pathname: "/" });
         })
-        .catch((err) =>
+        .catch((err) => {
+          history.push({ pathname: "/" });
           this.setState({
             error: err.message,
             loading: false,
-          })
-        );
+          });
+        });
     });
   };
 
@@ -247,6 +253,7 @@ export class Video extends React.PureComponent {
             href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
             target="_blank"
             rel="noopener noreferrer"
+            size="large"
           >
             <TwitterIcon size="small" color="primary" />
           </IconButton>
@@ -283,13 +290,13 @@ export class Video extends React.PureComponent {
     return (
       <div className={classes.root}>
         {/* Desktop UI */}
-        <Hidden mdDown>
+        <Hidden smDown>
           <Card style={{ width: 640 }}>
             <CardActionArea>
               {loading ? (
                 <Skeleton
                   animation="wave"
-                  variant="rect"
+                  variant="rectangular"
                   style={{ height: 360 }}
                 />
               ) : (
@@ -374,6 +381,7 @@ export class Video extends React.PureComponent {
                   transform: "translate(-50%, -50%)",
                   transition: "100ms ease-in-out",
                 }}
+                size="large"
               >
                 <ViewIcon
                   style={{

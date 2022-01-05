@@ -19,8 +19,8 @@ __webpack_require__.d(__webpack_exports__, {
 var react = __webpack_require__(7294);
 // EXTERNAL MODULE: ./node_modules/react-router-dom/esm/react-router-dom.js
 var react_router_dom = __webpack_require__(3727);
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/Chip/Chip.js + 1 modules
-var Chip = __webpack_require__(1267);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Chip/Chip.js + 2 modules
+var Chip = __webpack_require__(461);
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(3379);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
@@ -40,10 +40,10 @@ var update = injectStylesIntoStyleTag_default()(Tags.default, options);
 
 
 /* harmony default export */ const components_Tags = (Tags.default.locals || {});
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/Menu/Menu.js + 3 modules
-var Menu = __webpack_require__(6780);
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/MenuItem/MenuItem.js + 1 modules
-var MenuItem = __webpack_require__(6775);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Menu/Menu.js + 7 modules
+var Menu = __webpack_require__(4125);
+// EXTERNAL MODULE: ./node_modules/@mui/material/MenuItem/MenuItem.js + 4 modules
+var MenuItem = __webpack_require__(4347);
 ;// CONCATENATED MODULE: ./src/components/Tags.js
 
 
@@ -129,4 +129,4 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".tags {\r\n  overflow-x: auto;\r\n  di
 /***/ })
 
 }]);
-//# sourceMappingURL=src_components_Tags_js-631c463b7763f151313c.js.map
+//# sourceMappingURL=src_components_Tags_js-440e0ee9c954d9975006.js.map
