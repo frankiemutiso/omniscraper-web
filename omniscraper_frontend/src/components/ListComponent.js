@@ -31,6 +31,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import { axiosInstance } from "../utils/axiosInstance";
+import Instructions from "./Instructions";
 
 // FIXME checkout https://mui.com/components/use-media-query/#using-material-uis-breakpoint-helpers
 const withMobileDialog = () => (WrappedComponent) => (props) =>
@@ -45,6 +46,7 @@ const styles = (theme) => ({
     marginRight: theme.spacing(3),
     marginLeft: theme.spacing(3),
     paddingTop: 72,
+    maxHeight: "100vh",
   },
   buttons: {
     border: "1px solid #185adb",
@@ -498,12 +500,7 @@ export class ListComponent extends Component {
           />
         </DialogContent>
         <DialogActions>
-          <Button
-            // style={{ fontFamily: "inherit", fontWeight: 600, color: "#fff" }}
-            onClick={handleTagsDialogClose}
-          >
-            Cancel
-          </Button>
+          <Button onClick={handleTagsDialogClose}>Cancel</Button>
           <Button
             color="primary"
             variant="contained"
@@ -671,145 +668,146 @@ export class ListComponent extends Component {
           loggedIn={loggedIn}
           loading={loading}
         />
-
-        <Grid
-          container
-          spacing={4}
-          style={{
-            marginTop: 1,
-          }}
-        >
-          {videos.map((video, index) => {
-            const url =
-              video.video_thumbnail_link_https !== null
-                ? video.video_thumbnail_link_https
-                : video.url;
-
-            return (
-              <Grid item lg={3} md={6} sm={6} xs={12} key={index}>
-                <Card
-                  style={{
-                    maxWidth: 380,
-                  }}
-                >
-                  <CardActionArea
-                    component={Link}
-                    to={`/${video.slug}`}
-                    onClick={handleScrollPosition}
-                  >
-                    <CardMedia
-                      component={
-                        video.video_thumbnail_link_https ? "img" : "video"
-                      }
-                      height="180"
-                      disablePictureInPicture
-                      controlsList="nodownload"
-                      crossOrigin="anonymous"
-                      image={url}
-                      style={{ objectFit: "cover", position: "relative" }}
-                      onContextMenu={(e) => e.preventDefault()}
-                    />
-                    <IconButton
-                      component={Link}
-                      to={`/${video.slug}`}
-                      style={{
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                      }}
-                      onClick={handleScrollPosition}
-                      size="large"
-                    >
-                      <ViewIcon
-                        style={{
-                          color: "white",
-                          fontSize: 60,
-                          opacity: 0.8,
-                        }}
-                      />
-                    </IconButton>
-                  </CardActionArea>
-
-                  <CardActions>
-                    <div
-                      style={{
-                        marginLeft: "auto",
-                      }}
-                    >
-                      <IconButton
-                        size="small"
-                        color="primary"
-                        onClick={() => handleShare(video)}
-                        style={{ marginRight: 8 }}
-                      >
-                        <ShareIcon size="small" />
-                      </IconButton>
-                      {loggedIn && (
-                        <IconButton
-                          size="small"
-                          color="primary"
-                          onClick={(e) => handleMenuClick(e, video)}
-                          style={{ marginRight: 8 }}
-                        >
-                          <MoreIcon />
-                        </IconButton>
-                      )}
-                    </div>
-                  </CardActions>
-                </Card>
-              </Grid>
-            );
-          })}
-        </Grid>
-
-        {loading && (
-          <Grid container spacing={4} style={{ marginTop: 10 }}>
-            {Array.from(new Array(12)).map((item, index) => (
-              <Grid item lg={3} md={6} sm={6} xs={12} key={index}>
-                <Card style={{ maxWidth: 380 }}>
-                  <CardActionArea component={Link} to="">
-                    <Skeleton
-                      animation="wave"
-                      variant="rectangular"
-                      style={{ height: 180 }}
-                    />
-                  </CardActionArea>
-
-                  <CardActions
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <div
-                      style={{
-                        marginLeft: "auto",
-                      }}
-                    >
-                      <IconButton
-                        size="small"
-                        color="primary"
-                        style={{ marginRight: 8 }}
-                      >
-                        <ShareIcon size="small" />
-                      </IconButton>
-                      {loggedIn && (
-                        <IconButton
-                          size="small"
-                          color="primary"
-                          style={{ marginRight: 8 }}
-                        >
-                          <MoreIcon />
-                        </IconButton>
-                      )}
-                    </div>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
+        <Grid container spacing={2} style={{ marginTop: 2 }}>
+          <Grid item md={3}>
+            <Instructions />
           </Grid>
-        )}
+          <Grid item md={9}>
+            <Grid container spacing={2}>
+              {videos.map((video, index) => {
+                const url =
+                  video.video_thumbnail_link_https !== null
+                    ? video.video_thumbnail_link_https
+                    : video.url;
+
+                return (
+                  <Grid item md={4} sm={6} xs={12} key={index}>
+                    <Card
+                      style={{
+                        maxWidth: 380,
+                      }}
+                    >
+                      <CardActionArea
+                        raised={true}
+                        component={Link}
+                        to={`/${video.slug}`}
+                        onClick={handleScrollPosition}
+                      >
+                        <CardMedia
+                          component={
+                            video.video_thumbnail_link_https ? "img" : "video"
+                          }
+                          height="180"
+                          disablePictureInPicture
+                          controlsList="nodownload"
+                          crossOrigin="anonymous"
+                          image={url}
+                          style={{ objectFit: "cover", position: "relative" }}
+                          onContextMenu={(e) => e.preventDefault()}
+                        />
+                        <IconButton
+                          component={Link}
+                          to={`/${video.slug}`}
+                          style={{
+                            position: "absolute",
+                            top: "50%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                          }}
+                          onClick={handleScrollPosition}
+                          size="large"
+                        >
+                          <ViewIcon
+                            style={{
+                              color: "white",
+                              fontSize: 60,
+                              opacity: 0.8,
+                            }}
+                          />
+                        </IconButton>
+                      </CardActionArea>
+
+                      <CardActions>
+                        <div
+                          style={{
+                            marginLeft: "auto",
+                          }}
+                        >
+                          <IconButton
+                            size="small"
+                            color="primary"
+                            onClick={() => handleShare(video)}
+                            style={{ marginRight: 8 }}
+                          >
+                            <ShareIcon size="small" />
+                          </IconButton>
+                          {loggedIn && (
+                            <IconButton
+                              size="small"
+                              color="primary"
+                              onClick={(e) => handleMenuClick(e, video)}
+                              style={{ marginRight: 8 }}
+                            >
+                              <MoreIcon />
+                            </IconButton>
+                          )}
+                        </div>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+                );
+              })}
+            </Grid>
+
+            {loading && (
+              <Grid container spacing={2}>
+                {Array.from(new Array(12)).map((item, index) => (
+                  <Grid item md={4} sm={6} xs={12} key={index}>
+                    <Card style={{ maxWidth: 380 }}>
+                      <CardActionArea>
+                        <Skeleton
+                          animation="wave"
+                          variant="rectangular"
+                          style={{ height: 180 }}
+                        />
+                      </CardActionArea>
+
+                      <CardActions
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <div
+                          style={{
+                            marginLeft: "auto",
+                          }}
+                        >
+                          <IconButton
+                            size="small"
+                            color="primary"
+                            style={{ marginRight: 8 }}
+                          >
+                            <ShareIcon size="small" />
+                          </IconButton>
+                          {loggedIn && (
+                            <IconButton
+                              size="small"
+                              color="primary"
+                              style={{ marginRight: 8 }}
+                            >
+                              <MoreIcon />
+                            </IconButton>
+                          )}
+                        </div>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
+            )}
+          </Grid>
+        </Grid>
 
         {loggedIn && (
           <React.Fragment>

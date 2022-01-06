@@ -30,11 +30,11 @@ const Nav = ({ loggedIn, handleLogout }) => {
             component={Link}
             to="/"
             style={{
-              textTransform: "uppercase",
+              // textTransform: "uppercase",
               color: "#fff",
               textDecoration: "none",
               fontWeight: 600,
-              fontSize: 18,
+              // fontSize: 18,
               marginRight: "auto",
             }}
             onClick={() => window.scrollTo({ top: 0, behaviour: "smooth" })}
