@@ -22,7 +22,7 @@ const Nav = ({ loggedIn, handleLogout }) => {
   const theme = useTheme();
 
   return (
-    <div style={{ flexGrow: 1, margin: 0 }}>
+    <div style={{ flexGrow: 1}}>
       <AppBar position="fixed" style={{ backgroundColor: "#000" }}>
         <Toolbar>
           <Typography
@@ -30,7 +30,7 @@ const Nav = ({ loggedIn, handleLogout }) => {
             component={Link}
             to="/"
             style={{
-              // textTransform: "uppercase",
+              textTransform: "uppercase",
               color: "#fff",
               textDecoration: "none",
               fontWeight: 600,

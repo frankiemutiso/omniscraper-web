@@ -19,6 +19,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Paper from "@mui/material/Paper";
 import CheckIcon from "@mui/icons-material/Check";
 import Grow from "@mui/material/Grow";
+import { Toolbar } from "@mui/material";
 
 const styles = (theme) => ({
   paper: {
@@ -115,131 +116,136 @@ export class Login extends PureComponent {
     } = this;
 
     return (
-      <Container style={{ marginTop: 72 }}>
-        <Paper className={classes.paper}>
-          <Snackbar
-            ContentProps={{
-              classes: {
-                root: classes.errorSnackbarRoot,
-              },
-            }}
-            open={snackbarOpen}
-            autoHideDuration={8000}
-            onClose={handleSnackbarClose}
-            message={error}
-            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-          />
-
-          <Snackbar
-            ContentProps={{
-              classes: {
-                root: classes.successSnackbarRoot,
-              },
-            }}
-            open={successSnackbarOpen}
-            autoHideDuration={2500}
-            onClose={handleSuccessSnackbarClose}
-            message="Successfully logged in"
-            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-          />
-
-          {successfulLogin ? (
-            <Grow in={true} {...{ timeout: 700 }}>
-              <Avatar className={classes.successAvatar}>
-                <CheckIcon />
-              </Avatar>
-            </Grow>
-          ) : (
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-          )}
-
-          <h4
-            style={{
-              color: "#1a1c20",
-              textTransform: "uppercase",
-              fontFamily: "inherit",
-              letterSpacing: "0.1em",
-            }}
-          >
-            Log In To Omniscraper
-          </h4>
-
-          <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            <TextField
-              error={snackbarOpen}
-              value={username}
-              onChange={handleChange}
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
-              autoFocus
-              inputProps={{ style: { fontFamily: "inherit" } }}
-              InputLabelProps={{ style: { fontFamily: "inherit" } }}
-              style={{ marginBottom: 20 }}
+      <>
+        <Toolbar />
+        <Container
+          style={{ height: "80vh", display: "grid", placeItems: "center" }}
+        >
+          <Paper className={classes.paper} square elevation={3}>
+            <Snackbar
+              ContentProps={{
+                classes: {
+                  root: classes.errorSnackbarRoot,
+                },
+              }}
+              open={snackbarOpen}
+              autoHideDuration={8000}
+              onClose={handleSnackbarClose}
+              message={error}
+              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             />
 
-            <FormControl
-              variant="outlined"
-              style={{ width: "100%" }}
-              error={snackbarOpen}
+            <Snackbar
+              ContentProps={{
+                classes: {
+                  root: classes.successSnackbarRoot,
+                },
+              }}
+              open={successSnackbarOpen}
+              autoHideDuration={2500}
+              onClose={handleSuccessSnackbarClose}
+              message="Successfully logged in"
+              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            />
+
+            {successfulLogin ? (
+              <Grow in={true} {...{ timeout: 700 }}>
+                <Avatar className={classes.successAvatar}>
+                  <CheckIcon />
+                </Avatar>
+              </Grow>
+            ) : (
+              <Avatar className={classes.avatar}>
+                <LockOutlinedIcon />
+              </Avatar>
+            )}
+
+            <h4
+              style={{
+                color: "#1a1c20",
+                textTransform: "uppercase",
+                fontFamily: "inherit",
+                letterSpacing: "0.1em",
+              }}
             >
-              <InputLabel
-                htmlFor="filled-adornment-password"
-                style={{ fontFamily: "inherit" }}
-              >
-                Password
-              </InputLabel>
-              <OutlinedInput
-                // error={error}
-                id="filled-adornment-password"
-                type={showPassword ? "text" : "password"}
-                value={password}
+              Log In To Omniscraper
+            </h4>
+
+            <form className={classes.form} noValidate onSubmit={handleSubmit}>
+              <TextField
+                error={snackbarOpen}
+                value={username}
                 onChange={handleChange}
-                label="Password"
-                name="password"
-                required
-                autoComplete="current-password"
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                      size="large"
-                    >
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                }
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                autoFocus
+                inputProps={{ style: { fontFamily: "inherit" } }}
+                InputLabelProps={{ style: { fontFamily: "inherit" } }}
+                style={{ marginBottom: 20 }}
               />
-            </FormControl>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              style={{ fontFamily: "inherit", fontWeight: 600 }}
-              endIcon={
-                loginLoading ? (
-                  <CircularProgress size={16} style={{ color: "white" }} />
-                ) : (
-                  ""
-                )
-              }
-            >
-              Log In
-            </Button>
-          </form>
-        </Paper>
-      </Container>
+
+              <FormControl
+                variant="outlined"
+                style={{ width: "100%" }}
+                error={snackbarOpen}
+              >
+                <InputLabel
+                  htmlFor="filled-adornment-password"
+                  style={{ fontFamily: "inherit" }}
+                >
+                  Password
+                </InputLabel>
+                <OutlinedInput
+                  // error={error}
+                  id="filled-adornment-password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={handleChange}
+                  label="Password"
+                  name="password"
+                  required
+                  autoComplete="current-password"
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                        size="large"
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                style={{ fontFamily: "inherit", fontWeight: 600 }}
+                endIcon={
+                  loginLoading ? (
+                    <CircularProgress size={16} style={{ color: "white" }} />
+                  ) : (
+                    ""
+                  )
+                }
+              >
+                Log In
+              </Button>
+            </form>
+          </Paper>
+        </Container>
+      </>
     );
   }
 }

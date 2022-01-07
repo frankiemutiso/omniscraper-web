@@ -33,7 +33,7 @@ function Tags({
   );
 
   return (
-    <div className="tags">
+    <div className="tags" style={{ marginTop: 8, marginBottom: 8 }}>
       {loggedIn && tagEditor}
       {videoTags.map((tag) => (
         <Chip

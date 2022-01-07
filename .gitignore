@@ -120,5 +120,3 @@ GitHub.sublime-settings
 !.vscode/extensions.json 
 .history
 
-# don't track changes in individual bundles
-**/bundles

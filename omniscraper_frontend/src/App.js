@@ -219,7 +219,6 @@ class App extends Component {
     setTimeout(
       () =>
         this.setState({
-          
           username: "",
           password: "",
           error: null,
