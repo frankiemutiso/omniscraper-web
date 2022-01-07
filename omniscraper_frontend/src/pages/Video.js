@@ -296,7 +296,7 @@ export class Video extends React.PureComponent {
         <Toolbar ref={this.ref} />
         <div className={classes.root}>
           {/* Desktop UI */}
-          <Box sx={{ display: { sm: "block", xs: "none" } }}>
+          <Hidden smDown>
             <Card
               style={{
                 width: 640,
@@ -319,7 +319,7 @@ export class Video extends React.PureComponent {
                     controls
                     crossOrigin="anonymous"
                     disablePictureInPicture
-                    autoplay
+                    // autoplay
                     controlsList="nodownload"
                     onContextMenu={(e) => e.preventDefault()}
                   />
@@ -358,10 +358,10 @@ export class Video extends React.PureComponent {
                 )}
               </CardActions>
             </Card>
-          </Box>
+          </Hidden>
 
           {/* mobile UI */}
-          <Box sx={{ display: { sm: "none", xs: "block" } }}>
+          <Hidden mdUp>
             {downloadProgress}
             <Card style={{ width: "100vw" }}>
               <CardActionArea>
@@ -426,7 +426,7 @@ export class Video extends React.PureComponent {
                 />
               ))}
             </SpeedDial>
-          </Box>
+          </Hidden>
         </div>
       </>
     );
