@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import AppBar from "@material-ui/core/AppBar";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import useTheme from "@material-ui/core/styles/useTheme";
-import Button from "@material-ui/core/Button";
-import Toolbar from "@material-ui/core/Toolbar";
+import AppBar from "@mui/material/AppBar";
+import { useTheme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import Button from "@mui/material/Button";
+import Toolbar from "@mui/material/Toolbar";
 import { Link } from "react-router-dom";
-import Typography from "@material-ui/core/Typography";
-// import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Typography from "@mui/material/Typography";
 
 const useStyles = makeStyles({
   navLink: {
@@ -14,6 +13,7 @@ const useStyles = makeStyles({
     cursor: "pointer",
     color: "#fff",
     border: "1px solid #fff",
+    backgroundColor: "#000",
   },
 });
 
@@ -22,7 +22,7 @@ const Nav = ({ loggedIn, handleLogout }) => {
   const theme = useTheme();
 
   return (
-    <div style={{ flexGrow: 1, margin: 0 }}>
+    <div style={{ flexGrow: 1}}>
       <AppBar position="fixed" style={{ backgroundColor: "#000" }}>
         <Toolbar>
           <Typography
@@ -34,7 +34,7 @@ const Nav = ({ loggedIn, handleLogout }) => {
               color: "#fff",
               textDecoration: "none",
               fontWeight: 600,
-              fontSize: 18,
+              // fontSize: 18,
               marginRight: "auto",
             }}
             onClick={() => window.scrollTo({ top: 0, behaviour: "smooth" })}
@@ -48,9 +48,10 @@ const Nav = ({ loggedIn, handleLogout }) => {
                 <Button
                   size="small"
                   variant="outlined"
+                  color="white"
                   component={Link}
                   to="/"
-                  className={classes.navLink}
+                  // className={classes.navLink}
                   onClick={handleLogout}
                 >
                   Logout

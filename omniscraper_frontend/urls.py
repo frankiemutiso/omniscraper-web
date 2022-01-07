@@ -8,6 +8,4 @@ urlpatterns = [
     re_path(r'^(?:.*)/?$', views.index),
     path('favicon.ico', RedirectView.as_view(
         url=staticfiles_storage.url("favicon.ico"))),
-    # path('service-worker.js', (TemplateView.as_view(template_name="omniscraper_frontend/service-worker.js",
-    #                                                 content_type='application/javascript', )), name='service-worker.js'),
 ]

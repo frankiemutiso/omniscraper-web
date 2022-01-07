@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Chip from "@material-ui/core/Chip";
+import Chip from "@mui/material/Chip";
 import "./Tags.css";
-import { Menu, MenuItem } from "@material-ui/core";
+import { Menu, MenuItem } from "@mui/material";
 
 function Tags({
   videoTags,
@@ -33,7 +33,7 @@ function Tags({
   );
 
   return (
-    <div className="tags">
+    <div className="tags" style={{ marginTop: 8, marginBottom: 8 }}>
       {loggedIn && tagEditor}
       {videoTags.map((tag) => (
         <Chip

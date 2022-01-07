@@ -1,6 +1,7 @@
 .tags {
   overflow-x: auto;
   display: flex;
+  margin-top: 20;
 }
 
 .tags::-webkit-scrollbar {

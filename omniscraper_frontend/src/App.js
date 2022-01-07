@@ -1,7 +1,9 @@
 import React, { Suspense, Component } from "react";
+import createTheme from "@mui/material/styles/createTheme";
 import { Router, Switch, Route, Redirect } from "react-router-dom";
-import ThemeProvider from "@material-ui/styles/ThemeProvider";
-import createTheme from "@material-ui/core/styles/createTheme";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
+import StyledEngineProvider from "@mui/material/StyledEngineProvider";
+
 import createHistory from "history/createBrowserHistory";
 // import axios from "axios";
 import { ThreeDots } from "@bit/mhnpd.react-loader-spinner.three-dots";
@@ -14,21 +16,19 @@ const FilteredVideos = React.lazy(() => import("./pages/FilteredVideos"));
 
 const theme = createTheme({
   typography: {
-    // fontFamily: ["Montserrat"].join(","),
     fontFamily: ["Inter"].join(","),
   },
   palette: {
     primary: {
       main: "#185adb",
-      // main: "#000000",
     },
     secondary: {
-      // main: "#cf0000",
       main: "#FF2626",
     },
     delete: {
       main: "#cf0000",
     },
+    white: { main: "#fff" },
   },
 });
 
@@ -60,6 +60,7 @@ class App extends Component {
     videos: [],
     hasMore: true,
     scrollPosition: 0,
+    successfulLogin: false,
   };
 
   componentDidMount() {
@@ -168,6 +169,7 @@ class App extends Component {
   };
 
   handleLogin = (e) => {
+    const { handleRedirectionDelay } = this;
     const { username, password } = this.state;
     e.preventDefault();
 
@@ -178,23 +180,52 @@ class App extends Component {
           password,
         })
         .then((response) => {
-          axiosInstance.defaults.headers["Authorization"] =
-            "JWT " + response.data.access;
+          if (response.status === 200) {
+            axiosInstance.defaults.headers["Authorization"] =
+              "JWT " + response.data.access;
 
-          localStorage.setItem("access_token", response.data.access);
-          localStorage.setItem("refresh_token", response.data.refresh);
+            localStorage.setItem("access_token", response.data.access);
+            localStorage.setItem("refresh_token", response.data.refresh);
 
-          this.setState({
-            loggedIn: true,
-            loginLoading: false,
-            username: "",
-            password: "",
-          });
+            this.setState(
+              {
+                successfulLogin: true,
+                loginLoading: false,
+              },
+              handleRedirectionDelay()
+            );
+          } else {
+            this.setState({
+              loggedIn: false,
+              loginLoading: false,
+              username: "",
+              password: "",
+              error: response.statusText,
+            });
+          }
         })
         .catch((error) => {
-          this.setState({ loggedIn: false, loginLoading: false });
+          const errorMessage = error.response.data.detail;
+          this.setState({
+            loggedIn: false,
+            loginLoading: false,
+            error: errorMessage,
+          });
         });
     });
+  };
+
+  handleRedirectionDelay = () => {
+    setTimeout(
+      () =>
+        this.setState({
+          username: "",
+          password: "",
+          error: null,
+          loggedIn: true,
+        }),
+      2500
+    );
   };
 
   handleLogout = () => {
@@ -241,7 +272,7 @@ class App extends Component {
       loginLoading,
       videoTags,
       tagsLoading,
-
+      successfulLogin,
       videosLoadingError,
       loading,
       hasMore,
@@ -250,83 +281,86 @@ class App extends Component {
     } = this.state;
 
     return (
-      <ThemeProvider theme={theme}>
-        <Router history={history}>
-          <div>
-            <Suspense
-              fallback={
-                <div
-                  style={{
-                    height: "100vh",
-                    display: "grid",
-                    placeItems: "center",
-                  }}
-                >
-                  <ThreeDots color="#185adb" height={50} width={50} />
-                </div>
-              }
-            >
-              <Nav loggedIn={loggedIn} handleLogout={handleLogout} />
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <Router history={history}>
+            <div>
+              <Suspense
+                fallback={
+                  <div
+                    style={{
+                      height: "100vh",
+                      display: "grid",
+                      placeItems: "center",
+                    }}
+                  >
+                    <ThreeDots color="#185adb" height={50} width={50} />
+                  </div>
+                }
+              >
+                <Nav loggedIn={loggedIn} handleLogout={handleLogout} />
 
-              <Switch>
-                {loggedIn ? <Redirect from="/login" to="/" /> : ""}
-                <Route
-                  exact
-                  path="/"
-                  render={(props) => (
-                    <Home
-                      {...props}
-                      loggedIn={loggedIn}
-                      videoTags={videoTags}
-                      tagsLoading={tagsLoading}
-                      loadTags={loadTags}
-                      error={videosLoadingError}
-                      loading={loading}
-                      hasMore={hasMore}
-                      videos={videos}
-                      loadVideos={loadVideos}
-                      scrollPosition={scrollPosition}
-                      handleScrollPosition={handleScrollPosition}
-                    />
-                  )}
-                />
+                <Switch>
+                  {loggedIn ? <Redirect from="/login" to="/" /> : ""}
+                  <Route
+                    exact
+                    path="/"
+                    render={(props) => (
+                      <Home
+                        {...props}
+                        loggedIn={loggedIn}
+                        videoTags={videoTags}
+                        tagsLoading={tagsLoading}
+                        loadTags={loadTags}
+                        error={videosLoadingError}
+                        loading={loading}
+                        hasMore={hasMore}
+                        videos={videos}
+                        loadVideos={loadVideos}
+                        scrollPosition={scrollPosition}
+                        handleScrollPosition={handleScrollPosition}
+                      />
+                    )}
+                  />
 
-                <Route
-                  path="/tags/:slug"
-                  render={(props) => (
-                    <FilteredVideos
-                      {...props}
-                      videoTags={videoTags}
-                      loggedIn={loggedIn}
-                      tagsLoading={tagsLoading}
-                      loadTags={loadTags}
-                      scrollPosition={scrollPosition}
-                      handleScrollPosition={handleScrollPosition}
-                    />
-                  )}
-                />
+                  <Route
+                    path="/tags/:slug"
+                    render={(props) => (
+                      <FilteredVideos
+                        {...props}
+                        videoTags={videoTags}
+                        loggedIn={loggedIn}
+                        tagsLoading={tagsLoading}
+                        loadTags={loadTags}
+                        scrollPosition={scrollPosition}
+                        handleScrollPosition={handleScrollPosition}
+                      />
+                    )}
+                  />
 
-                <Route
-                  path="/login"
-                  render={(props) => (
-                    <Login
-                      {...props}
-                      username={username}
-                      password={password}
-                      loginLoading={loginLoading}
-                      error={error}
-                      handleChange={handleChange}
-                      handleSubmit={handleLogin}
-                    />
-                  )}
-                />
+                  <Route
+                    path="/login"
+                    render={(props) => (
+                      <Login
+                        {...props}
+                        username={username}
+                        password={password}
+                        loginLoading={loginLoading}
+                        error={error}
+                        handleChange={handleChange}
+                        handleSubmit={handleLogin}
+                        successfulLogin={successfulLogin}
+                      />
+                    )}
+                  />
 
-                <Route path="/:slug" render={() => <Video />} />
-              </Switch>
-            </Suspense>
-          </div>
-        </Router>
-      </ThemeProvider>
+                  <Route path="/:slug" render={() => <Video />} />
+                </Switch>
+              </Suspense>
+            </div>
+          </Router>
+        </ThemeProvider>
+      </StyledEngineProvider>
     );
   }
 }

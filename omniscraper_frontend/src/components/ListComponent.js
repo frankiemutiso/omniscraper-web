@@ -1,37 +1,42 @@
 import React, { Component } from "react";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardMedia from "@material-ui/core/CardMedia";
-import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogActions from "@material-ui/core/DialogActions";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import DialogContent from "@material-ui/core/DialogContent";
-import Checkbox from "@material-ui/core/Checkbox";
-import TextField from "@material-ui/core/TextField";
-import Fab from "@material-ui/core/Fab";
-import Hidden from "@material-ui/core/Hidden";
-import MoreIcon from "@material-ui/icons/MoreVert";
-import ShareIcon from "@material-ui/icons/Share";
-import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@material-ui/icons/CheckBox";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import AddIcon from "@material-ui/icons/Add";
-import CloseIcon from "@material-ui/icons/Close";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import Skeleton from "@material-ui/lab/Skeleton";
-import ViewIcon from "@material-ui/icons/PlayArrow";
-import Snackbar from "@material-ui/core/Snackbar";
-import Typography from "@material-ui/core/Typography";
-import withMobileDialog from "@material-ui/core/withMobileDialog";
+import withStyles from "@mui/styles/withStyles";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardActions from "@mui/material/CardActions";
+import CardMedia from "@mui/material/CardMedia";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogActions from "@mui/material/DialogActions";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import DialogContent from "@mui/material/DialogContent";
+import Checkbox from "@mui/material/Checkbox";
+import TextField from "@mui/material/TextField";
+import Fab from "@mui/material/Fab";
+import Hidden from "@mui/material/Hidden";
+import MoreIcon from "@mui/icons-material/MoreVert";
+import ShareIcon from "@mui/icons-material/Share";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import CircularProgress from "@mui/material/CircularProgress";
+import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
+import Autocomplete from "@mui/material/Autocomplete";
+import Skeleton from "@mui/material/Skeleton";
+import ViewIcon from "@mui/icons-material/PlayArrow";
+import Snackbar from "@mui/material/Snackbar";
+import Typography from "@mui/material/Typography";
+import Toolbar from "@mui/material/Toolbar";
 import { Link } from "react-router-dom";
 import { axiosInstance } from "../utils/axiosInstance";
+import Instructions from "./Instructions";
+
+// FIXME checkout https://mui.com/components/use-media-query/#using-material-uis-breakpoint-helpers
+const withMobileDialog = () => (WrappedComponent) => (props) =>
+  <WrappedComponent {...props} width="lg" fullScreen={false} />;
 
 const Tags = React.lazy(() => import("./Tags"));
 
@@ -41,7 +46,7 @@ const styles = (theme) => ({
     flex: 1,
     marginRight: theme.spacing(3),
     marginLeft: theme.spacing(3),
-    paddingTop: 72,
+    // paddingTop: 64,
   },
   buttons: {
     border: "1px solid #185adb",
@@ -430,7 +435,11 @@ export class ListComponent extends Component {
             autoFocus
             color="secondary"
             endIcon={
-              flagging ? <CircularProgress size={16} color="white" /> : ""
+              flagging ? (
+                <CircularProgress size={16} style={{ color: "white" }} />
+              ) : (
+                ""
+              )
             }
           >
             Report
@@ -439,7 +448,7 @@ export class ListComponent extends Component {
       </Dialog>
     );
 
-    const tagsDialog = (
+    const editVideoTagsDialog = (
       <Dialog
         open={tagsDialogOpen}
         onClose={handleTagsDialogClose}
@@ -451,6 +460,7 @@ export class ListComponent extends Component {
           <IconButton
             className={classes.closeButton}
             onClick={handleTagsDialogClose}
+            size="large"
           >
             <CloseIcon />
           </IconButton>
@@ -466,8 +476,8 @@ export class ListComponent extends Component {
             filterSelectedOptions={true}
             getOptionLabel={(option) => option.tag_name}
             defaultValue={checkedTags}
-            renderOption={(option, { selected }) => (
-              <React.Fragment>
+            renderOption={(props, option, { selected }) => (
+              <li key={option.id} {...props}>
                 <Checkbox
                   icon={icon}
                   checkedIcon={checkedIcon}
@@ -476,21 +486,21 @@ export class ListComponent extends Component {
                   color="primary"
                 />
                 {option.tag_name}
-              </React.Fragment>
+              </li>
             )}
             style={{ width: "100%", height: "52vh" }}
             renderInput={(params) => (
-              <TextField {...params} variant="outlined" label="Tags" />
+              <TextField
+                {...params}
+                variant="outlined"
+                label="Tags"
+                style={{ marginTop: 8 }}
+              />
             )}
           />
         </DialogContent>
         <DialogActions>
-          <Button
-            // style={{ fontFamily: "inherit", fontWeight: 600, color: "#fff" }}
-            onClick={handleTagsDialogClose}
-          >
-            Cancel
-          </Button>
+          <Button onClick={handleTagsDialogClose}>Cancel</Button>
           <Button
             color="primary"
             variant="contained"
@@ -499,7 +509,7 @@ export class ListComponent extends Component {
             onClick={handleEditVideoTags}
             endIcon={
               editingVideoTags ? (
-                <CircularProgress size={16} color="white" />
+                <CircularProgress size={16} style={{ color: "white" }} />
               ) : (
                 ""
               )
@@ -531,6 +541,7 @@ export class ListComponent extends Component {
                 ? handleEditTagDialogClose
                 : handleCreateDialogClose
             }
+            size="large"
           >
             <CloseIcon />
           </IconButton>
@@ -552,7 +563,7 @@ export class ListComponent extends Component {
             fullWidth
             label="Description (optional)"
             multiline={true}
-            minRows={3}
+            minRows={2}
             name="description"
             onChange={handleTagChange}
             value={description}
@@ -578,7 +589,7 @@ export class ListComponent extends Component {
             onClick={editingDialogOpen ? handleEditTag : handleCreateTag}
             endIcon={
               creatingTag || editingTag ? (
-                <CircularProgress size={16} color="white" />
+                <CircularProgress size={16} style={{ color: "white" }} />
               ) : (
                 ""
               )
@@ -592,7 +603,8 @@ export class ListComponent extends Component {
 
     return (
       <div className={classes.root} onScroll={this.handleInfiniteScroll}>
-        {tagsDialog}
+        <Toolbar />
+        {editVideoTagsDialog}
         {createTagDialog}
         {reportDialog}
         <Menu
@@ -658,13 +670,7 @@ export class ListComponent extends Component {
           loading={loading}
         />
 
-        <Grid
-          container
-          spacing={4}
-          style={{
-            marginTop: 1,
-          }}
-        >
+        <Grid container spacing={2}>
           {videos.map((video, index) => {
             const url =
               video.video_thumbnail_link_https !== null
@@ -672,7 +678,7 @@ export class ListComponent extends Component {
                 : video.url;
 
             return (
-              <Grid item lg={3} md={6} sm={6} xs={12} key={index}>
+              <Grid item md={3} sm={6} xs={12} key={index}>
                 <Card
                   style={{
                     maxWidth: 380,
@@ -705,6 +711,7 @@ export class ListComponent extends Component {
                         transform: "translate(-50%, -50%)",
                       }}
                       onClick={handleScrollPosition}
+                      size="large"
                     >
                       <ViewIcon
                         style={{
@@ -749,14 +756,14 @@ export class ListComponent extends Component {
         </Grid>
 
         {loading && (
-          <Grid container spacing={4} style={{ marginTop: 10 }}>
+          <Grid container spacing={2} style={{ marginTop: 2 }}>
             {Array.from(new Array(12)).map((item, index) => (
-              <Grid item lg={3} md={6} sm={6} xs={12} key={index}>
+              <Grid item md={3} sm={6} xs={12} key={index}>
                 <Card style={{ maxWidth: 380 }}>
-                  <CardActionArea component={Link} to="">
+                  <CardActionArea>
                     <Skeleton
                       animation="wave"
-                      variant="rect"
+                      variant="rectangular"
                       style={{ height: 180 }}
                     />
                   </CardActionArea>
@@ -798,7 +805,7 @@ export class ListComponent extends Component {
 
         {loggedIn && (
           <React.Fragment>
-            <Hidden mdDown>
+            <Hidden lgDown>
               <Fab
                 className={classes.fab}
                 color="primary"
@@ -819,7 +826,7 @@ export class ListComponent extends Component {
                 <AddIcon />
               </Fab>
             </Hidden>
-            {!hasMore && (
+            {/* {!hasMore && (
               <div
                 style={{
                   textAlign: "center",
@@ -836,7 +843,7 @@ export class ListComponent extends Component {
                   the story."
                 </Typography>
               </div>
-            )}
+            )} */}
           </React.Fragment>
         )}
       </div>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import withStyles from "@material-ui/core/styles/withStyles";
+import withStyles from '@mui/styles/withStyles';
 
 const ListComponent = React.lazy(() => import("../components/ListComponent"));
 

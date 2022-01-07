@@ -1,40 +1,40 @@
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardMedia from "@material-ui/core/CardMedia";
-import Hidden from "@material-ui/core/Hidden";
-import withStyles from "@material-ui/core/styles/withStyles";
-import IconButton from "@material-ui/core/IconButton";
-import ViewIcon from "@material-ui/icons/PlayArrow";
-import ShareIcon from "@material-ui/icons/Share";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardActions from "@mui/material/CardActions";
+import CardMedia from "@mui/material/CardMedia";
+import Hidden from "@mui/material/Hidden";
+import withStyles from "@mui/styles/withStyles";
+import IconButton from "@mui/material/IconButton";
+import ViewIcon from "@mui/icons-material/PlayArrow";
+import ShareIcon from "@mui/icons-material/Share";
 import axios from "axios";
 import React from "react";
 import { withRouter } from "react-router";
-import Download from "@material-ui/icons/ArrowDownward";
-import TwitterIcon from "@material-ui/icons/Twitter";
+import Download from "@mui/icons-material/Download";
+import TwitterIcon from "@mui/icons-material/Twitter";
 import JSONbig from "json-bigint";
-import Skeleton from "@material-ui/lab/Skeleton";
-import SpeedDial from "@material-ui/lab/SpeedDial";
-import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
-import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
-import Link from "@material-ui/core/Link";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import Typography from "@material-ui/core/Typography";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import LinearProgress from "@material-ui/core/LinearProgress";
-import Box from "@material-ui/core/Box";
+import Skeleton from "@mui/material/Skeleton";
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialIcon from "@mui/material/SpeedDialIcon";
+import SpeedDialAction from "@mui/material/SpeedDialAction";
+import Link from "@mui/material/Link";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import Typography from "@mui/material/Typography";
+import DialogTitle from "@mui/material/DialogTitle";
+import LinearProgress from "@mui/material/LinearProgress";
+import Box from "@mui/material/Box";
+import Slide from "@mui/material/Slide";
+import Toolbar from "@mui/material/Toolbar";
 
 const styles = (theme) => ({
   root: {
     flex: 1,
     margin: "auto",
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("sm")]: {
       width: "85vw",
-      paddingTop: 80,
     },
-    paddingTop: "7.2vh",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -57,12 +57,11 @@ const styles = (theme) => ({
       left: theme.spacing(2),
     },
   },
-  // title: {
-  //   "&h2": {
-  //     fontFamily: "inherit",
-  //     fontWeight: 700,
-  //   },
-  // },
+  mobileCardMedia: {
+    objectFit: "contain",
+    height: `${100 - 48 * 0.16}vh`,
+    position: "relative",
+  },
 });
 
 function LinearProgressWithLabel(props) {
@@ -92,6 +91,10 @@ function LinearProgressWithLabel(props) {
   );
 }
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 export class Video extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -107,6 +110,7 @@ export class Video extends React.PureComponent {
     };
 
     this.vidRef = React.createRef();
+    this.ref = React.createRef();
   }
 
   componentDidMount = () => {
@@ -117,21 +121,27 @@ export class Video extends React.PureComponent {
     this.setState({ loading: true }, () => {
       const slug = this.props.match.params.slug;
       const url = `/api/${slug}`;
+      const { history } = this.props;
 
       axios
         .get(url, { transformResponse: (data) => JSONbig.parse(data) })
         .then((res) => {
-          this.setState({
-            video: res.data,
-            loading: false,
-          });
+          if (res.status === 200) {
+            this.setState({
+              video: res.data,
+              loading: false,
+            });
+          } else {
+            history.push({ pathname: "/" });
+          }
         })
-        .catch((err) =>
+        .catch((err) => {
+          history.push({ pathname: "/" });
           this.setState({
             error: err.message,
             loading: false,
-          })
-        );
+          });
+        });
     });
   };
 
@@ -247,11 +257,12 @@ export class Video extends React.PureComponent {
             href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
             target="_blank"
             rel="noopener noreferrer"
+            size="large"
           >
             <TwitterIcon size="small" color="primary" />
           </IconButton>
         ),
-        name: "Source",
+        name: "Tweet",
       },
       {
         icon: (
@@ -281,134 +292,143 @@ export class Video extends React.PureComponent {
     );
 
     return (
-      <div className={classes.root}>
-        {/* Desktop UI */}
-        <Hidden mdDown>
-          <Card style={{ width: 640 }}>
-            <CardActionArea>
-              {loading ? (
-                <Skeleton
-                  animation="wave"
-                  variant="rect"
-                  style={{ height: 360 }}
-                />
-              ) : (
+      <>
+        <Toolbar ref={this.ref} />
+        <div className={classes.root}>
+          {/* Desktop UI */}
+          <Box sx={{ display: { sm: "block", xs: "none" } }}>
+            <Card
+              style={{
+                width: 640,
+                marginTop: "12vh",
+              }}
+            >
+              <CardActionArea>
+                {loading ? (
+                  <Skeleton
+                    animation="wave"
+                    variant="rectangular"
+                    style={{ height: 360 }}
+                  />
+                ) : (
+                  <CardMedia
+                    component="video"
+                    height="360"
+                    src={video.url}
+                    style={{ objectFit: "contain" }}
+                    controls
+                    crossOrigin="anonymous"
+                    disablePictureInPicture
+                    autoplay
+                    controlsList="nodownload"
+                    onContextMenu={(e) => e.preventDefault()}
+                  />
+                )}
+              </CardActionArea>
+              <CardActions
+                style={{ display: "flex", justifyContent: "space-between" }}
+              >
+                {loading ? (
+                  <React.Fragment>
+                    <Skeleton animation="wave" height={45} width={80} />
+                    <Skeleton animation="wave" height={45} width={80} />
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    <Button
+                      size="small"
+                      color="primary"
+                      startIcon={<TwitterIcon />}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
+                    >
+                      Source
+                    </Button>
+                    <Button
+                      size="small"
+                      color="primary"
+                      variant="contained"
+                      startIcon={<Download />}
+                      onClick={() => downloadVideo(video)}
+                    >
+                      Download
+                    </Button>
+                  </React.Fragment>
+                )}
+              </CardActions>
+            </Card>
+          </Box>
+
+          {/* mobile UI */}
+          <Box sx={{ display: { sm: "none", xs: "block" } }}>
+            {downloadProgress}
+            <Card style={{ width: "100vw" }}>
+              <CardActionArea>
                 <CardMedia
+                  ref={this.vidRef}
                   component="video"
-                  height="360"
-                  src={video.url}
-                  style={{ objectFit: "contain" }}
-                  controls
                   crossOrigin="anonymous"
+                  src={video.url}
+                  style={{
+                    objectFit: "contain",
+                    height: `${
+                      100 - this.ref.current?.clientHeight * (1 / 8)
+                    }vh`,
+                    position: "relative",
+                  }}
+                  onClick={handleToggle}
+                  autoPlay
                   disablePictureInPicture
-                  autoplay
                   controlsList="nodownload"
                   onContextMenu={(e) => e.preventDefault()}
                 />
-              )}
-            </CardActionArea>
-            <CardActions
-              style={{ display: "flex", justifyContent: "space-between" }}
-            >
-              {loading ? (
-                <React.Fragment>
-                  <Skeleton animation="wave" height={45} width={80} />
-                  <Skeleton animation="wave" height={45} width={80} />
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <Button
-                    size="small"
-                    color="primary"
-                    startIcon={<TwitterIcon />}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
-                  >
-                    Source
-                  </Button>
-                  <Button
-                    size="small"
-                    color="primary"
-                    variant="contained"
-                    startIcon={<Download />}
-                    onClick={() => downloadVideo(video)}
-                  >
-                    Download
-                  </Button>
-                </React.Fragment>
-              )}
-            </CardActions>
-          </Card>
-        </Hidden>
-
-        {/* mobile UI */}
-        <Hidden mdUp>
-          {downloadProgress}
-          <Card style={{ width: "100vw" }}>
-            <CardActionArea>
-              <CardMedia
-                ref={this.vidRef}
-                component="video"
-                crossOrigin="anonymous"
-                src={video.url}
-                style={{
-                  objectFit: "contain",
-                  height: "92.8vh",
-                  position: "relative",
-                }}
-                onClick={handleToggle}
-                autoPlay
-                disablePictureInPicture
-                controlsList="nodownload"
-                onContextMenu={(e) => e.preventDefault()}
-              />
-              {/* {play !== true && ( */}
-              <IconButton
-                onClick={handleToggle}
-                style={{
-                  display: play === false ? "block" : "none",
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  transition: "100ms ease-in-out",
-                }}
-              >
-                <ViewIcon
+                <IconButton
+                  onClick={handleToggle}
                   style={{
-                    color: "white",
-                    fontSize: 80,
-                    opacity: 0.8,
+                    display: play === false ? "block" : "none",
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    transition: "100ms ease-in-out",
                   }}
+                  size="large"
+                >
+                  <ViewIcon
+                    style={{
+                      color: "white",
+                      fontSize: 80,
+                      opacity: 0.8,
+                    }}
+                  />
+                </IconButton>
+              </CardActionArea>
+            </Card>
+            <SpeedDial
+              ariaLabel="Twitter Video SpeedDial"
+              className={classes.speedDial}
+              icon={<SpeedDialIcon />}
+              onClose={handleSpeedDialClose}
+              onOpen={handleSpeedDialOpen}
+              open={speedDialOpen}
+              direction="up"
+              color="secondary"
+            >
+              {actions.map((action) => (
+                <SpeedDialAction
+                  component={Link}
+                  key={action.name}
+                  icon={action.icon}
+                  tooltipTitle={action.name}
+                  tooltipOpen
+                  onClick={handleSpeedDialClose}
                 />
-              </IconButton>
-              {/* )} */}
-            </CardActionArea>
-          </Card>
-          <SpeedDial
-            ariaLabel="Twitter Video SpeedDial"
-            className={classes.speedDial}
-            icon={<SpeedDialIcon />}
-            onClose={handleSpeedDialClose}
-            onOpen={handleSpeedDialOpen}
-            open={speedDialOpen}
-            direction="up"
-            color="secondary"
-          >
-            {actions.map((action) => (
-              <SpeedDialAction
-                component={Link}
-                key={action.name}
-                icon={action.icon}
-                tooltipTitle={action.name}
-                // tooltipOpen
-                onClick={handleSpeedDialClose}
-              />
-            ))}
-          </SpeedDial>
-        </Hidden>
-      </div>
+              ))}
+            </SpeedDial>
+          </Box>
+        </div>
+      </>
     );
   }
 }
