@@ -361,7 +361,7 @@ export class Video extends React.PureComponent {
           </Hidden>
 
           {/* mobile UI */}
-          <Hidden mdUp>
+          <Hidden smUp>
             {downloadProgress}
             <Card style={{ width: "100vw" }}>
               <CardActionArea>
