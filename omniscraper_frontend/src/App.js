@@ -8,6 +8,7 @@ import createHistory from "history/createBrowserHistory";
 // import axios from "axios";
 import { ThreeDots } from "@bit/mhnpd.react-loader-spinner.three-dots";
 import { axiosInstance } from "./utils/axiosInstance";
+import { handleBreakpoints } from "@mui/system";
 const Nav = React.lazy(() => import("./components/Nav"));
 const Video = React.lazy(() => import("./pages/Video"));
 const Home = React.lazy(() => import("./pages/Home"));
@@ -60,6 +61,7 @@ class App extends Component {
     videos: [],
     hasMore: true,
     scrollPosition: 0,
+    autoplayVideo: false,
     successfulLogin: false,
   };
 
@@ -251,6 +253,7 @@ class App extends Component {
 
   handleScrollPosition = () => {
     this.setState({
+      autoplayVideo: true,
       scrollPosition: window.pageYOffset,
     });
   };
@@ -278,6 +281,7 @@ class App extends Component {
       hasMore,
       videos,
       scrollPosition,
+      autoplayVideo,
     } = this.state;
 
     return (
@@ -354,7 +358,10 @@ class App extends Component {
                     )}
                   />
 
-                  <Route path="/:slug" render={() => <Video />} />
+                  <Route
+                    path="/:slug"
+                    render={() => <Video autoplayVideo={autoplayVideo} />}
+                  />
                 </Switch>
               </Suspense>
             </div>

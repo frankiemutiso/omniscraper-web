@@ -27,6 +27,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
 import Slide from "@mui/material/Slide";
 import Toolbar from "@mui/material/Toolbar";
+import { calculateTimeSinceSave } from "../utils/calculateTimeLapse";
 
 const styles = (theme) => ({
   root: {
@@ -238,7 +239,9 @@ export class Video extends React.PureComponent {
       handleProgressDialogClose,
     } = this;
     const { video, loading, speedDialOpen, play } = this.state;
-    const { classes } = this.props;
+    const { classes, autoplayVideo } = this.props;
+
+    const lapse = calculateTimeSinceSave(video);
 
     const actions = [
       {
@@ -319,19 +322,38 @@ export class Video extends React.PureComponent {
                     controls
                     crossOrigin="anonymous"
                     disablePictureInPicture
-                    // autoplay
+                    autoPlay={autoplayVideo}
                     controlsList="nodownload"
                     onContextMenu={(e) => e.preventDefault()}
                   />
                 )}
               </CardActionArea>
-              <CardActions
-                style={{ display: "flex", justifyContent: "space-between" }}
-              >
+              <CardActions>
+                {loading ? (
+                  <Skeleton
+                    animation="wave"
+                    height={30}
+                    width={80}
+                    style={{
+                      marginRight: "auto",
+                    }}
+                  />
+                ) : (
+                  <Typography
+                    color="textSecondary"
+                    variant="body2"
+                    style={{
+                      marginRight: "auto",
+                      marginLeft: 8,
+                    }}
+                  >
+                    {lapse}
+                  </Typography>
+                )}
                 {loading ? (
                   <React.Fragment>
-                    <Skeleton animation="wave" height={45} width={80} />
-                    <Skeleton animation="wave" height={45} width={80} />
+                    <Skeleton animation="wave" height={30} width={80} />
+                    <Skeleton animation="wave" height={30} width={80} />
                   </React.Fragment>
                 ) : (
                   <React.Fragment>
@@ -343,7 +365,7 @@ export class Video extends React.PureComponent {
                       rel="noopener noreferrer"
                       href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
                     >
-                      Source
+                      Tweet
                     </Button>
                     <Button
                       size="small"
@@ -351,6 +373,7 @@ export class Video extends React.PureComponent {
                       variant="contained"
                       startIcon={<Download />}
                       onClick={() => downloadVideo(video)}
+                      style={{ marginLeft: 16 }}
                     >
                       Download
                     </Button>

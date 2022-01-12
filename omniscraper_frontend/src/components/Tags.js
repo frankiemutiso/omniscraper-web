@@ -14,6 +14,7 @@ function Tags({
   handleClose,
   loggedIn,
   loading,
+  handleScrollPosition,
 }) {
   const tagEditor = (
     <Menu
@@ -40,6 +41,7 @@ function Tags({
           onContextMenu={(e) => handleRightClick(e, tag)}
           component={Link}
           to={`/tags/${tag.slug}`}
+          onClick={() => handleScrollPosition()}
           key={tag.tag_name}
           label={tag.tag_name}
           disabled={loading}

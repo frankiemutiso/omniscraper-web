@@ -33,6 +33,7 @@ import Toolbar from "@mui/material/Toolbar";
 import { Link } from "react-router-dom";
 import { axiosInstance } from "../utils/axiosInstance";
 import Instructions from "./Instructions";
+import { calculateTimeSinceSave } from "../utils/calculateTimeLapse";
 
 // FIXME checkout https://mui.com/components/use-media-query/#using-material-uis-breakpoint-helpers
 const withMobileDialog = () => (WrappedComponent) => (props) =>
@@ -46,7 +47,7 @@ const styles = (theme) => ({
     flex: 1,
     marginRight: theme.spacing(3),
     marginLeft: theme.spacing(3),
-    // paddingTop: 64,
+    paddingBottom: 16,
   },
   buttons: {
     border: "1px solid #185adb",
@@ -668,6 +669,7 @@ export class ListComponent extends Component {
           handleClose={handleTagMenuClose}
           loggedIn={loggedIn}
           loading={loading}
+          handleScrollPosition={handleScrollPosition}
         />
 
         <Grid container spacing={2}>
@@ -676,6 +678,8 @@ export class ListComponent extends Component {
               video.video_thumbnail_link_https !== null
                 ? video.video_thumbnail_link_https
                 : video.url;
+
+            const lapse = calculateTimeSinceSave(video);
 
             return (
               <Grid item md={3} sm={6} xs={12} key={index}>
@@ -687,7 +691,7 @@ export class ListComponent extends Component {
                   <CardActionArea
                     component={Link}
                     to={`/${video.slug}`}
-                    onClick={handleScrollPosition}
+                    onClick={() => handleScrollPosition()}
                   >
                     <CardMedia
                       component={
@@ -710,7 +714,7 @@ export class ListComponent extends Component {
                         left: "50%",
                         transform: "translate(-50%, -50%)",
                       }}
-                      onClick={handleScrollPosition}
+                      onClick={() => handleScrollPosition()}
                       size="large"
                     >
                       <ViewIcon
@@ -724,30 +728,34 @@ export class ListComponent extends Component {
                   </CardActionArea>
 
                   <CardActions>
-                    <div
+                    <Typography
+                      color="textSecondary"
+                      variant="body2"
                       style={{
-                        marginLeft: "auto",
+                        marginRight: "auto",
+                        marginLeft: 8,
                       }}
                     >
+                      {lapse}
+                    </Typography>
+                    <IconButton
+                      size="small"
+                      color="primary"
+                      onClick={() => handleShare(video)}
+                      style={{ marginRight: 8 }}
+                    >
+                      <ShareIcon size="small" />
+                    </IconButton>
+                    {loggedIn && (
                       <IconButton
                         size="small"
                         color="primary"
-                        onClick={() => handleShare(video)}
+                        onClick={(e) => handleMenuClick(e, video)}
                         style={{ marginRight: 8 }}
                       >
-                        <ShareIcon size="small" />
+                        <MoreIcon />
                       </IconButton>
-                      {loggedIn && (
-                        <IconButton
-                          size="small"
-                          color="primary"
-                          onClick={(e) => handleMenuClick(e, video)}
-                          style={{ marginRight: 8 }}
-                        >
-                          <MoreIcon />
-                        </IconButton>
-                      )}
-                    </div>
+                    )}
                   </CardActions>
                 </Card>
               </Grid>
@@ -768,34 +776,29 @@ export class ListComponent extends Component {
                     />
                   </CardActionArea>
 
-                  <CardActions
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <div
-                      style={{
-                        marginLeft: "auto",
-                      }}
+                  <CardActions>
+                    <Skeleton
+                      animation="wave"
+                      height={30}
+                      width={80}
+                      style={{ marginRight: "auto" }}
+                    />
+                    <IconButton
+                      size="small"
+                      color="primary"
+                      style={{ marginRight: 8 }}
                     >
+                      <ShareIcon size="small" />
+                    </IconButton>
+                    {loggedIn && (
                       <IconButton
                         size="small"
                         color="primary"
                         style={{ marginRight: 8 }}
                       >
-                        <ShareIcon size="small" />
+                        <MoreIcon />
                       </IconButton>
-                      {loggedIn && (
-                        <IconButton
-                          size="small"
-                          color="primary"
-                          style={{ marginRight: 8 }}
-                        >
-                          <MoreIcon />
-                        </IconButton>
-                      )}
-                    </div>
+                    )}
                   </CardActions>
                 </Card>
               </Grid>
