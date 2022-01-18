@@ -3,12 +3,10 @@ import createTheme from "@mui/material/styles/createTheme";
 import { Router, Switch, Route, Redirect } from "react-router-dom";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import StyledEngineProvider from "@mui/material/StyledEngineProvider";
-
 import createHistory from "history/createBrowserHistory";
-// import axios from "axios";
+import axios from "axios";
 import { ThreeDots } from "@bit/mhnpd.react-loader-spinner.three-dots";
 import { axiosInstance } from "./utils/axiosInstance";
-import { handleBreakpoints } from "@mui/system";
 const Nav = React.lazy(() => import("./components/Nav"));
 const Video = React.lazy(() => import("./pages/Video"));
 const Home = React.lazy(() => import("./pages/Home"));
@@ -73,61 +71,47 @@ class App extends Component {
     this.loadVideos();
   }
 
-  // addVideosToCache = async (videos) => {
-  //   const cache = await caches.open("videos-cache");
-  //   const url = videos.map((video) => video.url);
-
-  //   await cache.add(url);
-  // };
-
-  // componentDidUpdate(prevState) {
-  //   if (prevState.videos !== this.state.videos) {
-  //     this.addVideosToCache(this.state.videos);
-  //     console.log(this.state.videos);
-  //   }
-  // }
-
   loadVideos = () => {
     this.setState({ loading: true }, () => {
       const { offset, limit } = this.state;
 
       const url = `/api/videos/?limit=${limit}&offset=${offset}`;
       // const worker = new Worker("/worker.js");
-      const worker = new Worker(new URL("./worker.js", import.meta.url));
+      // const worker = new Worker(new URL("./worker.js", import.meta.url));
 
-      worker.postMessage(url);
+      // worker.postMessage(url);
 
-      worker.onmessage = (e) => {
-        const newVideos = e.data.videos;
-        const hasMore = e.data.has_more;
+      // worker.onmessage = (e) => {
+      //   const newVideos = e.data.videos;
+      //   const hasMore = e.data.has_more;
 
-        this.setState({
-          hasMore,
-          loading: false,
-          videos: [...this.state.videos, ...newVideos],
-          offset: offset + limit,
-        });
-      };
-
-      // axios
-      //   .get(url)
-      //   .then((res) => {
-      //     const newVideos = res.data.videos;
-      //     const hasMore = res.data.has_more;
-
-      //     this.setState({
-      //       hasMore,
-      //       loading: false,
-      //       videos: [...this.state.videos, ...newVideos],
-      //       offset: offset + limit,
-      //     });
-      //   })
-      //   .catch((err) => {
-      //     this.setState({
-      //       videosLoadingError: err.message,
-      //       loading: false,
-      //     });
+      //   this.setState({
+      //     hasMore,
+      //     loading: false,
+      //     videos: [...this.state.videos, ...newVideos],
+      //     offset: offset + limit,
       //   });
+      // };
+
+      axios
+        .get(url)
+        .then((res) => {
+          const newVideos = res.data.videos;
+          const hasMore = res.data.has_more;
+
+          this.setState({
+            hasMore,
+            loading: false,
+            videos: [...this.state.videos, ...newVideos],
+            offset: offset + limit,
+          });
+        })
+        .catch((err) => {
+          this.setState({
+            videosLoadingError: err.message,
+            loading: false,
+          });
+        });
     });
   };
 
@@ -135,34 +119,34 @@ class App extends Component {
     this.setState({ tagsLoading: true }, () => {
       const url = "/api/tags/";
       // const worker = new Worker("/tagsWorker.js");
-      const worker = new Worker(new URL("./tagsWorker.js", import.meta.url));
+      // const worker = new Worker(new URL("./tagsWorker.js", import.meta.url));
 
-      worker.postMessage(url);
+      // worker.postMessage(url);
 
-      worker.onmessage = (e) => {
-        const newTags = e.data.tags;
+      // worker.onmessage = (e) => {
+      //   const newTags = e.data.tags;
 
-        this.setState({
-          videoTags: newTags,
-          tagsLoading: false,
-        });
-      };
-
-      // axios
-      //   .get(url)
-      //   .then((res) => {
-      //     const newTags = res.data.tags;
-
-      //     this.setState({
-      //       videoTags: newTags,
-      //       tagsLoading: false,
-      //     });
-      //   })
-      //   .catch((err) => {
-      //     this.setState({
-      //       tagsLoading: false,
-      //     });
+      //   this.setState({
+      //     videoTags: newTags,
+      //     tagsLoading: false,
       //   });
+      // };
+
+      axios
+        .get(url)
+        .then((res) => {
+          const newTags = res.data.tags;
+
+          this.setState({
+            videoTags: newTags,
+            tagsLoading: false,
+          });
+        })
+        .catch((err) => {
+          this.setState({
+            tagsLoading: false,
+          });
+        });
     });
   };
 

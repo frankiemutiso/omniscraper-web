@@ -1,20 +1,18 @@
 import React from "react";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
+import Toolbar from "@mui/material/Toolbar";
 import Slide from "@mui/material/Slide";
 
-export const HideOnScroll = ({ children, window }) => {
+function Blank({ window }) {
   const trigger = useScrollTrigger({
     target: window ? window() : undefined,
   });
 
   return (
-    <Slide
-      appear={false}
-      direction="down"
-      in={!trigger}
-      timeout={{ enter: 500, exit: 500 }}
-    >
-      {children}
+    <Slide appear={false} direction="down" in={!trigger}>
+      <Toolbar />
     </Slide>
   );
-};
+}
+
+export default Blank;

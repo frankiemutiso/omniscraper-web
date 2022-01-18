@@ -29,8 +29,9 @@ import Skeleton from "@mui/material/Skeleton";
 import ViewIcon from "@mui/icons-material/PlayArrow";
 import Snackbar from "@mui/material/Snackbar";
 import Typography from "@mui/material/Typography";
-import Toolbar from "@mui/material/Toolbar";
 import { Link } from "react-router-dom";
+import Toolbar from "@mui/material/Toolbar";
+import Blank from "./Blank";
 import { axiosInstance } from "../utils/axiosInstance";
 import Instructions from "./Instructions";
 import { calculateTimeSinceSave } from "../utils/calculateTimeLapse";
@@ -128,7 +129,12 @@ export class ListComponent extends Component {
 
     if (error || loading || !hasMore) return;
 
-    if (scrollTop >= scrollHeight - clientHeight - 200) {
+    const checkHeight = scrollTop >= scrollHeight - clientHeight - 200;
+
+    if (clientHeight === scrollHeight - Math.round(scrollTop)) {
+      // console.log("SCROLL TOP: ", scrollTop);
+      // console.log("SCROLL HEIGHT: ", scrollHeight);
+      // console.log("CLIENT HEIGHT: ", clientHeight);
       loadVideos();
     }
   };
@@ -395,6 +401,7 @@ export class ListComponent extends Component {
       hasMore,
       fullScreen,
       handleScrollPosition,
+      window,
     } = this.props;
 
     const {
@@ -605,6 +612,8 @@ export class ListComponent extends Component {
     return (
       <div className={classes.root} onScroll={this.handleInfiniteScroll}>
         <Toolbar />
+        <Blank />
+
         {editVideoTagsDialog}
         {createTagDialog}
         {reportDialog}
@@ -690,6 +699,7 @@ export class ListComponent extends Component {
                 return (
                   <Grid item md={4} sm={6} xs={12} key={index}>
                     <Card
+                      elevation={0}
                       style={{
                         maxWidth: 380,
                       }}
@@ -773,7 +783,7 @@ export class ListComponent extends Component {
               <Grid container spacing={2} style={{ marginTop: 2 }}>
                 {Array.from(new Array(12)).map((item, index) => (
                   <Grid item md={4} sm={12} xs={12} key={index}>
-                    <Card style={{ maxWidth: 380 }}>
+                    <Card elevation={0} style={{ maxWidth: 380 }}>
                       <CardActionArea>
                         <Skeleton
                           animation="wave"
