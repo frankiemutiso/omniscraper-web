@@ -1,75 +1,75 @@
 import { Grid, Paper, Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import Twitter from "@mui/icons-material/Twitter";
-import Mention from "@mui/icons-material/AlternateEmail";
-import Download from "@mui/icons-material/Download";
-import Click from "@mui/icons-material/Mouse";
-import Avatar from "@mui/material/Avatar";
-
+import Click from "@mui/icons-material/InsertLinkRounded";
+import Download from "@mui/icons-material/FileDownloadOutlined";
+import Mention from "@mui/icons-material/ReplyRounded";
 import React from "react";
 
-function Instructions() {
-  return (
-    <Paper elevation={1} square style={{ padding: 16 }}>
-      <Typography varaint="body1">
-        The most trusted, reliable, and fastest application that helps users to
-        download their favourite Twitter videos.
-      </Typography>
-      <div style={{ marginTop: 8, marginBottom: 8 }}>
-        <Paper
-          elevation={0}
-          style={{
-            marginBottom: 16,
-            height: 50,
-            width: 50,
-            display: "grid",
-            placeItems: "center",
-            backgroundColor: "#64e2ff",
-          }}
-        >
-          <Twitter style={{ color: "#1D9BF0" }} />
-        </Paper>
-        <Paper
-          elevation={0}
-          style={{
-            marginBottom: 16,
-            height: 50,
-            width: 50,
-            display: "grid",
-            placeItems: "center",
-            backgroundColor: "#ffc2f2",
-          }}
-        >
-          <Mention style={{ color: "#F22F5F" }} />
-        </Paper>
+const useStyles = makeStyles({
+  container: {
+    display: "grid",
+    placeItems: "center",
+    // width: 200,
+    textAlign: "center",
+  },
+  paper: { padding: 16, display: "flex", justifyContent: "center", width: 200 },
+  typography: { marginTop: 8, lineHeight: 1.5 },
+});
 
-        <Paper
-          elevation={0}
-          style={{
-            marginBottom: 16,
-            height: 50,
-            width: 50,
-            display: "grid",
-            placeItems: "center",
-            backgroundColor: "#b2b8c4",
-          }}
-        >
-          <Click style={{ color: "#1F2531" }} />
-        </Paper>
-        <Paper
-          elevation={0}
-          style={{
-            marginBottom: 16,
-            height: 50,
-            width: 50,
-            display: "grid",
-            placeItems: "center",
-            backgroundColor: "#b0ffe7",
-          }}
-        >
-          <Download style={{ color: "#1DB954" }} />
-        </Paper>
-      </div>
-    </Paper>
+function Instructions() {
+  const classes = useStyles();
+
+  return (
+    <div>
+      <Paper
+        elevation={0}
+        style={{
+          padding: 16,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          position: "fixed",
+          flex: 1,
+          width: "23vw",
+          textAlign: "center",
+        }}
+      >
+        <div elevation={0} className={classes.paper}>
+          <div className={classes.container}>
+            <Twitter style={{ color: "#6E6E73", fontSize: 50 }} />
+            <Typography variant="overline" className={classes.typography}>
+              Log into Twitter
+            </Typography>
+          </div>
+        </div>
+        <div elevation={0} className={classes.paper}>
+          <div className={classes.container}>
+            <Mention style={{ color: "#6E6E73", fontSize: 50 }} />
+            <Typography variant="overline" className={classes.typography}>
+              Find your favourite video and comment with <b>@omniscraper</b>
+            </Typography>
+          </div>
+        </div>
+
+        <div elevation={0} className={classes.paper}>
+          <div className={classes.container}>
+            <Click style={{ color: "#6E6E73", fontSize: 50 }} />
+            <Typography variant="overline" className={classes.typography}>
+              Click on the link reply
+            </Typography>
+          </div>
+        </div>
+        <div elevation={0} className={classes.paper}>
+          <div className={classes.container}>
+            <Download style={{ color: "#6E6E73", fontSize: 50 }} />
+            <Typography variant="overline" className={classes.typography}>
+              Download and share your video!
+            </Typography>
+          </div>
+        </div>
+      </Paper>
+    </div>
   );
 }
 
