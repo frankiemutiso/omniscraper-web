@@ -137,10 +137,7 @@ export class ListComponent extends Component {
 
     const checkHeight = scrollTop >= scrollHeight - clientHeight - 200;
 
-    if (clientHeight === scrollHeight - Math.round(scrollTop)) {
-      // console.log("SCROLL TOP: ", scrollTop);
-      // console.log("SCROLL HEIGHT: ", scrollHeight);
-      // console.log("CLIENT HEIGHT: ", clientHeight);
+    if (checkHeight) {
       loadVideos();
     }
   };
@@ -736,8 +733,12 @@ export class ListComponent extends Component {
                           style={{ objectFit: "cover", position: "relative" }}
                           onContextMenu={(e) => e.preventDefault()}
                         />
-                        <IconButton
+
+                        <ViewIcon
                           style={{
+                            color: "white",
+                            fontSize: 60,
+                            opacity: 0.8,
                             position: "absolute",
                             top: "50%",
                             left: "50%",
@@ -748,15 +749,7 @@ export class ListComponent extends Component {
                             handleScrollPosition();
                           }}
                           size="large"
-                        >
-                          <ViewIcon
-                            style={{
-                              color: "white",
-                              fontSize: 60,
-                              opacity: 0.8,
-                            }}
-                          />
-                        </IconButton>
+                        />
                       </CardActionArea>
 
                       <CardActions>

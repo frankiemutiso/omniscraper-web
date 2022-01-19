@@ -409,27 +409,20 @@ export class Video extends React.PureComponent {
                   controlsList="nodownload"
                   onContextMenu={(e) => e.preventDefault()}
                 />
-                <IconButton
-                  onClick={handleToggle}
+                <ViewIcon
+                  size="large"
                   style={{
-                    display:
-                      play === false ? "block" : "none",
+                    color: "white",
+                    fontSize: 80,
+                    opacity: 0.8,
+                    display: play === false ? "block" : "none",
                     position: "absolute",
                     top: "50%",
                     left: "50%",
                     transform: "translate(-50%, -50%)",
                     transition: "all 150ms ease",
                   }}
-                  size="large"
-                >
-                  <ViewIcon
-                    style={{
-                      color: "white",
-                      fontSize: 80,
-                      opacity: 0.8,
-                    }}
-                  />
-                </IconButton>
+                />
               </CardActionArea>
             </Card>
             <SpeedDial
