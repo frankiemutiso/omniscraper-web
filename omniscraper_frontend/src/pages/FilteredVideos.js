@@ -59,10 +59,6 @@ export class FilteredVideos extends Component {
     });
   };
 
-  handleScrollPosition = () => {
-    return;
-  };
-
   render() {
     const { loading, videos, hasMore, videosLoadingError } = this.state;
     const { classes, loggedIn, videoTags, loadTags, location } = this.props;
