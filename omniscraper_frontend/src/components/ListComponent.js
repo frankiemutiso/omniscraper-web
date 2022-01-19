@@ -31,6 +31,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
+import { withRouter } from "react-router";
 import Blank from "./Blank";
 import { axiosInstance } from "../utils/axiosInstance";
 import Instructions from "./Instructions";
@@ -77,6 +78,11 @@ const styles = (theme) => ({
     position: "absolute",
     right: theme.spacing(1),
     top: theme.spacing(1),
+  },
+  videos: {
+    [theme.breakpoints.down("sm")]: {
+      marginTop: 16,
+    },
   },
 });
 
@@ -368,6 +374,12 @@ export class ListComponent extends Component {
     });
   };
 
+  handleVideoClick = (slug) => {
+    const { history } = this.props;
+
+    history.push(`/${slug}`);
+  };
+
   render() {
     const {
       open,
@@ -402,6 +414,7 @@ export class ListComponent extends Component {
       fullScreen,
       handleScrollPosition,
       window,
+      history,
     } = this.props;
 
     const {
@@ -425,6 +438,7 @@ export class ListComponent extends Component {
       handleEditTag,
       handleRightClick,
       handleTagMenuClose,
+      handleVideoClick,
     } = this;
     const reportDialog = (
       <Dialog
@@ -681,12 +695,12 @@ export class ListComponent extends Component {
           handleScrollPosition={handleScrollPosition}
         />
         <Grid container spacing={2} style={{ paddingTop: 16 }}>
-          <Hidden smDown>
+          <Hidden mdDown>
             <Grid item md={3} xs={12} sm={12}>
               <Instructions />
             </Grid>
           </Hidden>
-          <Grid item md={9} xs={12} sm={12}>
+          <Grid item md={9} xs={12} sm={12} className={classes.videos}>
             <Grid container spacing={2}>
               {videos.map((video, index) => {
                 const url =
@@ -705,9 +719,10 @@ export class ListComponent extends Component {
                       }}
                     >
                       <CardActionArea
-                        component={Link}
-                        to={`/${video.slug}`}
-                        onClick={() => handleScrollPosition()}
+                        onClick={() => {
+                          handleVideoClick(video.slug);
+                          handleScrollPosition();
+                        }}
                       >
                         <CardMedia
                           component={
@@ -722,15 +737,16 @@ export class ListComponent extends Component {
                           onContextMenu={(e) => e.preventDefault()}
                         />
                         <IconButton
-                          component={Link}
-                          to={`/${video.slug}`}
                           style={{
                             position: "absolute",
                             top: "50%",
                             left: "50%",
                             transform: "translate(-50%, -50%)",
                           }}
-                          onClick={() => handleScrollPosition()}
+                          onClick={() => {
+                            handleVideoClick(video.slug);
+                            handleScrollPosition();
+                          }}
                           size="large"
                         >
                           <ViewIcon
@@ -782,7 +798,7 @@ export class ListComponent extends Component {
             {loading && (
               <Grid container spacing={2} style={{ marginTop: 2 }}>
                 {Array.from(new Array(12)).map((item, index) => (
-                  <Grid item md={4} sm={12} xs={12} key={index}>
+                  <Grid item md={4} sm={6} xs={12} key={index}>
                     <Card elevation={0} style={{ maxWidth: 380 }}>
                       <CardActionArea>
                         <Skeleton
@@ -872,4 +888,6 @@ export class ListComponent extends Component {
   }
 }
 
-export default withStyles(styles)(withMobileDialog()(ListComponent));
+export default withRouter(
+  withStyles(styles)(withMobileDialog()(ListComponent))
+);

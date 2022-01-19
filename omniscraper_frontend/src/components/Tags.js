@@ -6,7 +6,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import makeStyles from "@mui/styles/makeStyles";
 import { HideOnScroll } from "./HideOnScroll";
-import useScrollTrigger from "@mui/material/useScrollTrigger";
+import { useTheme } from "@mui/material/styles";
 
 const styles = makeStyles((theme) => ({
   tags: {
@@ -14,14 +14,17 @@ const styles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     "&::-webkit-scrollbar": { width: 0 },
-    [theme.breakpoints.down("sm")]: {
-      paddinTop: 16,
-    },
   },
   toolBarRoot: {
     paddingRight: 0,
-    padingLeft: 0,
+    paddingLeft: 0,
+    [theme.breakpoints.down("md")]: {
+      paddingTop: 16,
+    },
+    height: 64,
   },
+
+  appBar: {},
 }));
 
 function Tags(props) {
@@ -39,6 +42,7 @@ function Tags(props) {
     window,
   } = props;
   const classes = styles(props);
+  const theme = useTheme();
 
   const tagEditor = (
     <Menu
@@ -57,16 +61,12 @@ function Tags(props) {
     </Menu>
   );
 
-  const trigger = useScrollTrigger({
-    target: window ? window() : undefined,
-  });
-
   return (
     <AppBar
       style={{
         background: "#fff",
         position: "fixed",
-        top: trigger ? 0 : 64,
+        top: 64,
         opacity: 0.95,
         transition: "all 0.5s ease",
       }}

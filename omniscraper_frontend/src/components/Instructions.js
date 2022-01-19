@@ -21,9 +21,6 @@ const useStyles = makeStyles({
 
 function Instructions({ window }) {
   const classes = useStyles();
-  const trigger = useScrollTrigger({
-    target: window ? window() : undefined,
-  });
 
   return (
     <Paper
@@ -34,7 +31,6 @@ function Instructions({ window }) {
         flexDirection: "column",
         alignItems: "center",
         position: "fixed",
-        top: trigger && 80,
         flex: 1,
         width: "23vw",
         textAlign: "center",

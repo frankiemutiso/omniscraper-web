@@ -23,6 +23,7 @@ const useStyles = makeStyles({
     },
     transition: "all 0.5s ease",
   },
+  toolbarRoot: { height: 64 },
 });
 
 const Nav = (props) => {
@@ -33,8 +34,10 @@ const Nav = (props) => {
 
   return (
     <div style={{ flexGrow: 1 }}>
-      <HideOnScroll {...props}>
-        <AppBar style={{ backgroundColor: "#000" }}>
+        <AppBar
+          style={{ backgroundColor: "#000" }}
+          classes={{ root: classes.toolbarRoot }}
+        >
           <Toolbar>
             <div
               style={{
@@ -95,7 +98,6 @@ const Nav = (props) => {
             </div>
           </Toolbar>
         </AppBar>
-      </HideOnScroll>
     </div>
   );
 };

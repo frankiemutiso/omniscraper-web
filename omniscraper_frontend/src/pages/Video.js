@@ -297,13 +297,18 @@ export class Video extends React.PureComponent {
     return (
       <>
         <Toolbar ref={this.ref} />
-        <div className={classes.root}>
+        <div
+          className={classes.root}
+          style={{
+            minHeight: "100vh",
+          }}
+        >
           {/* Desktop UI */}
           <Hidden smDown>
             <Card
+              elevation={0}
               style={{
-                width: 640,
-                marginTop: "12vh",
+                width: "80vw",
               }}
             >
               <CardActionArea>
@@ -311,14 +316,14 @@ export class Video extends React.PureComponent {
                   <Skeleton
                     animation="wave"
                     variant="rectangular"
-                    style={{ height: 360 }}
+                    style={{ height: "65vh" }}
                   />
                 ) : (
                   <CardMedia
                     component="video"
-                    height="360"
+                    // height="70vh"
                     src={video.url}
-                    style={{ objectFit: "contain" }}
+                    style={{ objectFit: "contain", height: "65vh" }}
                     controls
                     crossOrigin="anonymous"
                     disablePictureInPicture
@@ -341,7 +346,7 @@ export class Video extends React.PureComponent {
                 ) : (
                   <Typography
                     color="textSecondary"
-                    variant="body2"
+                    variant="caption"
                     style={{
                       marginRight: "auto",
                       marginLeft: 8,
@@ -386,7 +391,7 @@ export class Video extends React.PureComponent {
           {/* mobile UI */}
           <Hidden smUp>
             {downloadProgress}
-            <Card style={{ width: "100vw" }}>
+            <Card elevation={0} style={{ width: "100vw" }}>
               <CardActionArea>
                 <CardMedia
                   ref={this.vidRef}
@@ -395,13 +400,11 @@ export class Video extends React.PureComponent {
                   src={video.url}
                   style={{
                     objectFit: "contain",
-                    height: `${
-                      100 - this.ref.current?.clientHeight * (1 / 8)
-                    }vh`,
+                    height: "100vh",
                     position: "relative",
                   }}
                   onClick={handleToggle}
-                  autoPlay
+                  autoPlay={autoplayVideo}
                   disablePictureInPicture
                   controlsList="nodownload"
                   onContextMenu={(e) => e.preventDefault()}
@@ -409,12 +412,13 @@ export class Video extends React.PureComponent {
                 <IconButton
                   onClick={handleToggle}
                   style={{
-                    display: play === false ? "block" : "none",
+                    display:
+                      play === false ? "block" : "none",
                     position: "absolute",
                     top: "50%",
                     left: "50%",
                     transform: "translate(-50%, -50%)",
-                    transition: "100ms ease-in-out",
+                    transition: "all 150ms ease",
                   }}
                   size="large"
                 >

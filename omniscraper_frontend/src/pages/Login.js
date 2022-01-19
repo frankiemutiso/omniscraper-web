@@ -119,9 +119,9 @@ export class Login extends PureComponent {
       <>
         <Toolbar />
         <Container
-          style={{ height: "80vh", display: "grid", placeItems: "center" }}
+          style={{ minHeight: "100vh", display: "grid", placeItems: "center" }}
         >
-          <Paper className={classes.paper} square elevation={3}>
+          <Paper elevation={0} className={classes.paper} square elevation={3}>
             <Snackbar
               ContentProps={{
                 classes: {
