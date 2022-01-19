@@ -1,1 +1,0 @@
-self.onmessage=function(e){var n=e.data;fetch(n).then((function(e){return e.json()})).then((function(e){self.postMessage(e),self.close()}))};
