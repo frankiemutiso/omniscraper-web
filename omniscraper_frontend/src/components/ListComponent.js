@@ -29,8 +29,10 @@ import Skeleton from "@mui/material/Skeleton";
 import ViewIcon from "@mui/icons-material/PlayArrow";
 import Snackbar from "@mui/material/Snackbar";
 import Typography from "@mui/material/Typography";
-import Toolbar from "@mui/material/Toolbar";
 import { Link } from "react-router-dom";
+import Toolbar from "@mui/material/Toolbar";
+import { withRouter } from "react-router";
+import Blank from "./Blank";
 import { axiosInstance } from "../utils/axiosInstance";
 import Instructions from "./Instructions";
 import { calculateTimeSinceSave } from "../utils/calculateTimeLapse";
@@ -76,6 +78,11 @@ const styles = (theme) => ({
     position: "absolute",
     right: theme.spacing(1),
     top: theme.spacing(1),
+  },
+  videos: {
+    [theme.breakpoints.down("sm")]: {
+      marginTop: 16,
+    },
   },
 });
 
@@ -128,7 +135,12 @@ export class ListComponent extends Component {
 
     if (error || loading || !hasMore) return;
 
-    if (scrollTop >= scrollHeight - clientHeight - 200) {
+    const checkHeight = scrollTop >= scrollHeight - clientHeight - 200;
+
+    if (clientHeight === scrollHeight - Math.round(scrollTop)) {
+      // console.log("SCROLL TOP: ", scrollTop);
+      // console.log("SCROLL HEIGHT: ", scrollHeight);
+      // console.log("CLIENT HEIGHT: ", clientHeight);
       loadVideos();
     }
   };
@@ -362,6 +374,12 @@ export class ListComponent extends Component {
     });
   };
 
+  handleVideoClick = (slug) => {
+    const { history } = this.props;
+
+    history.push(`/${slug}`);
+  };
+
   render() {
     const {
       open,
@@ -395,6 +413,8 @@ export class ListComponent extends Component {
       hasMore,
       fullScreen,
       handleScrollPosition,
+      window,
+      history,
     } = this.props;
 
     const {
@@ -418,6 +438,7 @@ export class ListComponent extends Component {
       handleEditTag,
       handleRightClick,
       handleTagMenuClose,
+      handleVideoClick,
     } = this;
     const reportDialog = (
       <Dialog
@@ -605,6 +626,8 @@ export class ListComponent extends Component {
     return (
       <div className={classes.root} onScroll={this.handleInfiniteScroll}>
         <Toolbar />
+        <Blank />
+
         {editVideoTagsDialog}
         {createTagDialog}
         {reportDialog}
@@ -671,140 +694,151 @@ export class ListComponent extends Component {
           loading={loading}
           handleScrollPosition={handleScrollPosition}
         />
+        <Grid container spacing={2} style={{ paddingTop: 16 }}>
+          <Hidden mdDown>
+            <Grid item md={3} xs={12} sm={12}>
+              <Instructions />
+            </Grid>
+          </Hidden>
+          <Grid item md={9} xs={12} sm={12} className={classes.videos}>
+            <Grid container spacing={2}>
+              {videos.map((video, index) => {
+                const url =
+                  video.video_thumbnail_link_https !== null
+                    ? video.video_thumbnail_link_https
+                    : video.url;
 
-        <Grid container spacing={2}>
-          {videos.map((video, index) => {
-            const url =
-              video.video_thumbnail_link_https !== null
-                ? video.video_thumbnail_link_https
-                : video.url;
+                const lapse = calculateTimeSinceSave(video);
 
-            const lapse = calculateTimeSinceSave(video);
-
-            return (
-              <Grid item md={3} sm={6} xs={12} key={index}>
-                <Card
-                  style={{
-                    maxWidth: 380,
-                  }}
-                >
-                  <CardActionArea
-                    component={Link}
-                    to={`/${video.slug}`}
-                    onClick={() => handleScrollPosition()}
-                  >
-                    <CardMedia
-                      component={
-                        video.video_thumbnail_link_https ? "img" : "video"
-                      }
-                      height="180"
-                      disablePictureInPicture
-                      controlsList="nodownload"
-                      crossOrigin="anonymous"
-                      image={url}
-                      style={{ objectFit: "cover", position: "relative" }}
-                      onContextMenu={(e) => e.preventDefault()}
-                    />
-                    <IconButton
-                      component={Link}
-                      to={`/${video.slug}`}
+                return (
+                  <Grid item md={4} sm={6} xs={12} key={index}>
+                    <Card
+                      elevation={0}
                       style={{
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
+                        maxWidth: 380,
                       }}
-                      onClick={() => handleScrollPosition()}
-                      size="large"
                     >
-                      <ViewIcon
-                        style={{
-                          color: "white",
-                          fontSize: 60,
-                          opacity: 0.8,
+                      <CardActionArea
+                        onClick={() => {
+                          handleVideoClick(video.slug);
+                          handleScrollPosition();
                         }}
-                      />
-                    </IconButton>
-                  </CardActionArea>
-
-                  <CardActions>
-                    <Typography
-                      color="textSecondary"
-                      variant="body2"
-                      style={{
-                        marginRight: "auto",
-                        marginLeft: 8,
-                      }}
-                    >
-                      {lapse}
-                    </Typography>
-                    <IconButton
-                      size="small"
-                      color="primary"
-                      onClick={() => handleShare(video)}
-                      style={{ marginRight: 8 }}
-                    >
-                      <ShareIcon size="small" />
-                    </IconButton>
-                    {loggedIn && (
-                      <IconButton
-                        size="small"
-                        color="primary"
-                        onClick={(e) => handleMenuClick(e, video)}
-                        style={{ marginRight: 8 }}
                       >
-                        <MoreIcon />
-                      </IconButton>
-                    )}
-                  </CardActions>
-                </Card>
-              </Grid>
-            );
-          })}
-        </Grid>
+                        <CardMedia
+                          component={
+                            video.video_thumbnail_link_https ? "img" : "video"
+                          }
+                          height="180"
+                          disablePictureInPicture
+                          controlsList="nodownload"
+                          crossOrigin="anonymous"
+                          image={url}
+                          style={{ objectFit: "cover", position: "relative" }}
+                          onContextMenu={(e) => e.preventDefault()}
+                        />
+                        <IconButton
+                          style={{
+                            position: "absolute",
+                            top: "50%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                          }}
+                          onClick={() => {
+                            handleVideoClick(video.slug);
+                            handleScrollPosition();
+                          }}
+                          size="large"
+                        >
+                          <ViewIcon
+                            style={{
+                              color: "white",
+                              fontSize: 60,
+                              opacity: 0.8,
+                            }}
+                          />
+                        </IconButton>
+                      </CardActionArea>
 
-        {loading && (
-          <Grid container spacing={2} style={{ marginTop: 2 }}>
-            {Array.from(new Array(12)).map((item, index) => (
-              <Grid item md={3} sm={6} xs={12} key={index}>
-                <Card style={{ maxWidth: 380 }}>
-                  <CardActionArea>
-                    <Skeleton
-                      animation="wave"
-                      variant="rectangular"
-                      style={{ height: 180 }}
-                    />
-                  </CardActionArea>
+                      <CardActions>
+                        <Typography
+                          color="textSecondary"
+                          variant="caption"
+                          style={{
+                            marginRight: "auto",
+                            marginLeft: 8,
+                          }}
+                        >
+                          {lapse}
+                        </Typography>
+                        <IconButton
+                          size="small"
+                          color="primary"
+                          onClick={() => handleShare(video)}
+                          style={{ marginRight: 8 }}
+                        >
+                          <ShareIcon size="small" />
+                        </IconButton>
+                        {loggedIn && (
+                          <IconButton
+                            size="small"
+                            color="primary"
+                            onClick={(e) => handleMenuClick(e, video)}
+                            style={{ marginRight: 8 }}
+                          >
+                            <MoreIcon />
+                          </IconButton>
+                        )}
+                      </CardActions>
+                    </Card>
+                  </Grid>
+                );
+              })}
+            </Grid>
 
-                  <CardActions>
-                    <Skeleton
-                      animation="wave"
-                      height={30}
-                      width={80}
-                      style={{ marginRight: "auto" }}
-                    />
-                    <IconButton
-                      size="small"
-                      color="primary"
-                      style={{ marginRight: 8 }}
-                    >
-                      <ShareIcon size="small" />
-                    </IconButton>
-                    {loggedIn && (
-                      <IconButton
-                        size="small"
-                        color="primary"
-                        style={{ marginRight: 8 }}
-                      >
-                        <MoreIcon />
-                      </IconButton>
-                    )}
-                  </CardActions>
-                </Card>
+            {loading && (
+              <Grid container spacing={2} style={{ marginTop: 2 }}>
+                {Array.from(new Array(12)).map((item, index) => (
+                  <Grid item md={4} sm={6} xs={12} key={index}>
+                    <Card elevation={0} style={{ maxWidth: 380 }}>
+                      <CardActionArea>
+                        <Skeleton
+                          animation="wave"
+                          variant="rectangular"
+                          style={{ height: 180 }}
+                        />
+                      </CardActionArea>
+
+                      <CardActions>
+                        <Skeleton
+                          animation="wave"
+                          height={30}
+                          width={80}
+                          style={{ marginRight: "auto" }}
+                        />
+                        <IconButton
+                          size="small"
+                          color="primary"
+                          style={{ marginRight: 8 }}
+                        >
+                          <ShareIcon size="small" />
+                        </IconButton>
+                        {loggedIn && (
+                          <IconButton
+                            size="small"
+                            color="primary"
+                            style={{ marginRight: 8 }}
+                          >
+                            <MoreIcon />
+                          </IconButton>
+                        )}
+                      </CardActions>
+                    </Card>
+                  </Grid>
+                ))}
               </Grid>
-            ))}
+            )}
           </Grid>
-        )}
+        </Grid>
 
         {loggedIn && (
           <React.Fragment>
@@ -854,4 +888,6 @@ export class ListComponent extends Component {
   }
 }
 
-export default withStyles(styles)(withMobileDialog()(ListComponent));
+export default withRouter(
+  withStyles(styles)(withMobileDialog()(ListComponent))
+);
