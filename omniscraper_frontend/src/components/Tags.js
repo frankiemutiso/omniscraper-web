@@ -8,14 +8,9 @@ import makeStyles from "@mui/styles/makeStyles";
 import { HideOnScroll } from "./HideOnScroll";
 import { useTheme } from "@mui/material/styles";
 import { useHistory } from "react-router-dom";
+import "./Tags.css";
 
 const styles = makeStyles((theme) => ({
-  tags: {
-    overflowX: "auto",
-    display: "flex",
-    alignItems: "center",
-    "&::-webkit-scrollbar": { width: 0 },
-  },
   toolBarRoot: {
     paddingRight: 0,
     paddingLeft: 0,
@@ -72,8 +67,8 @@ function Tags(props) {
       }}
     >
       <Toolbar classes={{ root: classes.toolBarRoot }}>
-        <div className={classes.tags}>
-          {loggedIn && tagEditor}
+        {loggedIn && tagEditor}
+        <div className="tags">
           <div style={{ paddingRight: 16 }} />
           {videoTags.map((tag) => (
             <Chip
