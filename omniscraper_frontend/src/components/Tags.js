@@ -7,6 +7,7 @@ import Toolbar from "@mui/material/Toolbar";
 import makeStyles from "@mui/styles/makeStyles";
 import { HideOnScroll } from "./HideOnScroll";
 import { useTheme } from "@mui/material/styles";
+import { useHistory } from "react-router-dom";
 
 const styles = makeStyles((theme) => ({
   tags: {
@@ -39,10 +40,9 @@ function Tags(props) {
     loggedIn,
     loading,
     handleScrollPosition,
-    window,
   } = props;
   const classes = styles(props);
-  const theme = useTheme();
+  const history = useHistory();
 
   const tagEditor = (
     <Menu
@@ -78,9 +78,10 @@ function Tags(props) {
           {videoTags.map((tag) => (
             <Chip
               onContextMenu={(e) => handleRightClick(e, tag)}
-              component={Link}
-              to={`/tags/${tag.slug}`}
-              onClick={() => handleScrollPosition()}
+              onClick={() => {
+                handleScrollPosition();
+                history.push(`/tags/${tag.slug}`);
+              }}
               key={tag.tag_name}
               label={tag.tag_name}
               disabled={loading}
