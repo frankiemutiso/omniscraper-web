@@ -61,8 +61,14 @@ export class FilteredVideos extends Component {
 
   render() {
     const { loading, videos, hasMore, videosLoadingError } = this.state;
-    const { classes, loggedIn, videoTags, loadTags, location } = this.props;
-    const { handleScrollPosition } = this;
+    const {
+      classes,
+      loggedIn,
+      videoTags,
+      loadTags,
+      location,
+      handleScrollPosition,
+    } = this.props;
     const pathParams = location.pathname.split("/");
     const clickedTag = pathParams[pathParams.length - 1];
 
