@@ -1,0 +1,10 @@
+.tags {
+  overflow-x: auto;
+  display: flex;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+}
+
+.tags::-webkit-scrollbar {
+  display: none;
+}
