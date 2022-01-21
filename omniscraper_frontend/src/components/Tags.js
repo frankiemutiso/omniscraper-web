@@ -20,7 +20,7 @@ const styles = makeStyles((theme) => ({
     paddingRight: 0,
     paddingLeft: 0,
     [theme.breakpoints.down("sm")]: {
-      paddingTop: 16,
+      // paddingTop: 16,
     },
     height: 64,
   },
