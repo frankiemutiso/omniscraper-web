@@ -84,6 +84,20 @@ const styles = (theme) => ({
       marginTop: 16,
     },
   },
+  textContainer: {
+    paddingLeft: 8,
+    paddingRight: 8,
+    marginBottom: 4,
+    [theme.breakpoints.up("md")]: {
+      height: 50,
+      textOverflow: "ellipsis",
+      wordWrap: "break-word",
+      display: "-webkit-box",
+      WebkitLineClamp: 2,
+      WebkitBoxOrient: "vertical",
+      overflow: "hidden",
+    },
+  },
 });
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -705,6 +719,12 @@ export class ListComponent extends Component {
                     ? video.video_thumbnail_link_https
                     : video.url;
 
+                const indexOfHttps =
+                  video.text !== null && video.text.indexOf("https");
+                const text =
+                  video.text !== null &&
+                  video.text.slice(0, indexOfHttps).trim();
+
                 const lapse = calculateTimeSinceSave(video);
 
                 return (
@@ -753,34 +773,67 @@ export class ListComponent extends Component {
                       </CardActionArea>
 
                       <CardActions>
-                        <Typography
-                          color="textSecondary"
-                          variant="caption"
+                        <div
                           style={{
-                            marginRight: "auto",
-                            marginLeft: 8,
+                            display: "flex",
+                            flexDirection: "column",
+                            width: "100%",
                           }}
                         >
-                          {lapse}
-                        </Typography>
-                        <IconButton
-                          size="small"
-                          color="primary"
-                          onClick={() => handleShare(video)}
-                          style={{ marginRight: 8 }}
-                        >
-                          <ShareIcon size="small" />
-                        </IconButton>
-                        {loggedIn && (
-                          <IconButton
-                            size="small"
-                            color="primary"
-                            onClick={(e) => handleMenuClick(e, video)}
-                            style={{ marginRight: 8 }}
+                          <div className={classes.textContainer}>
+                            {text.length > 0 && (
+                              <Typography
+                                variant="caption"
+                                color="textPrimary"
+                                style={{
+                                  "&::first-letter": {
+                                    textTransform: "uppercase",
+                                  },
+                                }}
+                              >
+                                {text}
+                              </Typography>
+                            )}
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                            }}
                           >
-                            <MoreIcon />
-                          </IconButton>
-                        )}
+                            <Typography
+                              color="textSecondary"
+                              variant="caption"
+                              style={{
+                                // marginRight: "auto",
+                                marginLeft: 8,
+                              }}
+                            >
+                              {lapse}
+                            </Typography>
+                            <div>
+                              <IconButton
+                                size="small"
+                                color="primary"
+                                onClick={() => handleShare(video)}
+                                style={{ marginRight: 8 }}
+                              >
+                                <ShareIcon style={{ fontSize: 16 }} />
+                              </IconButton>
+                              {loggedIn && (
+                                <IconButton
+                                  size="small"
+                                  color="primary"
+                                  onClick={(e) => handleMenuClick(e, video)}
+                                  style={{ marginRight: 8 }}
+                                >
+                                  <MoreIcon style={{ fontSize: 16 }} />
+                                </IconButton>
+                              )}
+                            </div>
+                          </div>
+                        </div>
                       </CardActions>
                     </Card>
                   </Grid>
@@ -802,28 +855,47 @@ export class ListComponent extends Component {
                       </CardActionArea>
 
                       <CardActions>
-                        <Skeleton
-                          animation="wave"
-                          height={30}
-                          width={80}
-                          style={{ marginRight: "auto" }}
-                        />
-                        <IconButton
-                          size="small"
-                          color="primary"
-                          style={{ marginRight: 8 }}
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            width: "100%",
+                          }}
                         >
-                          <ShareIcon size="small" />
-                        </IconButton>
-                        {loggedIn && (
-                          <IconButton
-                            size="small"
-                            color="primary"
-                            style={{ marginRight: 8 }}
+                          <div>
+                            <Skeleton animation="wave" variant="text" />
+                            <Skeleton animation="wave" variant="text" />
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
                           >
-                            <MoreIcon />
-                          </IconButton>
-                        )}
+                            <Skeleton
+                              animation="wave"
+                              height={30}
+                              width={80}
+                              style={{ marginRight: "auto" }}
+                            />
+                            <IconButton
+                              size="small"
+                              color="primary"
+                              style={{ marginRight: 8 }}
+                            >
+                              <ShareIcon size="small" />
+                            </IconButton>
+                            {loggedIn && (
+                              <IconButton
+                                size="small"
+                                color="primary"
+                                style={{ marginRight: 8 }}
+                              >
+                                <MoreIcon />
+                              </IconButton>
+                            )}
+                          </div>
+                        </div>
                       </CardActions>
                     </Card>
                   </Grid>
