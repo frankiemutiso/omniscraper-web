@@ -5,7 +5,7 @@ from .models import TwitterVideo, VideoTag
 class TwitterVideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = TwitterVideo
-        fields = ['id', "slug", "url", "parent_tweet_id", "flagged", "tags", "video_thumbnail_link_https", "date_saved_utc"]
+        fields = ['id', "slug", "url", "parent_tweet_id", "flagged", "tags", "video_thumbnail_link_https", "text", "date_saved_utc"]
         extra_kwargs = {"tags": {"required": False}}
 
 

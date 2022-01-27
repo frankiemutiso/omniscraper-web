@@ -243,6 +243,10 @@ export class Video extends React.PureComponent {
 
     const lapse = calculateTimeSinceSave(video);
 
+    const indexOfHttps = video.text !== null && video.text?.indexOf("https");
+    const text =
+      video.text !== null && video.text?.slice(0, indexOfHttps).trim();
+
     const actions = [
       {
         icon: (
@@ -319,71 +323,131 @@ export class Video extends React.PureComponent {
                     style={{ height: "65vh" }}
                   />
                 ) : (
-                  <CardMedia
-                    component="video"
-                    // height="70vh"
-                    src={video.url}
-                    style={{ objectFit: "contain", height: "65vh" }}
-                    controls
-                    crossOrigin="anonymous"
-                    disablePictureInPicture
-                    autoPlay={autoplayVideo}
-                    controlsList="nodownload"
-                    onContextMenu={(e) => e.preventDefault()}
-                  />
+                  <>
+                    <CardMedia
+                      ref={this.vidRef}
+                      component="video"
+                      src={video.url}
+                      style={{
+                        objectFit: "contain",
+                        height: "65vh",
+                        position: "relative",
+                      }}
+                      // controls
+                      crossOrigin="anonymous"
+                      disablePictureInPicture
+                      onClick={handleToggle}
+                      autoPlay={autoplayVideo}
+                      controlsList="nodownload"
+                      onContextMenu={(e) => e.preventDefault()}
+                    />
+                    <ViewIcon
+                      size="large"
+                      onClick={handleToggle}
+                      style={{
+                        color: "white",
+                        fontSize: 80,
+                        opacity: 0.8,
+                        display: play === false ? "block" : "none",
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        transition: "all 150ms ease",
+                      }}
+                    />
+                    <div className={classes.controls}></div>
+                  </>
                 )}
               </CardActionArea>
               <CardActions>
-                {loading ? (
-                  <Skeleton
-                    animation="wave"
-                    height={30}
-                    width={80}
+                <div style={{ width: "100%" }}>
+                  <div
                     style={{
-                      marginRight: "auto",
-                    }}
-                  />
-                ) : (
-                  <Typography
-                    color="textSecondary"
-                    variant="caption"
-                    style={{
-                      marginRight: "auto",
-                      marginLeft: 8,
+                      paddingLeft: 8,
+                      paddinRight: 8,
+                      marginBottom: 8,
                     }}
                   >
-                    {lapse}
-                  </Typography>
-                )}
-                {loading ? (
-                  <React.Fragment>
-                    <Skeleton animation="wave" height={30} width={80} />
-                    <Skeleton animation="wave" height={30} width={80} />
-                  </React.Fragment>
-                ) : (
-                  <React.Fragment>
-                    <Button
-                      size="small"
-                      color="primary"
-                      startIcon={<TwitterIcon />}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
-                    >
-                      Tweet
-                    </Button>
-                    <Button
-                      size="small"
-                      color="primary"
-                      variant="contained"
-                      startIcon={<Download />}
-                      onClick={() => downloadVideo(video)}
-                      style={{ marginLeft: 16 }}
-                    >
-                      Download
-                    </Button>
-                  </React.Fragment>
-                )}
+                    {loading ? (
+                      <>
+                        <Skeleton animation="wave" variant="text" />
+                        <Skeleton animation="wave" variant="text" />
+                      </>
+                    ) : (
+                      <>
+                        {text?.length > 0 && (
+                          <Typography variant="caption" color="textPrimary">
+                            {text}
+                          </Typography>
+                        )}
+                      </>
+                    )}
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    {loading ? (
+                      <Skeleton
+                        animation="wave"
+                        height={30}
+                        width={80}
+                        style={{
+                          marginRight: "auto",
+                        }}
+                      />
+                    ) : (
+                      <Typography
+                        color="textSecondary"
+                        variant="caption"
+                        style={{
+                          marginRight: "auto",
+                          marginLeft: 8,
+                        }}
+                      >
+                        {lapse}
+                      </Typography>
+                    )}
+                    {loading ? (
+                      <React.Fragment>
+                        <Skeleton animation="wave" height={30} width={80} />
+                        <Skeleton
+                          animation="wave"
+                          height={30}
+                          width={80}
+                          style={{ marginLeft: 16 }}
+                        />
+                      </React.Fragment>
+                    ) : (
+                      <div>
+                        <Button
+                          size="small"
+                          color="primary"
+                          startIcon={<TwitterIcon />}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
+                        >
+                          Tweet
+                        </Button>
+                        <Button
+                          size="small"
+                          color="primary"
+                          variant="contained"
+                          startIcon={<Download />}
+                          onClick={() => downloadVideo(video)}
+                          style={{ marginLeft: 16 }}
+                        >
+                          Download
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </CardActions>
             </Card>
           </Hidden>
