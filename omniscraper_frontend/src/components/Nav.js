@@ -23,13 +23,13 @@ const useStyles = makeStyles({
     },
     transition: "all 0.5s ease",
   },
-  toolbarRoot: { height: 64 },
+  toolbarRoot: { height: 64, paddingLeft: 0 },
   logo: {
     width: 72,
-    height: 72,
-    marginTop: 14,
-    marginRight: -12,
+    maxWidth: "100%",
+    height: "auto",
     marginLeft: -16,
+    marginRight: -10,
   },
 });
 
@@ -52,17 +52,15 @@ const Nav = (props) => {
               display: "flex",
               cursor: "pointer",
               alignItems: "center",
+              height: 64,
             }}
+            classes={{ root: classes.toolbarRoot }}
             onClick={() => {
               history.push("/");
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
-            <div
-              stle={{ display: "grid", placeItems: "center", marginRight: -16 }}
-            >
-              <img src={logo} alt="Omniscraper Logo" className={classes.logo} />
-            </div>
+            <img src={logo} alt="Omniscraper Logo" className={classes.logo} />
             <div
               style={{
                 display: "flex",
