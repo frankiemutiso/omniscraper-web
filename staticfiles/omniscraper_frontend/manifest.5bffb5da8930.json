@@ -8,27 +8,27 @@
       "type": "image/x-icon"
     },
     {
-      "src": "maskable_icon_192.png",
+      "src": "omniscraper_logo.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "maskable"
     },
     {
-      "src": "maskable_icon_192.png",
+      "src": "omniscraper_logo.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any"
     },
     {
-      "src": "maskable_icon_512.png",
+      "src": "omniscraper_logo.png",
       "type": "image/png",
-      "sizes": "512x512", 
+      "sizes": "512x512",
       "purpose": "maskable"
     },
     {
-      "src": "maskable_icon_512.png",
+      "src": "omniscraper_logo.png",
       "type": "image/png",
-      "sizes": "512x512", 
+      "sizes": "512x512",
       "purpose": "any"
     }
   ],
@@ -36,5 +36,5 @@
   "scope": ".",
   "display": "standalone",
   "theme_color": "#F3F1F5",
-  "background_color": "#7E7EBC"
+  "background_color": "#000000"
 }
