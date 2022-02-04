@@ -7,7 +7,7 @@ import Toolbar from "@mui/material/Toolbar";
 import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import { HideOnScroll } from "./HideOnScroll";
-
+import logo from "../assets/omniscraperLogo.png";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -24,6 +24,13 @@ const useStyles = makeStyles({
     transition: "all 0.5s ease",
   },
   toolbarRoot: { height: 64 },
+  logo: {
+    width: 72,
+    height: 72,
+    marginTop: 14,
+    marginRight: -12,
+    marginLeft: -16,
+  },
 });
 
 const Nav = (props) => {
@@ -34,22 +41,33 @@ const Nav = (props) => {
 
   return (
     <div style={{ flexGrow: 1 }}>
-        <AppBar
-          style={{ backgroundColor: "#000" }}
-          classes={{ root: classes.toolbarRoot }}
-        >
-          <Toolbar>
+      <AppBar
+        style={{ backgroundColor: "#000" }}
+        classes={{ root: classes.toolbarRoot }}
+      >
+        <Toolbar>
+          <div
+            style={{
+              marginRight: "auto",
+              display: "flex",
+              cursor: "pointer",
+              alignItems: "center",
+            }}
+            onClick={() => {
+              history.push("/");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          >
+            <div
+              stle={{ display: "grid", placeItems: "center", marginRight: -16 }}
+            >
+              <img src={logo} alt="Omniscraper Logo" className={classes.logo} />
+            </div>
             <div
               style={{
-                marginRight: "auto",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                history.push("/");
-                window.scrollTo({ top: 0, behaviour: "smooth" });
               }}
             >
               <Typography
@@ -78,26 +96,27 @@ const Nav = (props) => {
                 smart content delivery
               </Typography>
             </div>
+          </div>
 
-            <div>
-              {loggedIn && (
-                <React.Fragment>
-                  <Button
-                    size="small"
-                    variant="outlined"
-                    color="white"
-                    component={Link}
-                    to="/"
-                    // className={classes.navLink}
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </Button>
-                </React.Fragment>
-              )}
-            </div>
-          </Toolbar>
-        </AppBar>
+          <div>
+            {loggedIn && (
+              <React.Fragment>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  color="white"
+                  component={Link}
+                  to="/"
+                  // className={classes.navLink}
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
+              </React.Fragment>
+            )}
+          </div>
+        </Toolbar>
+      </AppBar>
     </div>
   );
 };
