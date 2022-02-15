@@ -7,7 +7,7 @@ import Toolbar from "@mui/material/Toolbar";
 import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import { HideOnScroll } from "./HideOnScroll";
-import logo from "../assets/omniscraperLogo.png";
+import logo from "../assets/omniscraperLogo.svg";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -25,7 +25,7 @@ const useStyles = makeStyles({
   },
   toolbarRoot: { height: 64, paddingLeft: 0 },
   logo: {
-    width: 72,
+    width: 60,
     maxWidth: "100%",
     height: "auto",
     marginLeft: -16,
@@ -66,17 +66,18 @@ const Nav = (props) => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                marginTop: -7,
               }}
             >
               <Typography
-                variant="h6"
+                variant="subtitle1"
                 style={{
                   textTransform: "uppercase",
-                  // fontStyle: "italic",
                   color: "#fff",
                   textDecoration: "none",
                   marginBottom: -8,
                   fontWeight: 600,
+                  letterSpacing: 0.1,
                 }}
                 className={classes.title}
               >
@@ -87,7 +88,7 @@ const Nav = (props) => {
                 variant="caption"
                 style={{
                   textTransform: "uppercase",
-                  fontSize: 10,
+                  fontSize: 8,
                   letterSpacing: 0.4,
                 }}
               >
