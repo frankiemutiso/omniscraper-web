@@ -162,7 +162,7 @@ export class ListComponent extends Component {
 
     this.setState({ flagging: true }, () => {
       axiosInstance
-        .put(url, {
+        .patch(url, {
           id: video.id,
           url: video.url,
           parent_tweet_id: video.parent_tweet_id,
