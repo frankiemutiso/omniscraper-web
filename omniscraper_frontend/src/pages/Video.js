@@ -1,4 +1,4 @@
-import Button from "@mui/material/Button";
+import Button from "../components/reusableComponents/Button";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardActions from "@mui/material/CardActions";
@@ -29,6 +29,7 @@ import Box from "@mui/material/Box";
 import Slide from "@mui/material/Slide";
 import Toolbar from "@mui/material/Toolbar";
 import { calculateTimeSinceSave } from "../utils/calculateTimeLapse";
+import "./Video.css";
 
 const styles = (theme) => ({
   root: {
@@ -439,11 +440,10 @@ export class Video extends React.PureComponent {
                           />
                         </React.Fragment>
                       ) : (
-                        <div>
+                        <div className="video__buttons">
                           <Button
-                            size="small"
-                            color="primary"
-                            startIcon={<TwitterIcon />}
+                            type="link"
+                            startIcon={<TwitterIcon style={{ fontSize: 18 }} />}
                             target="_blank"
                             rel="noopener noreferrer"
                             href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
@@ -451,10 +451,7 @@ export class Video extends React.PureComponent {
                             Tweet
                           </Button>
                           <Button
-                            size="small"
-                            color="primary"
-                            variant="contained"
-                            startIcon={<Download />}
+                            startIcon={<Download style={{ fontSize: 18 }} />}
                             onClick={() => downloadVideo(video)}
                             style={{ marginLeft: 16 }}
                           >

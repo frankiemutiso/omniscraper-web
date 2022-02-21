@@ -1,0 +1,10 @@
+.login__success-text {
+  color: #24bf5f;
+  margin: 8px 0px;
+  font-size: 12px;
+}
+.login__error-text {
+  color: #f54f4e;
+  margin: 8px 0px;
+  font-size: 12px;
+}

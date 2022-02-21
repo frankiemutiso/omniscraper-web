@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
 
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
@@ -14,12 +13,12 @@ import withStyles from "@mui/styles/withStyles";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import Paper from "@mui/material/Paper";
-import CheckIcon from "@mui/icons-material/Check";
-import Grow from "@mui/material/Grow";
+
+import Button from "../components/reusableComponents/Button";
 import { Toolbar } from "@mui/material";
+import "./Login.css";
 
 const styles = (theme) => ({
   paper: {
@@ -122,42 +121,15 @@ export class Login extends PureComponent {
           style={{ minHeight: "100vh", display: "grid", placeItems: "center" }}
         >
           <Paper elevation={0} className={classes.paper} square elevation={3}>
-            <Snackbar
-              ContentProps={{
-                classes: {
-                  root: classes.errorSnackbarRoot,
-                },
-              }}
-              open={snackbarOpen}
-              autoHideDuration={8000}
-              onClose={handleSnackbarClose}
-              message={error}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-            />
-
-            <Snackbar
-              ContentProps={{
-                classes: {
-                  root: classes.successSnackbarRoot,
-                },
-              }}
-              open={successSnackbarOpen}
-              autoHideDuration={2500}
-              onClose={handleSuccessSnackbarClose}
-              message="Successfully logged in"
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-            />
-
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
             {successfulLogin ? (
-              <Grow in={true} {...{ timeout: 700 }}>
-                <Avatar className={classes.successAvatar}>
-                  <CheckIcon />
-                </Avatar>
-              </Grow>
+              <p className="login__success-text">
+                You have successfully logged in.
+              </p>
             ) : (
-              <Avatar className={classes.avatar}>
-                <LockOutlinedIcon />
-              </Avatar>
+              <p className="login__error-text">{error}</p>
             )}
 
             <h4
@@ -225,16 +197,13 @@ export class Login extends PureComponent {
                   }
                 />
               </FormControl>
+
               <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                style={{ fontFamily: "inherit", fontWeight: 600 }}
+                onClick={() => handleSubmit()}
+                style={{ marginTop: 16, width: "100%" }}
                 endIcon={
                   loginLoading ? (
-                    <CircularProgress size={16} style={{ color: "white" }} />
+                    <CircularProgress size={12} style={{ color: "white" }} />
                   ) : (
                     ""
                   )

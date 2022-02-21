@@ -1,0 +1,71 @@
+.button__outlined {
+  padding: 7px 15px;
+  color: #0087fe;
+  background-color: transparent;
+  border: 1px solid #0087fe;
+  border-radius: 5px;
+  outline: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button__outlined:hover,
+.button__default:hover,
+.button__link:hover {
+  opacity: 0.8;
+}
+
+.button__default {
+  padding: 8px 16px;
+  color: #fff;
+  background-color: #0087fe;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button__link {
+  padding: 7px 15px;
+  color: #0087fe;
+  background-color: transparent;
+  border: 1px solid #0087fe;
+  border-radius: 5px;
+  outline: none;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.button__icon {
+  border-radius: 5px;
+  border: 1px solid #0087fe;
+  cursor: pointer;
+  outline: none;
+}
+.button__end-icon {
+  padding-left: 8px;
+}
+
+.button__start-icon {
+  padding-right: 8px;
+}

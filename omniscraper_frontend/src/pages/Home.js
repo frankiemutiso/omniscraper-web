@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import withStyles from '@mui/styles/withStyles';
+import withStyles from "@mui/styles/withStyles";
 
-const ListComponent = React.lazy(() => import("../components/ListComponent"));
+const List = React.lazy(() => import("../components/List"));
 
 const styles = (theme) => ({
   root: {
@@ -29,7 +29,7 @@ export class Home extends Component {
 
     return (
       <React.Fragment>
-        <ListComponent
+        <List
           loggedIn={loggedIn}
           videoTags={videoTags}
           hasMore={hasMore}

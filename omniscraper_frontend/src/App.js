@@ -76,22 +76,6 @@ class App extends Component {
       const { offset, limit } = this.state;
 
       const url = `/api/videos/?limit=${limit}&offset=${offset}`;
-      // const worker = new Worker("/worker.js");
-      // const worker = new Worker(new URL("./worker.js", import.meta.url));
-
-      // worker.postMessage(url);
-
-      // worker.onmessage = (e) => {
-      //   const newVideos = e.data.videos;
-      //   const hasMore = e.data.has_more;
-
-      //   this.setState({
-      //     hasMore,
-      //     loading: false,
-      //     videos: [...this.state.videos, ...newVideos],
-      //     offset: offset + limit,
-      //   });
-      // };
 
       axios
         .get(url)
@@ -118,19 +102,6 @@ class App extends Component {
   loadTags = () => {
     this.setState({ tagsLoading: true }, () => {
       const url = "/api/tags/";
-      // const worker = new Worker("/tagsWorker.js");
-      // const worker = new Worker(new URL("./tagsWorker.js", import.meta.url));
-
-      // worker.postMessage(url);
-
-      // worker.onmessage = (e) => {
-      //   const newTags = e.data.tags;
-
-      //   this.setState({
-      //     videoTags: newTags,
-      //     tagsLoading: false,
-      //   });
-      // };
 
       axios
         .get(url)
