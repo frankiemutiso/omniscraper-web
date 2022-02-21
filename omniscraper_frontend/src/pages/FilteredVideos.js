@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { withRouter } from "react-router";
-const ListComponent = React.lazy(() => import("../components/ListComponent"));
+const List = React.lazy(() => import("../components/List"));
 
 export class FilteredVideos extends Component {
   constructor(props) {
@@ -74,7 +74,7 @@ export class FilteredVideos extends Component {
 
     return (
       <>
-        <ListComponent
+        <List
           loggedIn={loggedIn}
           videos={videos}
           videoTags={videoTags}

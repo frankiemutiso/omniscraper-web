@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import AppBar from "@mui/material/AppBar";
 import { useTheme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
-import Button from "@mui/material/Button";
 import Toolbar from "@mui/material/Toolbar";
 import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import { HideOnScroll } from "./HideOnScroll";
 import logo from "../assets/omniscraperLogo.svg";
 import { useHistory } from "react-router-dom";
+import Button from "./reusableComponents/Button";
 
 const useStyles = makeStyles({
   navLink: {
@@ -100,15 +100,7 @@ const Nav = (props) => {
           <div>
             {loggedIn && (
               <React.Fragment>
-                <Button
-                  size="small"
-                  variant="outlined"
-                  color="white"
-                  component={Link}
-                  to="/"
-                  // className={classes.navLink}
-                  onClick={handleLogout}
-                >
+                <Button type="outlined" onClick={() => handleLogout()}>
                   Logout
                 </Button>
               </React.Fragment>
