@@ -791,24 +791,30 @@ export class List extends Component {
                             >
                               {lapse}
                             </p>
-                            <div>
-                              <IconButton
-                                size="small"
-                                color="primary"
-                                onClick={() => handleShare(video)}
+                            <div
+                              style={{ display: "flex", alignItems: "center" }}
+                            >
+                              <Button
                                 style={{ marginRight: 8 }}
+                                type="icon"
+                                onClick={() => handleShare(video)}
                               >
-                                <ShareIcon style={{ fontSize: 16 }} />
-                              </IconButton>
-                              {loggedIn && (
-                                <IconButton
-                                  size="small"
+                                <ShareIcon
                                   color="primary"
+                                  style={{ fontSize: 18 }}
+                                />
+                              </Button>
+                              {loggedIn && (
+                                <Button
+                                  type="icon"
                                   onClick={(e) => handleMenuClick(e, video)}
                                   style={{ marginRight: 8 }}
                                 >
-                                  <MoreIcon style={{ fontSize: 16 }} />
-                                </IconButton>
+                                  <MoreIcon
+                                    color="primary"
+                                    style={{ fontSize: 18 }}
+                                  />
+                                </Button>
                               )}
                             </div>
                           </div>
@@ -857,22 +863,23 @@ export class List extends Component {
                               width={80}
                               style={{ marginRight: "auto" }}
                             />
-                            <IconButton
-                              size="small"
-                              color="primary"
-                              style={{ marginRight: 8 }}
+                            <div
+                              style={{ display: "flex", alignItems: "center" }}
                             >
-                              <ShareIcon size="small" />
-                            </IconButton>
-                            {loggedIn && (
-                              <IconButton
-                                size="small"
+                              <ShareIcon
+                                disabled
                                 color="primary"
-                                style={{ marginRight: 8 }}
-                              >
-                                <MoreIcon />
-                              </IconButton>
-                            )}
+                                style={{ fontSize: 18, marginRight: 8 }}
+                              />
+
+                              {loggedIn && (
+                                <MoreIcon
+                                  disabled
+                                  color="primary"
+                                  style={{ fontSize: 18, marginRight: 8 }}
+                                />
+                              )}
+                            </div>
                           </div>
                         </div>
                       </CardActions>

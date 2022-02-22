@@ -148,6 +148,7 @@ class App extends Component {
               {
                 successfulLogin: true,
                 loginLoading: false,
+                error: null,
               },
               handleRedirectionDelay()
             );
