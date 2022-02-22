@@ -2,27 +2,19 @@ import React, { PureComponent } from "react";
 
 import Avatar from "@mui/material/Avatar";
 import CircularProgress from "@mui/material/CircularProgress";
-import Container from "@mui/material/Container";
-import FormControl from "@mui/material/FormControl";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
-import InputLabel from "@mui/material/InputLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import TextField from "@mui/material/TextField";
+import Textfield from "../components/reusableComponents/Textfield";
 import withStyles from "@mui/styles/withStyles";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Snackbar from "@mui/material/Snackbar";
 import Paper from "@mui/material/Paper";
-
 import Button from "../components/reusableComponents/Button";
-import { Toolbar } from "@mui/material";
 import "./Login.css";
 
 const styles = (theme) => ({
   paper: {
     padding: 24,
+    paddingBottom: 40,
     margin: "auto",
     width: "40vw",
     [theme.breakpoints.down("md")]: { width: "80vw" },
@@ -33,7 +25,7 @@ const styles = (theme) => ({
   },
   avatar: {
     marginTop: theme.spacing(1),
-    marginBottom: 16,
+    marginBottom: 8,
     backgroundColor: "black",
   },
   successAvatar: {
@@ -45,52 +37,20 @@ const styles = (theme) => ({
     width: "100%",
     marginTop: theme.spacing(1),
   },
-  textField: {
-    fontFamily: "inherit",
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  errorSnackbarRoot: {
-    backgroundColor: "#D53636",
-  },
-  successSnackbarRoot: {
-    backgroundColor: "#1DB954",
-  },
 });
 
 export class Login extends PureComponent {
   state = {
     showPassword: false,
-    snackbarOpen: false,
-    successSnackbarOpen: false,
   };
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.error !== this.props.error) {
-      this.setState({ snackbarOpen: true });
-    }
-
-    if (prevProps.successfulLogin !== this.props.successfulLogin) {
-      this.setState({ successSnackbarOpen: true });
-    }
-  }
-
-  handleClickShowPassword = () => {
+  handleClickShowPassword = (event) => {
+    event.preventDefault();
     this.setState({ showPassword: !this.state.showPassword });
   };
 
   handleMouseDownPassword = (event) => {
     event.preventDefault();
-  };
-
-  handleSnackbarClose = () => {
-    const { error } = this.props;
-    this.setState({ snackbarOpen: false });
-  };
-
-  handleSuccessSnackbarClose = () => {
-    this.setState({ successSnackbarOpen: false });
   };
 
   render() {
@@ -105,116 +65,102 @@ export class Login extends PureComponent {
       successfulLogin,
     } = this.props;
 
-    const { showPassword, snackbarOpen, successSnackbarOpen } = this.state;
+    const { showPassword } = this.state;
 
-    const {
-      handleClickShowPassword,
-      handleMouseDownPassword,
-      handleSnackbarClose,
-      handleSuccessSnackbarClose,
-    } = this;
+    const { handleClickShowPassword, handleMouseDownPassword } = this;
 
     return (
-      <>
-        <Toolbar />
-        <Container
-          style={{ minHeight: "100vh", display: "grid", placeItems: "center" }}
-        >
-          <Paper elevation={0} className={classes.paper} square elevation={3}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            {successfulLogin ? (
-              <p className="login__success-text">
-                You have successfully logged in.
-              </p>
-            ) : (
-              <p className="login__error-text">{error}</p>
-            )}
+      <div
+        style={{ minHeight: "100vh", display: "grid", placeItems: "center" }}
+      >
+        <Paper elevation={0} className={classes.paper} square elevation={3}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          {successfulLogin ? (
+            <p className="login__success-text">
+              You have successfully logged in.
+            </p>
+          ) : (
+            <p className="login__error-text">{error}</p>
+          )}
 
-            <h4
-              style={{
-                color: "#1a1c20",
-                textTransform: "uppercase",
-                fontFamily: "inherit",
-                letterSpacing: "0.1em",
-              }}
-            >
-              Log In To Omniscraper
-            </h4>
+          <h4
+            style={{
+              color: "#1a1c20",
+              textTransform: "uppercase",
+              fontFamily: "inherit",
+              letterSpacing: "0.1em",
+              marginBottom: 8,
+            }}
+          >
+            Log In To Omniscraper
+          </h4>
 
-            <form className={classes.form} noValidate onSubmit={handleSubmit}>
-              <TextField
-                error={snackbarOpen}
-                value={username}
+          <form className={classes.form} noValidate onSubmit={handleSubmit}>
+            <Textfield
+              error={error}
+              type="text"
+              id="username"
+              placeholder="Username"
+              name="username"
+              value={username}
+              required="required"
+              autoComplete="on"
+              autoFocus
+              onChange={handleChange}
+              style={{ width: "100%", marginBottom: 16 }}
+            />
+            <div style={{ position: "relative" }}>
+              <Textfield
+                error={error}
+                type={showPassword ? "text" : "password"}
+                id="password"
+                value={password}
                 onChange={handleChange}
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="username"
-                autoFocus
-                inputProps={{ style: { fontFamily: "inherit" } }}
-                InputLabelProps={{ style: { fontFamily: "inherit" } }}
-                style={{ marginBottom: 20 }}
+                placeholder="Password"
+                name="password"
+                required
+                autoComplete="on"
+                style={{
+                  width: "100%",
+                  marginBottom: 16,
+                }}
               />
-
-              <FormControl
-                variant="outlined"
-                style={{ width: "100%" }}
-                error={snackbarOpen}
-              >
-                <InputLabel
-                  htmlFor="filled-adornment-password"
-                  style={{ fontFamily: "inherit" }}
-                >
-                  Password
-                </InputLabel>
-                <OutlinedInput
-                  // error={error}
-                  id="filled-adornment-password"
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={handleChange}
-                  label="Password"
-                  name="password"
-                  required
-                  autoComplete="current-password"
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                        size="large"
-                      >
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-
               <Button
-                onClick={() => handleSubmit()}
-                style={{ marginTop: 16, width: "100%" }}
-                endIcon={
-                  loginLoading ? (
-                    <CircularProgress size={12} style={{ color: "white" }} />
-                  ) : (
-                    ""
-                  )
-                }
+                type="icon"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+                style={{
+                  position: "absolute",
+                  top: "15%",
+                  right: 16,
+                }}
               >
-                Log In
+                {showPassword ? (
+                  <Visibility color="primary" style={{ fontSize: 18 }} />
+                ) : (
+                  <VisibilityOff color="primary" style={{ fontSize: 18 }} />
+                )}
               </Button>
-            </form>
-          </Paper>
-        </Container>
-      </>
+            </div>
+
+            <Button
+              onClick={() => handleSubmit()}
+              style={{ marginTop: 16, width: "100%" }}
+              endIcon={
+                loginLoading ? (
+                  <CircularProgress size={12} style={{ color: "white" }} />
+                ) : (
+                  ""
+                )
+              }
+            >
+              Log In
+            </Button>
+          </form>
+        </Paper>
+      </div>
     );
   }
 }

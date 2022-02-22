@@ -1,0 +1,23 @@
+.textfield {
+  outline-color: #0087fe;
+  border-radius: 5px;
+  padding: 16px 16px;
+  border: 1px solid #e0e0e0;
+  font-family: inherit;
+}
+
+.textfield--error {
+  outline-color: #f54f4e;
+  border-radius: 5px;
+  padding: 16px 16px;
+  border: 1px solid #f54f4e;
+  font-family: inherit;
+}
+
+.textfield--success {
+  outline-color: #24bf5f;
+  border-radius: 5px;
+  padding: 16px 16px;
+  border: 1px solid #24bf5f;
+  font-family: inherit;
+}

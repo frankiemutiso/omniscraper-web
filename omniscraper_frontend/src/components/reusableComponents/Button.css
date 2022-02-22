@@ -13,6 +13,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  text-transform: uppercase;
 }
 
 .button__outlined:hover,
@@ -36,6 +37,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  text-transform: uppercase;
 }
 
 .button__link {
@@ -54,13 +56,22 @@
   justify-content: center;
   text-decoration: none;
   font-family: inherit;
+  text-transform: uppercase;
 }
 
 .button__icon {
-  border-radius: 5px;
-  border: 1px solid #0087fe;
+  border-radius: 999px;
+  border: none;
   cursor: pointer;
   outline: none;
+  height: 32px;
+  width: 32px;
+  transition: 0.25s ease-in-out;
+  background: transparent;
+}
+
+.button__icon:hover {
+  background: #e5f3fe;
 }
 .button__end-icon {
   padding-left: 8px;
