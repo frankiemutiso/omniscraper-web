@@ -695,7 +695,7 @@ export class List extends Component {
                         <Button
                           style={{ marginRight: 8 }}
                           type="icon"
-                          onClick={(e) => handleMenuClick(e, video)}
+                          onClick={() => handleShare(video)}
                         >
                           <ShareIcon color="primary" style={{ fontSize: 18 }} />
                         </Button>
@@ -704,7 +704,8 @@ export class List extends Component {
                         loggedIn && (
                           <Button
                             type="icon"
-                            onClick={() => handleShare(video)}
+                            onClick={(e) => handleMenuClick(e, video)}
+                            
                             style={{ marginRight: 8 }}
                           >
                             <MoreIcon
