@@ -15,7 +15,7 @@ const FilteredVideos = React.lazy(() => import("./pages/FilteredVideos"));
 
 const theme = createTheme({
   typography: {
-    fontFamily: ["Inter"].join(","),
+    fontFamily: ["Inter", "Sora"].join(","),
   },
   palette: {
     primary: {
@@ -316,7 +316,7 @@ class App extends Component {
 
                   <Route
                     path="/:slug"
-                    render={() => <Video autoplayVideo={autoplayVideo} />}
+                    render={() => <Video autoplayVideo={autoplayVideo} loggedIn={ loggedIn}/>}
                   />
                 </Switch>
               </Suspense>

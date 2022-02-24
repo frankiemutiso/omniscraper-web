@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import withStyles from "@mui/styles/withStyles";
 import Button from "./reusableComponents/Button";
-import Card from "@mui/material/Card";
-import CardActionArea from "@mui/material/CardActionArea";
-import CardActions from "@mui/material/CardActions";
-import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
@@ -17,17 +13,14 @@ import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
 import Fab from "@mui/material/Fab";
 import Hidden from "@mui/material/Hidden";
-import MoreIcon from "@mui/icons-material/MoreVert";
 import ShareIcon from "@mui/icons-material/Share";
+import MoreIcon from "@mui/icons-material/MoreVert";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CircularProgress from "@mui/material/CircularProgress";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import Autocomplete from "@mui/material/Autocomplete";
-import Skeleton from "@mui/material/Skeleton";
-import ViewIcon from "@mui/icons-material/PlayArrow";
-import Snackbar from "@mui/material/Snackbar";
 import Toolbar from "@mui/material/Toolbar";
 import { withRouter } from "react-router";
 import Blank from "./Blank";
@@ -35,6 +28,9 @@ import { axiosInstance } from "../utils/axiosInstance";
 import Instructions from "./Instructions";
 import { calculateTimeSinceSave } from "../utils/calculateTimeLapse";
 import "./List.css";
+import MediaCard from "./reusableComponents/MediaCard";
+import Placeholder from "./reusableComponents/Placeholder";
+
 // FIXME checkout https://mui.com/components/use-media-query/#using-material-uis-breakpoint-helpers
 const withMobileDialog = () => (WrappedComponent) => (props) =>
   <WrappedComponent {...props} width="lg" fullScreen={false} />;
@@ -82,20 +78,7 @@ const styles = (theme) => ({
       marginTop: 16,
     },
   },
-  textContainer: {
-    paddingLeft: 8,
-    paddingRight: 8,
-    marginBottom: 4,
-    [theme.breakpoints.up("md")]: {
-      height: 50,
-      textOverflow: "ellipsis",
-      wordWrap: "break-word",
-      display: "-webkit-box",
-      WebkitLineClamp: 2,
-      WebkitBoxOrient: "vertical",
-      overflow: "hidden",
-    },
-  },
+  textContainer: {},
 });
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -653,32 +636,7 @@ export class List extends Component {
             Add/Remove tags
           </MenuItem>
         </Menu>
-        <Snackbar
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-          open={snackBarOpen}
-          autoHideDuration={3000}
-          onClose={handleSnackBarClose}
-          message={
-            shareSupportedError
-              ? "Web share not supported!"
-              : shareError !== null
-              ? `${shareError}`
-              : ""
-          }
-          action={
-            <IconButton
-              size="small"
-              aria-label="close"
-              color="inherit"
-              onClick={handleSnackBarClose}
-            >
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          }
-        ></Snackbar>
+       
 
         <Tags
           videoTags={videoTags}
@@ -719,108 +677,47 @@ export class List extends Component {
 
                 return (
                   <Grid item md={4} sm={6} xs={12} key={index}>
-                    <Card
-                      elevation={0}
+                    <MediaCard
+                      screen="list"
+                      type={
+                        video.video_thumbnail_link_https ? "image" : "video"
+                      }
+                      height="180px"
                       style={{
                         maxWidth: 380,
                       }}
-                    >
-                      <CardActionArea
-                        onClick={() => {
-                          handleVideoClick(video.slug);
-                          handleScrollPosition();
-                        }}
-                      >
-                        <CardMedia
-                          component={
-                            video.video_thumbnail_link_https ? "img" : "video"
-                          }
-                          height="180"
-                          disablePictureInPicture
-                          controlsList="nodownload"
-                          crossOrigin="anonymous"
-                          image={url}
-                          style={{ objectFit: "cover", position: "relative" }}
-                          onContextMenu={(e) => e.preventDefault()}
-                        />
-
-                        <ViewIcon
-                          style={{
-                            color: "white",
-                            fontSize: 60,
-                            opacity: 0.8,
-                            position: "absolute",
-                            top: "50%",
-                            left: "50%",
-                            transform: "translate(-50%, -50%)",
-                          }}
-                          onClick={() => {
-                            handleVideoClick(video.slug);
-                            handleScrollPosition();
-                          }}
-                          size="large"
-                        />
-                      </CardActionArea>
-
-                      <CardActions>
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            width: "100%",
-                          }}
+                      src={url}
+                      handleClick={() => {
+                        handleVideoClick(video.slug);
+                        handleScrollPosition();
+                      }}
+                      leftButton={
+                        <Button
+                          style={{ marginRight: 8 }}
+                          type="icon"
+                          onClick={(e) => handleMenuClick(e, video)}
                         >
-                          <div className={classes.textContainer}>
-                            {text.length > 0 && (
-                              <p className="list__caption-text">{text}</p>
-                            )}
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                            }}
+                          <ShareIcon color="primary" style={{ fontSize: 18 }} />
+                        </Button>
+                      }
+                      rightButton={
+                        loggedIn && (
+                          <Button
+                            type="icon"
+                            onClick={() => handleShare(video)}
+                            style={{ marginRight: 8 }}
                           >
-                            <p
-                              className="list__caption-text"
-                              style={{
-                                // marginRight: "auto",
-                                marginLeft: 8,
-                              }}
-                            >
-                              {lapse}
-                            </p>
-                            <div
-                              style={{ display: "flex", alignItems: "center" }}
-                            >
-                              <Button
-                                style={{ marginRight: 8 }}
-                                type="icon"
-                                onClick={() => handleShare(video)}
-                              >
-                                <ShareIcon
-                                  color="primary"
-                                  style={{ fontSize: 18 }}
-                                />
-                              </Button>
-                              {loggedIn && (
-                                <Button
-                                  type="icon"
-                                  onClick={(e) => handleMenuClick(e, video)}
-                                  style={{ marginRight: 8 }}
-                                >
-                                  <MoreIcon
-                                    color="primary"
-                                    style={{ fontSize: 18 }}
-                                  />
-                                </Button>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </CardActions>
-                    </Card>
+                            <MoreIcon
+                              color="primary"
+                              style={{ fontSize: 18 }}
+                            />
+                          </Button>
+                        )
+                      }
+                      // loggedIn={loggedIn}
+                      text={text}
+                      lapse={lapse}
+                    />
                   </Grid>
                 );
               })}
@@ -830,60 +727,12 @@ export class List extends Component {
               <Grid container spacing={2} style={{ marginTop: 2 }}>
                 {Array.from(new Array(12)).map((item, index) => (
                   <Grid item md={4} sm={6} xs={12} key={index}>
-                    <Card elevation={0} style={{ maxWidth: 380 }}>
-                      <CardActionArea>
-                        <Skeleton
-                          animation="wave"
-                          variant="rectangular"
-                          style={{ height: 180 }}
-                        />
-                      </CardActionArea>
-
-                      <CardActions>
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            width: "100%",
-                          }}
-                        >
-                          <div>
-                            <Skeleton animation="wave" variant="text" />
-                            <Skeleton animation="wave" variant="text" />
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                            }}
-                          >
-                            <Skeleton
-                              animation="wave"
-                              height={30}
-                              width={80}
-                              style={{ marginRight: "auto" }}
-                            />
-                            <div
-                              style={{ display: "flex", alignItems: "center" }}
-                            >
-                              <ShareIcon
-                                disabled
-                                color="primary"
-                                style={{ fontSize: 18, marginRight: 8 }}
-                              />
-
-                              {loggedIn && (
-                                <MoreIcon
-                                  disabled
-                                  color="primary"
-                                  style={{ fontSize: 18, marginRight: 8 }}
-                                />
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </CardActions>
-                    </Card>
+                    <Placeholder
+                      style={{ maxWidth: 380 }}
+                      height={180}
+                      screen="list"
+                      loggedIn={loggedIn}
+                    />
                   </Grid>
                 ))}
               </Grid>
