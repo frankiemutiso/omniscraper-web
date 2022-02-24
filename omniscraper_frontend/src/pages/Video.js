@@ -1,35 +1,29 @@
 import Button from "../components/reusableComponents/Button";
-import Card from "@mui/material/Card";
-import CardActionArea from "@mui/material/CardActionArea";
-import CardActions from "@mui/material/CardActions";
-import CardMedia from "@mui/material/CardMedia";
 import Hidden from "@mui/material/Hidden";
 import withStyles from "@mui/styles/withStyles";
 import IconButton from "@mui/material/IconButton";
-import ViewIcon from "@mui/icons-material/PlayArrow";
 import ShareIcon from "@mui/icons-material/Share";
-import BackIcon from "@material-ui/icons/ArrowBack";
 import axios from "axios";
 import React from "react";
 import { withRouter } from "react-router";
 import Download from "@mui/icons-material/Download";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import JSONbig from "json-bigint";
-import Skeleton from "@mui/material/Skeleton";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import Link from "@mui/material/Link";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import Typography from "@mui/material/Typography";
 import DialogTitle from "@mui/material/DialogTitle";
 import LinearProgress from "@mui/material/LinearProgress";
-import Box from "@mui/material/Box";
-import Slide from "@mui/material/Slide";
 import Toolbar from "@mui/material/Toolbar";
 import { calculateTimeSinceSave } from "../utils/calculateTimeLapse";
 import "./Video.css";
+import MediaCard from "../components/reusableComponents/MediaCard";
+import Placeholder from "../components/reusableComponents/Placeholder";
+import Spinner from "../components/reusableComponents/Spinner";
+import { SECONDARY } from "../theme";
 
 const styles = (theme) => ({
   root: {
@@ -69,34 +63,29 @@ const styles = (theme) => ({
 
 function LinearProgressWithLabel(props) {
   return (
-    <Box
-      sx={{
+    <div
+      style={{
         width: "100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
       }}
     >
-      <Box sx={{ width: "100%", mr: 2 }}>
+      <div style={{ width: "100%", marginRight: "16px" }}>
         <LinearProgress
           variant="determinate"
           {...props}
-          style={{ height: 8, borderRadius: 5 }}
+          style={{ height: "8px", borderRadius: "5px" }}
         />
-      </Box>
-      <Box sx={{ minWidth: 35 }}>
-        <Typography variant="body2" color="primary">{`${Math.round(
+      </div>
+      <div style={{ minWidth: "35px" }}>
+        <p style={{ color: SECONDARY, fontWeight: 600 }}>{`${Math.round(
           props.value
-        )}%`}</Typography>
-        {/* <Chip label={`${Math.round(props.value)}%`} color="primary" /> */}
-      </Box>
-    </Box>
+        )}%`}</p>
+      </div>
+    </div>
   );
 }
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
 export class Video extends React.PureComponent {
   constructor(props) {
@@ -241,7 +230,7 @@ export class Video extends React.PureComponent {
       handleProgressDialogClose,
     } = this;
     const { video, loading, speedDialOpen, play } = this.state;
-    const { classes, autoplayVideo, history } = this.props;
+    const { classes, autoplayVideo, history, loggedIn } = this.props;
 
     const lapse = calculateTimeSinceSave(video);
 
@@ -287,9 +276,8 @@ export class Video extends React.PureComponent {
 
     const downloadProgress = (
       <Dialog
-        // style={{ maxWidth: "100vh" }}
         onClose={handleProgressDialogClose}
-        minWidth="sm"
+        fullWidth
         maxWidth="sm"
         open={this.state.progressDialogOpen}
       >
@@ -312,197 +300,85 @@ export class Video extends React.PureComponent {
           {/* Desktop UI */}
           <Hidden smDown>
             <>
-              {/* <div>
-                <Button
-                  size="small"
-                  color="primary"
-                  variant="contained"
-                  startIcon={<BackIcon />}
-                  onClick={() => {
-                    history.push("/");
+              {loading ? (
+                <Placeholder
+                  style={{ width: "80vw" }}
+                  height="65vh"
+                  screen="detail"
+                  loggedIn={loggedIn}
+                />
+              ) : (
+                <MediaCard
+                  screen="detail"
+                  device="desktop"
+                  style={{
+                    width: "80vw",
                   }}
-                  style={{ marginBottom: 16 }}
-                >
-                  Back
-                </Button> 
-              </div>*/}
-              <Card
-                elevation={0}
-                style={{
-                  width: "80vw",
-                }}
-              >
-                <CardActionArea>
-                  {loading ? (
-                    <Skeleton
-                      animation="wave"
-                      variant="rectangular"
-                      style={{ height: "65vh" }}
-                    />
-                  ) : (
-                    <>
-                      <CardMedia
-                        ref={this.vidRef}
-                        component="video"
-                        src={video.url}
-                        style={{
-                          objectFit: "contain",
-                          height: "65vh",
-                          position: "relative",
-                        }}
-                        // controls
-                        crossOrigin="anonymous"
-                        disablePictureInPicture
-                        onClick={handleToggle}
-                        autoPlay={autoplayVideo}
-                        controlsList="nodownload"
-                        onContextMenu={(e) => e.preventDefault()}
-                      />
-                      <ViewIcon
-                        size="large"
-                        onClick={handleToggle}
-                        style={{
-                          color: "white",
-                          fontSize: 80,
-                          opacity: 0.8,
-                          display: play === false ? "block" : "none",
-                          position: "absolute",
-                          top: "50%",
-                          left: "50%",
-                          transform: "translate(-50%, -50%)",
-                          transition: "all 150ms ease",
-                        }}
-                      />
-                      <div className={classes.controls}></div>
-                    </>
-                  )}
-                </CardActionArea>
-                <CardActions>
-                  <div style={{ width: "100%" }}>
-                    <div
-                      style={{
-                        paddingLeft: 8,
-                        paddinRight: 8,
-                        marginBottom: 8,
-                      }}
+                  type="video"
+                  height="65vh"
+                  src={video.url}
+                  handleClick={() => {
+                    handleToggle();
+                  }}
+                  play={play}
+                  leftButton={
+                    <Button
+                      type="link"
+                      startIcon={<TwitterIcon style={{ fontSize: 18 }} />}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
                     >
-                      {loading ? (
-                        <>
-                          <Skeleton animation="wave" variant="text" />
-                          <Skeleton animation="wave" variant="text" />
-                        </>
-                      ) : (
-                        <>
-                          {text?.length > 0 && (
-                            <Typography variant="caption" color="textPrimary">
-                              {text}
-                            </Typography>
-                          )}
-                        </>
-                      )}
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                      }}
+                      Tweet
+                    </Button>
+                  }
+                  rightButton={
+                    <Button
+                      startIcon={<Download style={{ fontSize: 18 }} />}
+                      onClick={() => downloadVideo(video)}
+                      style={{ marginLeft: 16 }}
                     >
-                      {loading ? (
-                        <Skeleton
-                          animation="wave"
-                          height={30}
-                          width={80}
-                          style={{
-                            marginRight: "auto",
-                          }}
-                        />
-                      ) : (
-                        <Typography
-                          color="textSecondary"
-                          variant="caption"
-                          style={{
-                            marginRight: "auto",
-                            marginLeft: 8,
-                          }}
-                        >
-                          {lapse}
-                        </Typography>
-                      )}
-                      {loading ? (
-                        <React.Fragment>
-                          <Skeleton animation="wave" height={30} width={80} />
-                          <Skeleton
-                            animation="wave"
-                            height={30}
-                            width={80}
-                            style={{ marginLeft: 16 }}
-                          />
-                        </React.Fragment>
-                      ) : (
-                        <div className="video__buttons">
-                          <Button
-                            type="link"
-                            startIcon={<TwitterIcon style={{ fontSize: 18 }} />}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
-                          >
-                            Tweet
-                          </Button>
-                          <Button
-                            startIcon={<Download style={{ fontSize: 18 }} />}
-                            onClick={() => downloadVideo(video)}
-                            style={{ marginLeft: 16 }}
-                          >
-                            Download
-                          </Button>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </CardActions>
-              </Card>
+                      Download
+                    </Button>
+                  }
+                  autoPlay={autoplayVideo}
+                  // loggedIn={loggedIn}
+                  text={text}
+                  lapse={lapse}
+                  ref={this.vidRef}
+                />
+              )}
             </>
           </Hidden>
 
           {/* mobile UI */}
           <Hidden smUp>
             {downloadProgress}
-            <Card elevation={0} style={{ width: "100vw" }}>
-              <CardActionArea>
-                <CardMedia
-                  ref={this.vidRef}
-                  component="video"
-                  crossOrigin="anonymous"
-                  src={video.url}
-                  style={{
-                    objectFit: "contain",
-                    height: "100vh",
-                    position: "relative",
-                  }}
-                  onClick={handleToggle}
-                  autoPlay={autoplayVideo}
-                  disablePictureInPicture
-                  controlsList="nodownload"
-                  onContextMenu={(e) => e.preventDefault()}
-                />
-                <ViewIcon
-                  size="large"
-                  style={{
-                    color: "white",
-                    fontSize: 80,
-                    opacity: 0.8,
-                    display: play === false ? "block" : "none",
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    transition: "all 150ms ease",
-                  }}
-                />
-              </CardActionArea>
-            </Card>
+            {loading ? (
+              <div
+                style={{
+                  width: "100vw",
+                  height: "100vh",
+                  display: "grid",
+                  placeItems: "center",
+                }}
+              >
+                <Spinner size={40} color={SECONDARY} />
+              </div>
+            ) : (
+              <MediaCard
+                screen="detail"
+                device="mobile"
+                src={video.url}
+                play={play}
+                handleClick={handleToggle}
+                autoPlay={autoplayVideo}
+                height="100vh"
+                style={{ width: "100vw" }}
+                ref={this.vidRef}
+                type="video"
+              />
+            )}
             <SpeedDial
               ariaLabel="Twitter Video SpeedDial"
               className={classes.speedDial}

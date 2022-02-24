@@ -1,50 +1,18 @@
-import React, { Component } from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
-import { useTheme } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
 import Toolbar from "@mui/material/Toolbar";
-import { Link } from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import { HideOnScroll } from "./HideOnScroll";
 import logo from "../assets/omniscraperLogo.svg";
 import { useHistory } from "react-router-dom";
 import Button from "./reusableComponents/Button";
-
-const useStyles = makeStyles({
-  navLink: {
-    textDecoration: "none",
-    color: "#fff",
-    border: "1px solid #fff",
-    backgroundColor: "#000",
-  },
-  title: {
-    "&:hover": {
-      color: "#f5f5f7",
-    },
-    transition: "all 0.5s ease",
-  },
-  toolbarRoot: { height: 64, paddingLeft: 0 },
-  logo: {
-    width: 60,
-    maxWidth: "100%",
-    height: "auto",
-    marginLeft: -16,
-    marginRight: -10,
-  },
-});
+import "./Nav.css";
 
 const Nav = (props) => {
   const { loggedIn, handleLogout } = props;
-  const classes = useStyles();
-  const theme = useTheme();
   const history = useHistory();
 
   return (
     <div style={{ flexGrow: 1 }}>
-      <AppBar
-        style={{ backgroundColor: "#000" }}
-        classes={{ root: classes.toolbarRoot }}
-      >
+      <AppBar style={{ backgroundColor: "#000" }}>
         <Toolbar>
           <div
             style={{
@@ -54,13 +22,12 @@ const Nav = (props) => {
               alignItems: "center",
               height: 64,
             }}
-            classes={{ root: classes.toolbarRoot }}
             onClick={() => {
               history.push("/");
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
-            <img src={logo} alt="Omniscraper Logo" className={classes.logo} />
+            <img src={logo} alt="Omniscraper Logo" className="logo" />
             <div
               style={{
                 display: "flex",
@@ -69,38 +36,38 @@ const Nav = (props) => {
                 marginTop: -7,
               }}
             >
-              <Typography
+              <p
                 variant="subtitle1"
                 style={{
                   textTransform: "uppercase",
                   color: "#fff",
                   textDecoration: "none",
-                  marginBottom: -8,
                   fontWeight: 600,
                   letterSpacing: 0.1,
+                  fontFamily: "Sora",
                 }}
-                className={classes.title}
+                className="title"
               >
                 Omniscraper
-              </Typography>
-              <Typography
-                className={classes.title}
-                variant="caption"
+              </p>
+              <p
+                className="title"
                 style={{
                   textTransform: "uppercase",
                   fontSize: 8,
-                  letterSpacing: 0.4,
+                  letterSpacing: 0.6,
+                  fontFamily: "Sora",
                 }}
               >
                 smart content delivery
-              </Typography>
+              </p>
             </div>
           </div>
 
           <div>
             {loggedIn && (
               <React.Fragment>
-                <Button type="outlined" onClick={() => handleLogout()}>
+                <Button type="default" onClick={() => handleLogout()}>
                   Logout
                 </Button>
               </React.Fragment>
