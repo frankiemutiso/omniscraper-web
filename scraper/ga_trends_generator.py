@@ -2,12 +2,15 @@ from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 from pathlib import Path
 import os
+from django.conf import settings
+from google.auth import crypt
+import json
 
+from omniscraper.settings import GA_JSON_FILE 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
-KEY_FILE_LOCATION =  os.path.join(BASE_DIR, 'scraper/primeval-aspect-335218-7605103db5f2.json')
-VIEW_ID = '238135258'
+VIEW_ID = settings.VIEW_ID
 
 def initialize_analyticsreporting():
     """Initializes an Analytics Reporting API V4 service object.
@@ -15,8 +18,7 @@ def initialize_analyticsreporting():
     Returns:
     An authorized Analytics Reporting API V4 service object.
     """
-    credentials = ServiceAccountCredentials.from_json_keyfile_name(
-        KEY_FILE_LOCATION, SCOPES)
+    credentials = ServiceAccountCredentials.from_json_keyfile_dict(json.loads(GA_JSON_FILE), SCOPES)
 
     # Build the service object.
     analytics = build('analyticsreporting', 'v4', credentials=credentials)
