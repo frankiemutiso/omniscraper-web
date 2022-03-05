@@ -9,6 +9,12 @@
   border-top-right-radius: 5px;
 }
 
+.media-card__desktop__trending {
+  width: 100%;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
 media-card__action-area {
 }
 

@@ -61,6 +61,8 @@ class App extends Component {
     scrollPosition: 0,
     autoplayVideo: false,
     successfulLogin: false,
+    trendingVideos: [],
+    trendingVideosLoading: false,
   };
 
   componentDidMount() {
@@ -96,6 +98,8 @@ class App extends Component {
             loading: false,
           });
         });
+
+      this.loadTrendingVideos();
     });
   };
 
@@ -118,6 +122,23 @@ class App extends Component {
             tagsLoading: false,
           });
         });
+    });
+  };
+
+  loadTrendingVideos = () => {
+    const url = "/api/trending/";
+    this.setState({ trendingVideosLoading: true }, () => {
+      axios
+        .get(url)
+        .then((res) => {
+          const trendingVideos = res.data.trending_videos;
+
+          this.setState({
+            trendingVideos: trendingVideos,
+            trendingVideosLoading: false,
+          });
+        })
+        .catch((err) => {});
     });
   };
 
@@ -238,6 +259,8 @@ class App extends Component {
       videos,
       scrollPosition,
       autoplayVideo,
+      trendingVideos,
+      trendingVideosLoading,
     } = this.state;
 
     return (
@@ -316,7 +339,14 @@ class App extends Component {
 
                   <Route
                     path="/:slug"
-                    render={() => <Video autoplayVideo={autoplayVideo} loggedIn={ loggedIn}/>}
+                    render={() => (
+                      <Video
+                        trendingVideosLoading={trendingVideosLoading}
+                        autoplayVideo={autoplayVideo}
+                        loggedIn={loggedIn}
+                        trendingVideos={trendingVideos}
+                      />
+                    )}
                   />
                 </Switch>
               </Suspense>

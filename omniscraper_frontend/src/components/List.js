@@ -7,6 +7,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogActions from "@mui/material/DialogActions";
 import Menu from "@mui/material/Menu";
+// import Menu from "./reusableComponents/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import DialogContent from "@mui/material/DialogContent";
 import Checkbox from "@mui/material/Checkbox";
@@ -636,7 +637,16 @@ export class List extends Component {
             Add/Remove tags
           </MenuItem>
         </Menu>
-       
+
+        {/* <Menu
+          top={mouseY}
+          left={mouseX}
+          open={mouseY && mouseX }
+          menuItems={[
+            { label: "Report", clickHandler: handlePromptOpen },
+            { label: "Add/Remove tags", clickHandler: handleTagsDialogOpen },
+          ]}
+        /> */}
 
         <Tags
           videoTags={videoTags}
@@ -678,7 +688,8 @@ export class List extends Component {
                 return (
                   <Grid item md={4} sm={6} xs={12} key={index}>
                     <MediaCard
-                      screen="list"
+                      displayBottomActions
+                      view="list"
                       type={
                         video.video_thumbnail_link_https ? "image" : "video"
                       }
@@ -686,6 +697,7 @@ export class List extends Component {
                       style={{
                         maxWidth: 380,
                       }}
+                      playIconSize={60}
                       src={url}
                       handleClick={() => {
                         handleVideoClick(video.slug);
@@ -705,7 +717,6 @@ export class List extends Component {
                           <Button
                             type="icon"
                             onClick={(e) => handleMenuClick(e, video)}
-                            
                             style={{ marginRight: 8 }}
                           >
                             <MoreIcon
@@ -731,7 +742,7 @@ export class List extends Component {
                     <Placeholder
                       style={{ maxWidth: 380 }}
                       height={180}
-                      screen="list"
+                      view="list"
                       loggedIn={loggedIn}
                     />
                   </Grid>

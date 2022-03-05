@@ -1,6 +1,5 @@
 import React from "react";
 import ViewIcon from "@mui/icons-material/PlayArrow";
-
 import "./MediaCard.css";
 
 // Media Card Types: image, video
@@ -17,9 +16,12 @@ const MediaCard = React.forwardRef((props, ref) => {
     handleClick,
     leftButton,
     rightButton,
-    screen,
+    view,
     device,
     play,
+    displayBottomActions,
+    playIconSize,
+    desktopTrending,
     ...restProps
   } = props;
   return (
@@ -32,14 +34,18 @@ const MediaCard = React.forwardRef((props, ref) => {
             disablePictureInPicture
             controlsList="nodownload"
             // height={height}
-            className="media-card__video"
+            className={
+              desktopTrending
+                ? "media-card__desktop__trending"
+                : "media-card__video"
+            }
             onContextMenu={(e) => e.preventDefault()}
             onClick={handleClick}
             style={{
               height: height,
-              objectFit: screen !== "detail" ? "cover" : "contain",
+              objectFit: view !== "detail" ? "cover" : "contain",
               border:
-                device === "desktop" && screen === "detail"
+                device === "desktop" && view === "detail"
                   ? "1px solid #e0e0e0"
                   : "none",
               borderBottom: "none",
@@ -55,14 +61,18 @@ const MediaCard = React.forwardRef((props, ref) => {
             alt={src}
             // height={height}
             loading="lazy"
-            className="media-card__image"
+            className={
+              desktopTrending
+                ? "media-card__desktop__trending"
+                : "media-card__image"
+            }
             onContextMenu={(e) => e.preventDefault()}
             onClick={handleClick}
             style={{
               height: height,
               objectFit: device !== "mobile" ? "cover" : "contain",
               border:
-                device === "desktop" && screen === "detail"
+                device === "desktop" && view === "detail"
                   ? "1px solid #e0e0e0"
                   : "none",
               borderBottom: "none",
@@ -73,13 +83,14 @@ const MediaCard = React.forwardRef((props, ref) => {
           <ViewIcon
             style={{
               color: "white",
-              fontSize: 60,
+              fontSize: playIconSize,
               opacity: 0.8,
               position: "absolute",
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
               cursor: "pointer",
+              borderRadius: 5,
             }}
             onClick={handleClick}
             size="large"
@@ -87,7 +98,7 @@ const MediaCard = React.forwardRef((props, ref) => {
         )}
       </div>
 
-      {(screen !== "detail" || device !== "mobile") && (
+      {displayBottomActions && (
         <div className="media-card__actions">
           <div className="media-card__actions__text-container">
             {text?.length > 0 && (

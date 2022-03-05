@@ -18,19 +18,24 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import LinearProgress from "@mui/material/LinearProgress";
 import Toolbar from "@mui/material/Toolbar";
+import Grid from "@mui/material/Grid";
 import { calculateTimeSinceSave } from "../utils/calculateTimeLapse";
 import "./Video.css";
 import MediaCard from "../components/reusableComponents/MediaCard";
 import Placeholder from "../components/reusableComponents/Placeholder";
 import Spinner from "../components/reusableComponents/Spinner";
 import { SECONDARY } from "../theme";
+import DesktopTrendingVideo from "../components/DesktopTrendingVideo";
+import Paper from "../components/reusableComponents/Paper";
+import TrendingVideosPlaceholder from "../components/reusableComponents/TrendingVideosPlaceholder";
 
 const styles = (theme) => ({
   root: {
     flex: 1,
     margin: "auto",
+    padding: 16,
     [theme.breakpoints.up("sm")]: {
-      width: "85vw",
+      width: "90vw",
     },
     display: "flex",
     alignItems: "center",
@@ -59,6 +64,7 @@ const styles = (theme) => ({
     height: `${100 - 48 * 0.16}vh`,
     position: "relative",
   },
+  autoPlayTrending: false,
 });
 
 function LinearProgressWithLabel(props) {
@@ -105,6 +111,12 @@ export class Video extends React.PureComponent {
     this.ref = React.createRef();
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.slug !== this.props.match.params.slug) {
+      this.loadVideo();
+    }
+  }
+
   componentDidMount = () => {
     this.loadVideo();
   };
@@ -135,6 +147,8 @@ export class Video extends React.PureComponent {
           });
         });
     });
+
+    this.handleVideoPlayState();
   };
 
   downloadVideo = (video) => {
@@ -183,13 +197,13 @@ export class Video extends React.PureComponent {
     this.setState({ speedDialOpen: false });
   };
 
-  handleToggle = () => {
-    if (this.vidRef.current.paused) {
+  handleVideoPlayState = () => {
+    if (this.vidRef.current?.paused) {
       this.setState({ play: true });
-      this.vidRef.current.play();
+      this.vidRef.current?.play();
     } else {
       this.setState({ play: false });
-      this.vidRef.current.pause();
+      this.vidRef.current?.pause();
     }
   };
 
@@ -220,17 +234,33 @@ export class Video extends React.PureComponent {
     });
   };
 
+  handleTrendingVideoClick = (slug) => {
+    const { history } = this.props;
+
+    history.push(`/${slug}`);
+    this.setState({ autoPlayTrending: true });
+  };
+
   render() {
     const {
       downloadVideo,
       handleSpeedDialOpen,
       handleSpeedDialClose,
-      handleToggle,
+      handleVideoPlayState,
       handleShare,
       handleProgressDialogClose,
+      handleTrendingVideoClick,
     } = this;
-    const { video, loading, speedDialOpen, play } = this.state;
-    const { classes, autoplayVideo, history, loggedIn } = this.props;
+    const { video, loading, speedDialOpen, play, autoPlayTrending } =
+      this.state;
+    const {
+      classes,
+      autoplayVideo,
+      history,
+      loggedIn,
+      trendingVideos,
+      trendingVideosLoading,
+    } = this.props;
 
     const lapse = calculateTimeSinceSave(video);
 
@@ -288,68 +318,138 @@ export class Video extends React.PureComponent {
       </Dialog>
     );
 
+    const otherTrendingVideos = trendingVideos?.filter(
+      (trendingVideo) => trendingVideo.id !== video.id
+    );
+
     return (
       <>
         <Toolbar ref={this.ref} />
         <div
           className={classes.root}
           style={{
-            minHeight: "100vh",
+            minHeight: "91vh",
           }}
         >
           {/* Desktop UI */}
-          <Hidden smDown>
-            <>
-              {loading ? (
-                <Placeholder
-                  style={{ width: "80vw" }}
-                  height="65vh"
-                  screen="detail"
-                  loggedIn={loggedIn}
-                />
-              ) : (
-                <MediaCard
-                  screen="detail"
-                  device="desktop"
+          <div className="grid__container">
+            <div className="main">
+              <Hidden smDown>
+                <>
+                  {loading ? (
+                    <Placeholder
+                      style={{ width: "100%" }}
+                      height="61vh"
+                      view="detail"
+                      loggedIn={loggedIn}
+                    />
+                  ) : (
+                    <MediaCard
+                      view="detail"
+                      device="desktop"
+                      displayBottomActions
+                      playIconSize={60}
+                      style={{
+                        width: "100%",
+                      }}
+                      type="video"
+                      height="60vh"
+                      src={video.url}
+                      handleClick={() => {
+                        handleVideoPlayState();
+                      }}
+                      play={play}
+                      leftButton={
+                        <Button
+                          type="link"
+                          startIcon={<TwitterIcon style={{ fontSize: 18 }} />}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
+                        >
+                          Tweet
+                        </Button>
+                      }
+                      rightButton={
+                        <Button
+                          startIcon={<Download style={{ fontSize: 18 }} />}
+                          onClick={() => downloadVideo(video)}
+                          style={{ marginLeft: 16 }}
+                        >
+                          Download
+                        </Button>
+                      }
+                      autoPlay={autoplayVideo || autoPlayTrending}
+                      // loggedIn={loggedIn}
+                      text={text}
+                      lapse={lapse}
+                      ref={this.vidRef}
+                    />
+                  )}
+                </>
+              </Hidden>
+            </div>
+            <div className="trending">
+              <Paper
+                style={{ paddingLeft: 16, paddingTop: 16, paddingBottom: 4 }}
+              >
+                <div
                   style={{
-                    width: "80vw",
+                    marginBottom: 8,
                   }}
-                  type="video"
-                  height="65vh"
-                  src={video.url}
-                  handleClick={() => {
-                    handleToggle();
-                  }}
-                  play={play}
-                  leftButton={
-                    <Button
-                      type="link"
-                      startIcon={<TwitterIcon style={{ fontSize: 18 }} />}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
-                    >
-                      Tweet
-                    </Button>
-                  }
-                  rightButton={
-                    <Button
-                      startIcon={<Download style={{ fontSize: 18 }} />}
-                      onClick={() => downloadVideo(video)}
-                      style={{ marginLeft: 16 }}
-                    >
-                      Download
-                    </Button>
-                  }
-                  autoPlay={autoplayVideo}
-                  // loggedIn={loggedIn}
-                  text={text}
-                  lapse={lapse}
-                  ref={this.vidRef}
-                />
-              )}
-            </>
-          </Hidden>
+                >
+                  <p className="trending__videos__heading">
+                    Trending this week
+                  </p>
+                </div>
+                <div className="trending__videos__container">
+                  {trendingVideosLoading || loading ? (
+                    <>
+                      {Array.from(new Array(5)).map((item, index) => (
+                        <TrendingVideosPlaceholder key={index} />
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      {otherTrendingVideos.map((video) => {
+                        const url =
+                          video.video_thumbnail_link_https !== null
+                            ? video.video_thumbnail_link_https
+                            : video.url;
+
+                        const indexOfHttps =
+                          video.text !== null && video.text.indexOf("https");
+                        const text =
+                          video.text !== null &&
+                          video.text.slice(0, indexOfHttps).trim();
+
+                        const lapse = calculateTimeSinceSave(video);
+
+                        return (
+                          <DesktopTrendingVideo
+                            key={video.id}
+                            type={
+                              video.video_thumbnail_link_https
+                                ? "image"
+                                : "video"
+                            }
+                            url={url}
+                            lapse={lapse}
+                            text={text}
+                            height={80}
+                            handleClick={() =>
+                              handleTrendingVideoClick(video.slug)
+                            }
+                            play={play}
+                          />
+                        );
+                      })}
+                    </>
+                  )}
+                </div>
+              </Paper>
+            </div>
+          </div>
 
           {/* mobile UI */}
           <Hidden smUp>
@@ -367,11 +467,12 @@ export class Video extends React.PureComponent {
               </div>
             ) : (
               <MediaCard
-                screen="detail"
+                playIconSize={60}
+                view="detail"
                 device="mobile"
                 src={video.url}
-                play={play}
-                handleClick={handleToggle}
+                play={true}
+                handleClick={handleVideoPlayState}
                 autoPlay={autoplayVideo}
                 height="100vh"
                 style={{ width: "100vw" }}

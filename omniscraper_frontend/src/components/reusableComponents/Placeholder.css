@@ -40,6 +40,10 @@
   background-color: #e0e0e0;
   margin-left: 8px;
 }
+.placeholder__actions {
+  height: 90px;
+}
+
 .placeholder__buttons {
   display: flex;
   align-items: center;

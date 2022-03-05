@@ -147,7 +147,6 @@ LOGOUT_REDIRECT_URL = "home"
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
-
 # enforce site-wide HTTPS
 
 CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE')
@@ -210,3 +209,6 @@ CORS_ALLOWED_ORIGINS = [
     "https://omniscraper.herokuapp.com",
     "http://127.0.0.1:8000"
 ]
+
+VIEW_ID = env("VIEW_ID")
+GA_JSON_FILE=env("GA_JSON_FILE")
