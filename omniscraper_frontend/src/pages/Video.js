@@ -102,7 +102,7 @@ export class Video extends React.PureComponent {
       loading: false,
       video: {},
       speedDialOpen: true,
-      play: true,
+      play: false,
       progressDialogOpen: false,
       downloadProgress: 0,
     };
@@ -122,7 +122,7 @@ export class Video extends React.PureComponent {
   };
 
   loadVideo = () => {
-    this.setState({ loading: true }, () => {
+    this.setState({ loading: true, play: false }, () => {
       const slug = this.props.match.params.slug;
       const url = `/api/${slug}`;
       const { history } = this.props;
@@ -131,10 +131,13 @@ export class Video extends React.PureComponent {
         .get(url, { transformResponse: (data) => JSONbig.parse(data) })
         .then((res) => {
           if (res.status === 200) {
-            this.setState({
-              video: res.data,
-              loading: false,
-            });
+            this.setState(
+              {
+                video: res.data,
+                loading: false,
+              },
+              () => this.handleVideoPlayState()
+            );
           } else {
             history.push({ pathname: "/" });
           }
@@ -332,9 +335,9 @@ export class Video extends React.PureComponent {
           }}
         >
           {/* Desktop UI */}
-          <div className="grid__container">
-            <div className="main">
-              <Hidden smDown>
+          <Hidden smDown>
+            <div className="grid__container">
+              <div className="main">
                 <>
                   {loading ? (
                     <Placeholder
@@ -387,69 +390,69 @@ export class Video extends React.PureComponent {
                     />
                   )}
                 </>
-              </Hidden>
-            </div>
-            <div className="trending">
-              <Paper
-                style={{ paddingLeft: 16, paddingTop: 16, paddingBottom: 4 }}
-              >
-                <div
-                  style={{
-                    marginBottom: 8,
-                  }}
+              </div>
+              <div className="trending">
+                <Paper
+                  style={{ paddingLeft: 16, paddingTop: 16, paddingBottom: 4 }}
                 >
-                  <p className="trending__videos__heading">
-                    Trending this week
-                  </p>
-                </div>
-                <div className="trending__videos__container">
-                  {trendingVideosLoading || loading ? (
-                    <>
-                      {Array.from(new Array(5)).map((item, index) => (
-                        <TrendingVideosPlaceholder key={index} />
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      {otherTrendingVideos.map((video) => {
-                        const url =
-                          video.video_thumbnail_link_https !== null
-                            ? video.video_thumbnail_link_https
-                            : video.url;
+                  <div
+                    style={{
+                      marginBottom: 8,
+                    }}
+                  >
+                    <p className="trending__videos__heading">
+                      Trending this week
+                    </p>
+                  </div>
+                  <div className="trending__videos__container">
+                    {trendingVideosLoading || loading ? (
+                      <>
+                        {Array.from(new Array(5)).map((item, index) => (
+                          <TrendingVideosPlaceholder key={index} />
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        {otherTrendingVideos.map((video) => {
+                          const url =
+                            video.video_thumbnail_link_https !== null
+                              ? video.video_thumbnail_link_https
+                              : video.url;
 
-                        const indexOfHttps =
-                          video.text !== null && video.text.indexOf("https");
-                        const text =
-                          video.text !== null &&
-                          video.text.slice(0, indexOfHttps).trim();
+                          const indexOfHttps =
+                            video.text !== null && video.text.indexOf("https");
+                          const text =
+                            video.text !== null &&
+                            video.text.slice(0, indexOfHttps).trim();
 
-                        const lapse = calculateTimeSinceSave(video);
+                          const lapse = calculateTimeSinceSave(video);
 
-                        return (
-                          <DesktopTrendingVideo
-                            key={video.id}
-                            type={
-                              video.video_thumbnail_link_https
-                                ? "image"
-                                : "video"
-                            }
-                            url={url}
-                            lapse={lapse}
-                            text={text}
-                            height={80}
-                            handleClick={() =>
-                              handleTrendingVideoClick(video.slug)
-                            }
-                            play={play}
-                          />
-                        );
-                      })}
-                    </>
-                  )}
-                </div>
-              </Paper>
+                          return (
+                            <DesktopTrendingVideo
+                              key={video.id}
+                              type={
+                                video.video_thumbnail_link_https
+                                  ? "image"
+                                  : "video"
+                              }
+                              url={url}
+                              lapse={lapse}
+                              text={text}
+                              height={80}
+                              handleClick={() =>
+                                handleTrendingVideoClick(video.slug)
+                              }
+                              play={play}
+                            />
+                          );
+                        })}
+                      </>
+                    )}
+                  </div>
+                </Paper>
+              </div>
             </div>
-          </div>
+          </Hidden>
 
           {/* mobile UI */}
           <Hidden smUp>
