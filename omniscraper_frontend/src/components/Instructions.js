@@ -1,17 +1,16 @@
-import { Grid, Paper, Typography } from "@mui/material";
+import React from "react";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
 import makeStyles from "@mui/styles/makeStyles";
 import Twitter from "@mui/icons-material/Twitter";
 import Click from "@mui/icons-material/InsertLinkRounded";
 import Download from "@mui/icons-material/FileDownloadOutlined";
 import Mention from "@mui/icons-material/ReplyRounded";
-import React from "react";
-import useScrollTrigger from "@mui/material/useScrollTrigger";
 
 const useStyles = makeStyles({
   container: {
     display: "grid",
     placeItems: "center",
-    // width: 200,
     textAlign: "center",
   },
   paper: { padding: 8, display: "flex", justifyContent: "center", width: 200 },
@@ -34,10 +33,9 @@ function Instructions({ window }) {
         flex: 1,
         width: "23vw",
         textAlign: "center",
-        transition: "all 0.5s ease",
       }}
     >
-      <div elevation={0} className={classes.paper}>
+      <div className={classes.paper}>
         <div className={classes.container}>
           <Twitter className={classes.icons} color="primary" />
           <Typography variant="overline" className={classes.typography}>
@@ -45,7 +43,7 @@ function Instructions({ window }) {
           </Typography>
         </div>
       </div>
-      <div elevation={0} className={classes.paper}>
+      <div className={classes.paper}>
         <div className={classes.container}>
           <Mention className={classes.icons} color="primary" />
           <Typography variant="overline" className={classes.typography}>
@@ -55,7 +53,7 @@ function Instructions({ window }) {
         </div>
       </div>
 
-      <div elevation={0} className={classes.paper}>
+      <div className={classes.paper}>
         <div className={classes.container}>
           <Click className={classes.icons} color="primary" />
           <Typography variant="overline" className={classes.typography}>
@@ -63,7 +61,7 @@ function Instructions({ window }) {
           </Typography>
         </div>
       </div>
-      <div elevation={0} className={classes.paper}>
+      <div className={classes.paper}>
         <div className={classes.container}>
           <Download className={classes.icons} color="primary" />
           <Typography variant="overline" className={classes.typography}>

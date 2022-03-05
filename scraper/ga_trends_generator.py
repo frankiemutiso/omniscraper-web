@@ -1,16 +1,9 @@
 from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
-from pathlib import Path
-import os
-from django.conf import settings
-from google.auth import crypt
 import json
-
-from omniscraper.settings import GA_JSON_FILE 
-BASE_DIR = Path(__file__).resolve().parent.parent
+from omniscraper.settings import GA_JSON_FILE , VIEW_ID
 
 SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
-VIEW_ID = settings.VIEW_ID
 
 def initialize_analyticsreporting():
     """Initializes an Analytics Reporting API V4 service object.
@@ -74,7 +67,7 @@ def package_response(response):
         dimensionHeaders = columnHeader.get('dimensions', [])
         metricHeaders = columnHeader.get('metricHeader', {}).get('metricHeaderEntries', [])
         
-        viewed_paths = []
+        trending_paths = []
         for row in report.get('data', {}).get('rows', []):
             dimensions = row.get('dimensions', [])
             dateRangeValues = row.get('metrics', [])
@@ -86,7 +79,7 @@ def package_response(response):
                     for metricHeader, value in zip(metricHeaders, values.get('values')):
                         list_item_dict['path'] = dimension[1:]
                         list_item_dict['path_views'] = int(value)
-                        viewed_paths.append(list_item_dict)
+                        trending_paths.append(list_item_dict)
         
-        return viewed_paths
+        return trending_paths
             

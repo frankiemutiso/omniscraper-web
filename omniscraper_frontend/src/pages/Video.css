@@ -1,6 +1,46 @@
+.grid__container {
+  display: grid;
+  grid-template-areas: "main trending";
+  width: 100%;
+  grid-template-columns: 70% 30%;
+}
+
+.main {
+  grid-area: main;
+  padding-right: 32px;
+}
+
+.trending {
+  grid-area: trending;
+}
+
 .video__buttons {
   display: flex;
   align-items: center;
+}
+
+.trending__videos__container {
+  height: 66vh;
+  overflow-y: auto;
+}
+.trending__videos__container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.trending__videos__container::-webkit-scrollbar-track {
+  background-color: #e0e0e0;
+}
+
+.trending__videos__container::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+}
+
+.trending__videos__heading {
+  font-size: 14px;
+  color: #000;
+  letter-spacing: 0.5px;
+  font-family: "Sora";
+  padding-bottom: 8px;
 }
 
 @media screen and (min-width: 411px) {
