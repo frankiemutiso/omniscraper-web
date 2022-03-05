@@ -141,6 +141,7 @@ class TrendingVideos(APIView):
         analytics = initialize_analyticsreporting()
         response = get_report(analytics)
         packaged_response = package_response(response)
+        print(packaged_response)
         
         trending_videos = []
         for obj in packaged_response:

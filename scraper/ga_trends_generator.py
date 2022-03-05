@@ -40,15 +40,27 @@ def get_report(analytics):
                 [
                     {
                         'filters': 
-                            [
+                            [ 
                                 {
                                     'dimensionName': 'ga:pagePath',
                                     'not': True, 
                                     'operator': 'EXACT', 
                                     'expressions': '/'
-                                 }
+                                },
+                               
                              ]
-                        }
+                        }, 
+                    {
+                        'filters': 
+                            [
+                                {    
+                                    'dimensionName': 'ga:pagePath',
+                                    'not': True, 
+                                    'operator': 'PARTIAL', 
+                                    'expressions': 'tags'
+                                }
+                            ]\
+                    }
                  ],
             "pageSize": "10",
         }]
@@ -77,6 +89,7 @@ def package_response(response):
 
                 for  values in dateRangeValues:
                     for metricHeader, value in zip(metricHeaders, values.get('values')):
+                
                         list_item_dict['path'] = dimension[1:]
                         list_item_dict['path_views'] = int(value)
                         trending_paths.append(list_item_dict)
