@@ -122,7 +122,8 @@ export class Video extends React.PureComponent {
   };
 
   loadVideo = () => {
-    this.setState({ loading: true, play: false }, () => {
+    this.handleVideoPlayState();
+    this.setState({ loading: true }, () => {
       const slug = this.props.match.params.slug;
       const url = `/api/${slug}`;
       const { history } = this.props;
@@ -150,8 +151,6 @@ export class Video extends React.PureComponent {
           });
         });
     });
-
-    this.handleVideoPlayState();
   };
 
   downloadVideo = (video) => {
