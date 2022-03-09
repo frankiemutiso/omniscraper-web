@@ -44,11 +44,7 @@ const MediaCard = React.forwardRef((props, ref) => {
             style={{
               height: height,
               objectFit: view !== "detail" ? "cover" : "contain",
-              border:
-                device === "desktop" && view === "detail"
-                  ? "1px solid #e0e0e0"
-                  : "none",
-              borderBottom: "none",
+              border:"none"
             }}
           >
             <source src={src} type="video/mp4" />
@@ -71,11 +67,7 @@ const MediaCard = React.forwardRef((props, ref) => {
             style={{
               height: height,
               objectFit: device !== "mobile" ? "cover" : "contain",
-              border:
-                device === "desktop" && view === "detail"
-                  ? "1px solid #e0e0e0"
-                  : "none",
-              borderBottom: "none",
+              border: "none",
             }}
           />
         )}
@@ -99,12 +91,21 @@ const MediaCard = React.forwardRef((props, ref) => {
       </div>
 
       {displayBottomActions && (
-        <div className="media-card__actions">
-          <div className="media-card__actions__text-container">
-            {text?.length > 0 && (
-              <p className="media-card__actions__text">{text}</p>
-            )}
-          </div>
+        <div
+          className={
+            device === "mobile" && view === "detail"
+              ? "media-card__actions__mobile__detail"
+              : "media-card__actions"
+          }
+        >
+          {text && (
+            <div className="media-card__actions__text-container">
+              {text?.length > 0 && (
+                <p className="media-card__actions__text">{text}</p>
+              )}
+            </div>
+          )}
+          
           <div className="media-card__actions__bottom">
             <p
               className="media-card__actions__text"

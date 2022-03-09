@@ -736,7 +736,7 @@ export class List extends Component {
             </Grid>
 
             {loading && (
-              <Grid container spacing={2} style={{ marginTop: 2 }}>
+              <Grid container style={{ marginTop: 2 }}>
                 {Array.from(new Array(12)).map((item, index) => (
                   <Grid item md={4} sm={6} xs={12} key={index}>
                     <Placeholder

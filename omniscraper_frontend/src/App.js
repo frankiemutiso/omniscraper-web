@@ -7,10 +7,11 @@ import createHistory from "history/createBrowserHistory";
 import axios from "axios";
 import { ThreeDots } from "@bit/mhnpd.react-loader-spinner.three-dots";
 import { axiosInstance } from "./utils/axiosInstance";
-const Nav = React.lazy(() => import("./components/Nav"));
+import Nav from "./components/Nav"
+import Login from "./pages/Login";
+
 const Video = React.lazy(() => import("./pages/Video"));
 const Home = React.lazy(() => import("./pages/Home"));
-const Login = React.lazy(() => import("./pages/Login"));
 const FilteredVideos = React.lazy(() => import("./pages/FilteredVideos"));
 
 const theme = createTheme({

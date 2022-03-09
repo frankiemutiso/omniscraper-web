@@ -41,7 +41,7 @@
   margin-left: 8px;
 }
 .placeholder__actions {
-  height: 90px;
+  max-height: 90px;
 }
 
 .placeholder__buttons {
