@@ -3,6 +3,10 @@
   color: #0087fe;
   background-color: transparent;
   border: 1px solid #0087fe;
+}
+
+.button__default,
+.button__outlined {
   border-radius: 5px;
   outline: none;
   font-family: inherit;
@@ -14,6 +18,7 @@
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
+  text-decoration: none;
 }
 
 .button__outlined:hover,
@@ -26,53 +31,25 @@
   padding: 8px 16px;
   color: #fff;
   background-color: #0087fe;
-  border-radius: 5px;
-  outline: none;
   border: none;
-  font-size: 13px;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  transition: 0.25s ease-in-out;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-transform: uppercase;
-}
-
-.button__link {
-  padding: 7px 15px;
-  color: #0087fe;
-  background-color: transparent;
-  border: 1px solid #0087fe;
-  border-radius: 5px;
-  outline: none;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.25s ease-in-out;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  font-family: inherit;
-  text-transform: uppercase;
 }
 
 .button__icon {
-  border-radius: 999px;
+  border-radius: 50%;
   border: none;
   cursor: pointer;
   outline: none;
-  height: 32px;
-  width: 32px;
+  /* height: 32px;
+  width: 32px; */
+  padding:8px;
   transition: 0.25s ease-in-out;
-  background: transparent;
+  background: #e5f3fe;
+  color: #0087fe;
+  text-decoration: none;
+  display:grid;
+  place-items:center;
 }
 
-.button__icon:hover {
-  background: #e5f3fe;
-}
 .button__end-icon {
   padding-left: 8px;
 }

@@ -9,21 +9,15 @@ import { withRouter } from "react-router";
 import Download from "@mui/icons-material/Download";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import JSONbig from "json-bigint";
-import SpeedDial from "@mui/material/SpeedDial";
-import SpeedDialIcon from "@mui/material/SpeedDialIcon";
-import SpeedDialAction from "@mui/material/SpeedDialAction";
-import Link from "@mui/material/Link";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import LinearProgress from "@mui/material/LinearProgress";
 import Toolbar from "@mui/material/Toolbar";
-import Grid from "@mui/material/Grid";
 import { calculateTimeSinceSave } from "../utils/calculateTimeLapse";
 import "./Video.css";
 import MediaCard from "../components/reusableComponents/MediaCard";
 import Placeholder from "../components/reusableComponents/Placeholder";
-import Spinner from "../components/reusableComponents/Spinner";
 import { SECONDARY } from "../theme";
 import DesktopTrendingVideo from "../components/DesktopTrendingVideo";
 import Paper from "../components/reusableComponents/Paper";
@@ -33,37 +27,18 @@ const styles = (theme) => ({
   root: {
     flex: 1,
     margin: "auto",
-    padding: 16,
     [theme.breakpoints.up("sm")]: {
+      padding: 16,
       width: "90vw",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      minHeight: "91vh",
     },
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    width: "100vw",
+    height: "93vh",
   },
 
-  speedDial: {
-    margin: 0,
-    left: "auto",
-    top: "auto",
-    position: "fixed",
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
-    textTransform: "none",
-    "&.MuiSpeedDial-directionUp, &.MuiSpeedDial-directionLeft": {
-      bottom: theme.spacing(2),
-      right: theme.spacing(2),
-    },
-    "&.MuiSpeedDial-directionDown, &.MuiSpeedDial-directionRight": {
-      top: theme.spacing(2),
-      left: theme.spacing(2),
-    },
-  },
-  mobileCardMedia: {
-    objectFit: "contain",
-    height: `${100 - 48 * 0.16}vh`,
-    position: "relative",
-  },
   autoPlayTrending: false,
 });
 
@@ -122,8 +97,8 @@ export class Video extends React.PureComponent {
   };
 
   loadVideo = () => {
-    this.handleVideoPlayState();
-    this.setState({ loading: true }, () => {
+    // this.handleVideoPlayState();
+    this.setState({ loading: true, play:false }, () => {
       const slug = this.props.match.params.slug;
       const url = `/api/${slug}`;
       const { history } = this.props;
@@ -283,14 +258,14 @@ export class Video extends React.PureComponent {
       },
       {
         icon: (
-          <IconButton
+          <Button
             href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
             target="_blank"
             rel="noopener noreferrer"
-            size="large"
+            type="icon"
           >
             <TwitterIcon size="small" color="primary" />
-          </IconButton>
+          </Button>
         ),
         name: "Tweet",
       },
@@ -327,12 +302,7 @@ export class Video extends React.PureComponent {
     return (
       <>
         <Toolbar ref={this.ref} />
-        <div
-          className={classes.root}
-          style={{
-            minHeight: "91vh",
-          }}
-        >
+        <div className={classes.root}>
           {/* Desktop UI */}
           <Hidden smDown>
             <div className="grid__container">
@@ -363,7 +333,6 @@ export class Video extends React.PureComponent {
                       play={play}
                       leftButton={
                         <Button
-                          type="link"
                           startIcon={<TwitterIcon style={{ fontSize: 18 }} />}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -456,53 +425,125 @@ export class Video extends React.PureComponent {
           {/* mobile UI */}
           <Hidden smUp>
             {downloadProgress}
-            {loading ? (
+            <>
+              {loading ? (
+                <Placeholder
+                  style={{ width: "100vw" }}
+                  height="42vh"
+                  view="list"
+                  loggedIn={loggedIn}
+                />
+              ) : (
+                <MediaCard
+                  displayBottomActions
+                  playIconSize={60}
+                  view="detail"
+                  device="mobile"
+                  src={video.url}
+                  play={play}
+                  handleClick={() => handleVideoPlayState()}
+                  autoPlay={autoplayVideo}
+                  height="42vh"
+                  style={{ width: "100vw" }}
+                  ref={this.vidRef}
+                  type="video"
+                  text={text}
+                  lapse={lapse}
+                  leftButton={
+                    
+                    <Button
+                      type="icon"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
+                    >
+                      <TwitterIcon style={{ fontSize: 18 }} />
+                    </Button>
+                  }
+                  rightButton={
+                    
+                    <Button
+                      type="icon"
+                      onClick={() => downloadVideo(video)}
+                      style={{ marginLeft: 8 }}
+                    >
+                      <Download style={{ fontSize: 18 }} />
+                    </Button>
+                  }
+                />
+              )}
               <div
                 style={{
-                  width: "100vw",
-                  height: "100vh",
-                  display: "grid",
-                  placeItems: "center",
+                  padding: 16,
+                  paddingTop: 24,
+                  padingBottom: 0,
                 }}
               >
-                <Spinner size={40} color={SECONDARY} />
+                <p
+                  className="trending__videos__heading"
+                  style={{ paddingBottom: 0 }}
+                >
+                  Trending this week
+                </p>
               </div>
-            ) : (
-              <MediaCard
-                playIconSize={60}
-                view="detail"
-                device="mobile"
-                src={video.url}
-                play={true}
-                handleClick={handleVideoPlayState}
-                autoPlay={autoplayVideo}
-                height="100vh"
-                style={{ width: "100vw" }}
-                ref={this.vidRef}
-                type="video"
-              />
-            )}
-            <SpeedDial
-              ariaLabel="Twitter Video SpeedDial"
-              className={classes.speedDial}
-              icon={<SpeedDialIcon />}
-              onClose={handleSpeedDialClose}
-              onOpen={handleSpeedDialOpen}
-              open={speedDialOpen}
-              direction="up"
-              color="secondary"
-            >
-              {actions.map((action) => (
-                <SpeedDialAction
-                  component={Link}
-                  key={action.name}
-                  icon={action.icon}
-                  tooltipTitle={action.name}
-                  tooltipOpen
-                  onClick={handleSpeedDialClose}
-                />
-              ))}
-            </SpeedDial>
+
+              <div className="trending__videos__mobile">
+                {trendingVideosLoading || loading ? (
+                  Array.from(new Array(5)).map((item, idx) => (
+                    <div className="trending__video__mobile">
+                      <Placeholder
+                      key={idx}
+                        style={{ width: "35vw" }}
+                        height="20vh"
+                        view="list"
+                        hideTextContainer
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <>
+                    {otherTrendingVideos.map((video) => {
+                      const url =
+                        video.video_thumbnail_link_https !== null
+                          ? video.video_thumbnail_link_https
+                          : video.url;
+
+                      const indexOfHttps =
+                        video.text !== null && video.text.indexOf("https");
+                      const text =
+                        video.text !== null &&
+                        video.text.slice(0, indexOfHttps).trim();
+
+                      const lapse = calculateTimeSinceSave(video);
+
+                      return (
+                        <div className="trending__video__mobile" key={video.id}>
+                          <MediaCard
+                            displayBottomActions
+                            playIconSize={40}
+                            view="list"
+                            src={url}
+                            play={true}
+                            handleClick={() =>
+                              handleTrendingVideoClick(video.slug)
+                            }
+                            autoPlay={autoplayVideo}
+                            height="20vh"
+                            style={{ width: "35vw" }}
+                            type={
+                              video.video_thumbnail_link_https
+                                ? "image"
+                                : "video"
+                            }
+                            lapse={lapse}
+                          />
+                        </div>
+                      );
+                    })}
+                  </>
+                )}
+              </div>
+            </>
           </Hidden>
         </div>
       </>

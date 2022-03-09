@@ -43,6 +43,39 @@
   padding-bottom: 8px;
 }
 
+.mobile__video__actions {
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  width: 100%;
+  height: 5vh;
+}
+
+.trending__videos__mobile {
+  overflow-x: auto;
+  display: flex;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  scroll-snap-type: both mandatory;
+}
+
+.trending__videos__mobile::-webkit-scrollbar {
+  display: none;
+}
+
+.trending__video__mobile {
+  padding: 0 4px;
+  scroll-snap-align: start;
+}
+
+.trending__video__mobile:first-child {
+  padding-left: 16px;
+}
+
+.trending__video__mobile:last-child {
+  padding-right: 16px;
+}
+
 @media screen and (min-width: 411px) {
   .video__desktop {
     display: block;
