@@ -33,8 +33,8 @@ def get_report(analytics):
         {
             'viewId': VIEW_ID,
             'dateRanges': [{'startDate': '7daysAgo', 'endDate': 'today'}],
-            'metrics': [{'expression': 'ga:pageviews'}],
-            'orderBys': [{'fieldName': 'ga:pageviews', 'sortOrder': 'DESCENDING'}],
+            'metrics': [{'expression': 'ga:uniquePageviews'}],
+            'orderBys': [{'fieldName': 'ga:uniquePageviews', 'sortOrder': 'DESCENDING'}],
             'dimensions': [{'name': 'ga:pagePath'}],
             'dimensionFilterClauses': 
                 [
