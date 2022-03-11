@@ -27,7 +27,7 @@ const styles = (theme) => ({
   root: {
     flex: 1,
     margin: "auto",
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up("md")]: {
       padding: 16,
       width: "90vw",
       display: "flex",
@@ -36,7 +36,7 @@ const styles = (theme) => ({
       minHeight: "91vh",
     },
     width: "100vw",
-    height: "93vh",
+    height: "94vh",
   },
 
   autoPlayTrending: false,
@@ -54,7 +54,7 @@ function LinearProgressWithLabel(props) {
     >
       <div style={{ width: "100%", marginRight: "16px" }}>
         <LinearProgress
-          variant="determinate"
+          variant='determinate'
           {...props}
           style={{ height: "8px", borderRadius: "5px" }}
         />
@@ -98,7 +98,7 @@ export class Video extends React.PureComponent {
 
   loadVideo = () => {
     // this.handleVideoPlayState();
-    this.setState({ loading: true, play:false }, () => {
+    this.setState({ loading: true, play: false }, () => {
       const slug = this.props.match.params.slug;
       const url = `/api/${slug}`;
       const { history } = this.props;
@@ -249,8 +249,8 @@ export class Video extends React.PureComponent {
       {
         icon: (
           <Download
-            color="primary"
-            size="small"
+            color='primary'
+            size='small'
             onClick={() => downloadVideo(video)}
           />
         ),
@@ -260,11 +260,11 @@ export class Video extends React.PureComponent {
         icon: (
           <Button
             href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            type="icon"
+            target='_blank'
+            rel='noopener noreferrer'
+            type='icon'
           >
-            <TwitterIcon size="small" color="primary" />
+            <TwitterIcon size='small' color='primary' />
           </Button>
         ),
         name: "Tweet",
@@ -272,8 +272,8 @@ export class Video extends React.PureComponent {
       {
         icon: (
           <ShareIcon
-            size="small"
-            color="primary"
+            size='small'
+            color='primary'
             onClick={() => handleShare(video)}
           />
         ),
@@ -285,7 +285,7 @@ export class Video extends React.PureComponent {
       <Dialog
         onClose={handleProgressDialogClose}
         fullWidth
-        maxWidth="sm"
+        maxWidth='sm'
         open={this.state.progressDialogOpen}
       >
         <DialogTitle className={classes.title}>Download Progress</DialogTitle>
@@ -304,28 +304,28 @@ export class Video extends React.PureComponent {
         <Toolbar ref={this.ref} />
         <div className={classes.root}>
           {/* Desktop UI */}
-          <Hidden smDown>
-            <div className="grid__container">
-              <div className="main">
+          <Hidden mdDown>
+            <div className='grid__container'>
+              <div className='main'>
                 <>
                   {loading ? (
                     <Placeholder
                       style={{ width: "100%" }}
-                      height="61vh"
-                      view="detail"
+                      height='61vh'
+                      view='detail'
                       loggedIn={loggedIn}
                     />
                   ) : (
                     <MediaCard
-                      view="detail"
-                      device="desktop"
+                      view='detail'
+                      device='desktop'
                       displayBottomActions
                       playIconSize={60}
                       style={{
                         width: "100%",
                       }}
-                      type="video"
-                      height="60vh"
+                      type='video'
+                      height='60vh'
                       src={video.url}
                       handleClick={() => {
                         handleVideoPlayState();
@@ -334,8 +334,8 @@ export class Video extends React.PureComponent {
                       leftButton={
                         <Button
                           startIcon={<TwitterIcon style={{ fontSize: 18 }} />}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          target='_blank'
+                          rel='noopener noreferrer'
                           href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
                         >
                           Tweet
@@ -359,7 +359,7 @@ export class Video extends React.PureComponent {
                   )}
                 </>
               </div>
-              <div className="trending">
+              <div className='trending'>
                 <Paper
                   style={{ paddingLeft: 16, paddingTop: 16, paddingBottom: 4 }}
                 >
@@ -368,11 +368,11 @@ export class Video extends React.PureComponent {
                       marginBottom: 8,
                     }}
                   >
-                    <p className="trending__videos__heading">
+                    <p className='trending__videos__heading'>
                       Trending this week
                     </p>
                   </div>
-                  <div className="trending__videos__container">
+                  <div className='trending__videos__container'>
                     {trendingVideosLoading || loading ? (
                       <>
                         {Array.from(new Array(5)).map((item, index) => (
@@ -423,47 +423,45 @@ export class Video extends React.PureComponent {
           </Hidden>
 
           {/* mobile UI */}
-          <Hidden smUp>
+          <Hidden mdUp>
             {downloadProgress}
             <>
               {loading ? (
                 <Placeholder
                   style={{ width: "100vw" }}
-                  height="42vh"
-                  view="list"
+                  height='42vh'
+                  view='list'
                   loggedIn={loggedIn}
                 />
               ) : (
                 <MediaCard
                   displayBottomActions
                   playIconSize={60}
-                  view="detail"
-                  device="mobile"
+                  view='detail'
+                  device='mobile'
                   src={video.url}
                   play={play}
                   handleClick={() => handleVideoPlayState()}
                   autoPlay={autoplayVideo}
-                  height="42vh"
+                  height='42vh'
                   style={{ width: "100vw" }}
                   ref={this.vidRef}
-                  type="video"
+                  type='video'
                   text={text}
                   lapse={lapse}
                   leftButton={
-                    
                     <Button
-                      type="icon"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      type='icon'
+                      target='_blank'
+                      rel='noopener noreferrer'
                       href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
                     >
                       <TwitterIcon style={{ fontSize: 18 }} />
                     </Button>
                   }
                   rightButton={
-                    
                     <Button
-                      type="icon"
+                      type='icon'
                       onClick={() => downloadVideo(video)}
                       style={{ marginLeft: 8 }}
                     >
@@ -480,22 +478,22 @@ export class Video extends React.PureComponent {
                 }}
               >
                 <p
-                  className="trending__videos__heading"
+                  className='trending__videos__heading'
                   style={{ paddingBottom: 0 }}
                 >
                   Trending this week
                 </p>
               </div>
 
-              <div className="trending__videos__mobile">
+              <div className='trending__videos__mobile'>
                 {trendingVideosLoading || loading ? (
                   Array.from(new Array(5)).map((item, idx) => (
-                    <div className="trending__video__mobile">
+                    <div className='trending__video__mobile'>
                       <Placeholder
-                      key={idx}
+                        key={idx}
                         style={{ width: "35vw" }}
-                        height="20vh"
-                        view="list"
+                        height='20vh'
+                        view='list'
                         hideTextContainer
                       />
                     </div>
@@ -517,18 +515,18 @@ export class Video extends React.PureComponent {
                       const lapse = calculateTimeSinceSave(video);
 
                       return (
-                        <div className="trending__video__mobile" key={video.id}>
+                        <div className='trending__video__mobile' key={video.id}>
                           <MediaCard
                             displayBottomActions
                             playIconSize={40}
-                            view="list"
+                            view='list'
                             src={url}
                             play={true}
                             handleClick={() =>
                               handleTrendingVideoClick(video.slug)
                             }
                             autoPlay={autoplayVideo}
-                            height="20vh"
+                            height='20vh'
                             style={{ width: "35vw" }}
                             type={
                               video.video_thumbnail_link_https

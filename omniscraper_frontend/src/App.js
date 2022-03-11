@@ -7,7 +7,7 @@ import createHistory from "history/createBrowserHistory";
 import axios from "axios";
 import { ThreeDots } from "@bit/mhnpd.react-loader-spinner.three-dots";
 import { axiosInstance } from "./utils/axiosInstance";
-import Nav from "./components/Nav"
+import Nav from "./components/Nav";
 import Login from "./pages/Login";
 
 const Video = React.lazy(() => import("./pages/Video"));
@@ -66,13 +66,14 @@ class App extends Component {
     trendingVideosLoading: false,
   };
 
-  componentDidMount() {
+  componentDidMount = async () => {
     window.ga("create", "UA-190601275-1", "auto");
     window.ga("send", "pageview");
 
-    this.loadTags();
-    this.loadVideos();
-  }
+    await this.loadTags();
+    await this.loadVideos();
+    await this.loadTrendingVideos();
+  };
 
   loadVideos = () => {
     this.setState({ loading: true }, () => {
@@ -99,8 +100,6 @@ class App extends Component {
             loading: false,
           });
         });
-
-      this.loadTrendingVideos();
     });
   };
 
@@ -278,17 +277,17 @@ class App extends Component {
                       placeItems: "center",
                     }}
                   >
-                    <ThreeDots color="#185adb" height={50} width={50} />
+                    <ThreeDots color='#185adb' height={50} width={50} />
                   </div>
                 }
               >
                 <Nav loggedIn={loggedIn} handleLogout={handleLogout} />
 
                 <Switch>
-                  {loggedIn ? <Redirect from="/login" to="/" /> : ""}
+                  {loggedIn ? <Redirect from='/login' to='/' /> : ""}
                   <Route
                     exact
-                    path="/"
+                    path='/'
                     render={(props) => (
                       <Home
                         {...props}
@@ -308,7 +307,7 @@ class App extends Component {
                   />
 
                   <Route
-                    path="/tags/:slug"
+                    path='/tags/:slug'
                     render={(props) => (
                       <FilteredVideos
                         {...props}
@@ -323,7 +322,7 @@ class App extends Component {
                   />
 
                   <Route
-                    path="/login"
+                    path='/login'
                     render={(props) => (
                       <Login
                         {...props}
@@ -339,7 +338,7 @@ class App extends Component {
                   />
 
                   <Route
-                    path="/:slug"
+                    path='/:slug'
                     render={() => (
                       <Video
                         trendingVideosLoading={trendingVideosLoading}
