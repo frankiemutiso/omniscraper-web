@@ -2,26 +2,14 @@ import React, { Component } from "react";
 import withStyles from "@mui/styles/withStyles";
 import Button from "./reusableComponents/Button";
 import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogActions from "@mui/material/DialogActions";
 import Menu from "@mui/material/Menu";
 // import Menu from "./reusableComponents/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import DialogContent from "@mui/material/DialogContent";
-import Checkbox from "@mui/material/Checkbox";
-import TextField from "@mui/material/TextField";
 import Fab from "@mui/material/Fab";
 import Hidden from "@mui/material/Hidden";
 import ShareIcon from "@mui/icons-material/Share";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import CircularProgress from "@mui/material/CircularProgress";
 import AddIcon from "@mui/icons-material/Add";
-import CloseIcon from "@mui/icons-material/Close";
-import Autocomplete from "@mui/material/Autocomplete";
 import Toolbar from "@mui/material/Toolbar";
 import { withRouter } from "react-router";
 import Blank from "./Blank";
@@ -31,10 +19,11 @@ import { calculateTimeSinceSave } from "../utils/calculateTimeLapse";
 import "./List.css";
 import MediaCard from "./reusableComponents/MediaCard";
 import Placeholder from "./reusableComponents/Placeholder";
+import Modal from "./reusableComponents/Modal";
 
 // FIXME checkout https://mui.com/components/use-media-query/#using-material-uis-breakpoint-helpers
 const withMobileDialog = () => (WrappedComponent) => (props) =>
-  <WrappedComponent {...props} width="lg" fullScreen={false} />;
+  <WrappedComponent {...props} width='lg' fullScreen={false} />;
 
 const Tags = React.lazy(() => import("./Tags"));
 
@@ -45,11 +34,6 @@ const styles = (theme) => ({
     marginRight: theme.spacing(3),
     marginLeft: theme.spacing(3),
     paddingBottom: 16,
-  },
-  buttons: {
-    border: "1px solid #185adb",
-    color: "#185adb",
-    fontFamily: "Montserrat",
   },
   title: {
     "&h2": {
@@ -69,21 +53,13 @@ const styles = (theme) => ({
     right: theme.spacing(2),
     textTransform: "none",
   },
-  closeButton: {
-    position: "absolute",
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-  },
   videos: {
     [theme.breakpoints.down("sm")]: {
       marginTop: 16,
     },
   },
-  textContainer: {},
-});
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" color="primary" />;
+});
 
 export class List extends Component {
   state = {
@@ -94,7 +70,7 @@ export class List extends Component {
     mouseX: null,
     mouseY: null,
     tagsDialogOpen: false,
-    tagDialogOpen: false,
+    createTagOpen: false,
     tagName: "",
     description: "",
     selectedTagsIds: [],
@@ -226,17 +202,17 @@ export class List extends Component {
   };
 
   handleCreateDialogOpen = () => {
-    this.setState({ tagDialogOpen: true });
+    this.setState({ createTagOpen: true });
   };
 
   handleCreateDialogClose = () => {
-    this.setState({ tagDialogOpen: false, tagName: "", description: "" });
+    this.setState({ createTagOpen: false, tagName: "", description: "" });
   };
 
   handleEditTagDialogOpen = () => {
     const tag = this.props.videoTags.find((x) => x.slug === this.state.tagSlug);
     this.setState({
-      tagDialogOpen: true,
+      createTagOpen: true,
       editingDialogOpen: true,
       tagName: tag.tag_name,
       description: tag.description,
@@ -246,7 +222,7 @@ export class List extends Component {
 
   handleEditTagDialogClose = () => {
     this.setState({
-      tagDialogOpen: false,
+      createTagOpen: false,
       tagName: "",
       description: "",
       editingDialogOpen: false,
@@ -381,7 +357,7 @@ export class List extends Component {
       mouseX,
       mouseY,
       tagsDialogOpen,
-      tagDialogOpen,
+      createTagOpen,
       tagName,
       description,
       creatingTag,
@@ -433,179 +409,60 @@ export class List extends Component {
       handleTagMenuClose,
       handleVideoClick,
     } = this;
+
     const reportDialog = (
-      <Dialog
-        open={open}
-        onClose={handlePromptClose}
-        style={{ paddingBottom: 8 }}
-      >
-        <DialogTitle className={classes.title}>
-          Are you sure you want to report this video?
-        </DialogTitle>
-        <DialogActions>
-          <Button onClick={handlePromptClose} type="outlined">
-            Cancel
-          </Button>
-          <Button
-            onClick={() => flagVideo(clickedVideo)}
-            endIcon={
-              flagging ? (
-                <CircularProgress size={12} style={{ color: "white" }} />
-              ) : (
-                ""
-              )
-            }
-          >
-            Report
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <>
+        <Modal
+          type='report'
+          open={open}
+          handleClose={handlePromptClose}
+          title='Report?'
+          handleRightButtonClick={() => flagVideo(clickedVideo)}
+          isSpinning={flagging}
+        />
+      </>
     );
 
     const editVideoTagsDialog = (
-      <Dialog
-        open={tagsDialogOpen}
-        onClose={handleTagsDialogClose}
-        fullWidth={true}
-        fullScreen={fullScreen}
-      >
-        <DialogTitle className={classes.title}>
-          <p className="list__modal__title">Edit video tags</p>
-          <IconButton
-            className={classes.closeButton}
-            onClick={handleTagsDialogClose}
-            size="large"
-          >
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent>
-          <Autocomplete
-            fullWidth={true}
-            open={tagsDialogOpen}
-            multiple
-            onChange={handleSelectedTagsChange}
-            options={videoTags}
-            disableCloseOnSelect
-            filterSelectedOptions={true}
-            getOptionLabel={(option) => option.tag_name}
-            defaultValue={checkedTags}
-            renderOption={(props, option, { selected }) => (
-              <li key={option.id} {...props}>
-                <Checkbox
-                  icon={icon}
-                  checkedIcon={checkedIcon}
-                  style={{ marginRight: 8 }}
-                  checked={selected}
-                  color="primary"
-                />
-                {option.tag_name}
-              </li>
-            )}
-            style={{ width: "100%", height: "52vh" }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                label="Tags"
-                style={{ marginTop: 8 }}
-              />
-            )}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleTagsDialogClose} type="outlined">
-            Cancel
-          </Button>
-          <Button
-            onClick={handleEditVideoTags}
-            endIcon={
-              editingVideoTags ? (
-                <CircularProgress size={12} style={{ color: "white" }} />
-              ) : (
-                ""
-              )
-            }
-          >
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <>
+        <Modal
+          type='editVideo'
+          open={tagsDialogOpen}
+          checkedTags={checkedTags}
+          handleClose={handleTagsDialogClose}
+          title='Edit video tags'
+          isSpinning={editingVideoTags}
+          fullScreen={fullScreen}
+          handleChange={handleSelectedTagsChange}
+          videoTags={videoTags}
+          handleRightButtonClick={handleEditVideoTags}
+          fullWidth={true}
+        />
+      </>
     );
 
     const createTagDialog = (
-      <Dialog
-        fullWidth={true}
-        open={tagDialogOpen}
-        onClose={
-          editingDialogOpen ? handleEditTagDialogClose : handleCreateDialogClose
-        }
-        fullScreen={fullScreen}
-      >
-        <DialogTitle className={classes.title}>
-          <p className="list__modal__title">
-            {editingDialogOpen ? "Edit tag" : "Create tag"}
-          </p>
-          <IconButton
-            className={classes.closeButton}
-            onClick={
-              editingDialogOpen
-                ? handleEditTagDialogClose
-                : handleCreateDialogClose
-            }
-            size="large"
-          >
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent>
-          <TextField
-            required
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            label="Tag name"
-            name="tagName"
-            onChange={handleTagChange}
-            value={tagName}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            label="Description (optional)"
-            multiline={true}
-            minRows={2}
-            name="description"
-            onChange={handleTagChange}
-            value={description}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button
-            type="outlined"
-            onClick={
-              editingDialogOpen
-                ? handleEditTagDialogClose
-                : handleCreateDialogClose
-            }
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={editingDialogOpen ? handleEditTag : handleCreateTag}
-            endIcon={
-              creatingTag || editingTag ? (
-                <CircularProgress size={12} style={{ color: "white" }} />
-              ) : (
-                ""
-              )
-            }
-          >
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <>
+        <Modal
+          type='createTag'
+          open={createTagOpen || editingDialogOpen}
+          handleClose={
+            editingDialogOpen
+              ? handleEditTagDialogClose
+              : handleCreateDialogClose
+          }
+          title={editingDialogOpen ? "Edit tag" : "Create tag"}
+          handleRightButtonClick={
+            editingDialogOpen ? handleEditTag : handleCreateTag
+          }
+          isSpinning={creatingTag || editingTag}
+          fullScreen={fullScreen}
+          handleChange={handleTagChange}
+          fullWidth={true}
+          description={description}
+          tagName={tagName}
+        />
+      </>
     );
 
     return (
@@ -620,7 +477,7 @@ export class List extends Component {
           keepMounted
           open={mouseY !== null}
           onClose={handleMenuClose}
-          anchorReference="anchorPosition"
+          anchorReference='anchorPosition'
           anchorPosition={
             mouseY !== null && mouseX !== null
               ? { top: mouseY, left: mouseX }
@@ -689,11 +546,11 @@ export class List extends Component {
                   <Grid item md={4} sm={6} xs={12} key={index}>
                     <MediaCard
                       displayBottomActions
-                      view="list"
+                      view='list'
                       type={
                         video.video_thumbnail_link_https ? "image" : "video"
                       }
-                      height="180px"
+                      height='180px'
                       style={{
                         maxWidth: 380,
                       }}
@@ -706,21 +563,21 @@ export class List extends Component {
                       leftButton={
                         <Button
                           style={{ marginRight: 8 }}
-                          type="icon"
+                          type='icon'
                           onClick={() => handleShare(video)}
                         >
-                          <ShareIcon color="primary" style={{ fontSize: 18 }} />
+                          <ShareIcon color='primary' style={{ fontSize: 18 }} />
                         </Button>
                       }
                       rightButton={
                         loggedIn && (
                           <Button
-                            type="icon"
+                            type='icon'
                             onClick={(e) => handleMenuClick(e, video)}
                             style={{ marginRight: 8 }}
                           >
                             <MoreIcon
-                              color="primary"
+                              color='primary'
                               style={{ fontSize: 18 }}
                             />
                           </Button>
@@ -736,13 +593,13 @@ export class List extends Component {
             </Grid>
 
             {loading && (
-              <Grid container style={{ marginTop: 2 }}>
+              <Grid container style={{ marginTop: 2 }} spacing={2}>
                 {Array.from(new Array(12)).map((item, index) => (
                   <Grid item md={4} sm={6} xs={12} key={index}>
                     <Placeholder
                       style={{ maxWidth: 380 }}
                       height={180}
-                      view="list"
+                      view='list'
                       loggedIn={loggedIn}
                     />
                   </Grid>
@@ -757,9 +614,9 @@ export class List extends Component {
             <Hidden lgDown>
               <Fab
                 className={classes.fab}
-                color="primary"
-                variant="extended"
-                size="medium"
+                color='primary'
+                variant='extended'
+                size='medium'
                 onClick={handleCreateDialogOpen}
               >
                 <AddIcon style={{ marginRight: 8 }} />
@@ -769,7 +626,7 @@ export class List extends Component {
             <Hidden mdUp>
               <Fab
                 className={classes.fab}
-                color="primary"
+                color='primary'
                 onClick={handleCreateDialogOpen}
               >
                 <AddIcon />
