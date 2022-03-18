@@ -1,7 +1,7 @@
 import React from "react";
 import ViewIcon from "@mui/icons-material/PlayArrow";
 import "./MediaCard.css";
-
+import BrokenImage from "../../assets/broken-image.png";
 // Media Card Types: image, video
 
 const MediaCard = React.forwardRef((props, ref) => {
@@ -24,15 +24,20 @@ const MediaCard = React.forwardRef((props, ref) => {
     desktopTrending,
     ...restProps
   } = props;
+
+  const handleImageError = (evt) => {
+    evt.target.src = `${BrokenImage}`;
+  };
+
   return (
-    <div {...restProps} className="media-card">
+    <div {...restProps} className='media-card'>
       <div style={{ position: "relative" }}>
         {type === "video" ? (
           <video
             ref={ref && ref}
             autoPlay={autoPlay}
             disablePictureInPicture
-            controlsList="nodownload"
+            controlsList='nodownload'
             // height={height}
             className={
               desktopTrending
@@ -40,28 +45,29 @@ const MediaCard = React.forwardRef((props, ref) => {
                 : "media-card__video"
             }
             onContextMenu={(e) => e.preventDefault()}
-            onClick={handleClick}
+            // onClick={handleClick}
             style={{
               height: height,
               objectFit: view !== "detail" ? "cover" : "contain",
-              border:"none"
+              border: "none",
             }}
           >
-            <source src={src} type="video/mp4" />
+            <source src={src} type='video/mp4' />
           </video>
         ) : (
           <img
             ref={ref && ref}
-            crossOrigin="anonymous"
+            crossOrigin='anonymous'
             src={src}
             alt={src}
             // height={height}
-            loading="lazy"
+            loading='lazy'
             className={
               desktopTrending
                 ? "media-card__desktop__trending"
                 : "media-card__image"
             }
+            onError={handleImageError}
             onContextMenu={(e) => e.preventDefault()}
             onClick={handleClick}
             style={{
@@ -85,7 +91,7 @@ const MediaCard = React.forwardRef((props, ref) => {
               borderRadius: 5,
             }}
             onClick={handleClick}
-            size="large"
+            size='large'
           />
         )}
       </div>
@@ -99,23 +105,23 @@ const MediaCard = React.forwardRef((props, ref) => {
           }
         >
           {text && (
-            <div className="media-card__actions__text-container">
+            <div className='media-card__actions__text-container'>
               {text?.length > 0 && (
-                <p className="media-card__actions__text">{text}</p>
+                <p className='media-card__actions__text'>{text}</p>
               )}
             </div>
           )}
-          
-          <div className="media-card__actions__bottom">
+
+          <div className='media-card__actions__bottom'>
             <p
-              className="media-card__actions__text"
+              className='media-card__actions__text'
               style={{
                 marginLeft: 8,
               }}
             >
               {lapse}
             </p>
-            <div className="media-card__actions__buttons">
+            <div className='media-card__actions__buttons'>
               {leftButton && leftButton}
               {rightButton && rightButton}
             </div>

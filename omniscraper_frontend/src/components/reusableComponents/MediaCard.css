@@ -8,8 +8,8 @@
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
-.media-card__video{
-  background:#fff;
+.media-card__video {
+  background: #fff;
 }
 
 .media-card__desktop__trending {
@@ -45,7 +45,7 @@ media-card__action-area {
 }
 
 .media-card__actions__text {
-  font-size: 11px;
+  font-size: 12px;
   font-family: inherit;
   color: #423f3e;
 }
