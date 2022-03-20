@@ -45,7 +45,7 @@ const MediaCard = React.forwardRef((props, ref) => {
                 : "media-card__video"
             }
             onContextMenu={(e) => e.preventDefault()}
-            // onClick={handleClick}
+            onClick={handleClick}
             style={{
               height: height,
               objectFit: view !== "detail" ? "cover" : "contain",
