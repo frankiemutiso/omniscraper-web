@@ -133,7 +133,8 @@ class Tag(APIView):
 class TrendingVideos(APIView):
     def get_object(self, slug):
         try:
-            return TwitterVideo.objects.get(slug=slug)
+            video = TwitterVideo.objects.get(slug=slug)
+            return video
         except TwitterVideo.DoesNotExist:
             raise Http404
         
@@ -148,8 +149,8 @@ class TrendingVideos(APIView):
             slug = obj['path']
             video = self.get_object(slug)
             
-            trending_videos.append(video)
-            # print(obj["path"])
+            if(video.flagged==False):
+                trending_videos.append(video)
 
         serializer = VideosSerializer(trending_videos, many=True)
         
