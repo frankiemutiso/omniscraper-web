@@ -5,10 +5,12 @@ import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import StyledEngineProvider from "@mui/material/StyledEngineProvider";
 import createHistory from "history/createBrowserHistory";
 import axios from "axios";
+import { connect } from "react-redux";
 import { ThreeDots } from "@bit/mhnpd.react-loader-spinner.three-dots";
-import { axiosInstance } from "./utils/axiosInstance";
 import Nav from "./components/Nav";
 import Login from "./pages/Login";
+import { loginUser } from "./store/actions/usersActions";
+import { loadTags } from "./store/actions/tagsActions";
 
 const Video = React.lazy(() => import("./pages/Video"));
 const Home = React.lazy(() => import("./pages/Home"));
@@ -41,18 +43,7 @@ history.listen((location) => {
 
 class App extends Component {
   state = {
-    username: "",
-    password: "",
-    loggedIn:
-      typeof window !== "undefined"
-        ? localStorage.getItem("access_token")
-          ? true
-          : false
-        : null,
-    loginLoading: false,
     error: null,
-    tagsLoading: false,
-    videoTags: [],
     videosLoadingError: false,
     loading: false,
     offset: 0,
@@ -70,7 +61,9 @@ class App extends Component {
     window.ga("create", "UA-190601275-1", "auto");
     window.ga("send", "pageview");
 
-    await this.loadTags();
+    const { loadTags } = this.props;
+
+    await loadTags();
     await this.loadVideos();
     await this.loadTrendingVideos();
   };
@@ -103,28 +96,6 @@ class App extends Component {
     });
   };
 
-  loadTags = () => {
-    this.setState({ tagsLoading: true }, () => {
-      const url = "/api/tags/";
-
-      axios
-        .get(url)
-        .then((res) => {
-          const newTags = res.data.tags;
-
-          this.setState({
-            videoTags: newTags,
-            tagsLoading: false,
-          });
-        })
-        .catch((err) => {
-          this.setState({
-            tagsLoading: false,
-          });
-        });
-    });
-  };
-
   loadTrendingVideos = () => {
     const url = "/api/trending/";
     this.setState({ trendingVideosLoading: true }, () => {
@@ -142,92 +113,6 @@ class App extends Component {
     });
   };
 
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  handleLogin = (e) => {
-    const { handleRedirectionDelay } = this;
-    const { username, password } = this.state;
-    e.preventDefault();
-
-    this.setState({ loginLoading: true }, () => {
-      axiosInstance
-        .post("token/obtain/", {
-          username,
-          password,
-        })
-        .then((response) => {
-          if (response.status === 200) {
-            axiosInstance.defaults.headers["Authorization"] =
-              "JWT " + response.data.access;
-
-            localStorage.setItem("access_token", response.data.access);
-            localStorage.setItem("refresh_token", response.data.refresh);
-
-            this.setState(
-              {
-                successfulLogin: true,
-                loginLoading: false,
-                error: null,
-              },
-              handleRedirectionDelay()
-            );
-          } else {
-            this.setState({
-              loggedIn: false,
-              loginLoading: false,
-              username: "",
-              password: "",
-              error: response.statusText,
-            });
-          }
-        })
-        .catch((error) => {
-          const errorMessage = error.response.data.detail;
-          this.setState({
-            loggedIn: false,
-            loginLoading: false,
-            error: errorMessage,
-          });
-        });
-    });
-  };
-
-  handleRedirectionDelay = () => {
-    setTimeout(
-      () =>
-        this.setState({
-          username: "",
-          password: "",
-          error: null,
-          loggedIn: true,
-        }),
-      2500
-    );
-  };
-
-  handleLogout = () => {
-    axiosInstance
-      .post("blacklist/", {
-        refresh_token: localStorage.getItem("refresh_token"),
-      })
-      .then((response) => {
-        if (response.status === 205) {
-          localStorage.removeItem("access_token");
-          localStorage.removeItem("refresh_token");
-          axiosInstance.defaults.headers["Authorization"] = null;
-          this.setState({ loggedIn: false });
-        }
-      })
-      .catch((e) => {
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("refresh_token");
-        axiosInstance.defaults.headers["Authorization"] = null;
-        this.setState({ loggedIn: false });
-      });
-  };
-
   handleScrollPosition = () => {
     this.setState({
       autoplayVideo: true,
@@ -236,23 +121,8 @@ class App extends Component {
   };
 
   render() {
+    const { loadVideos, handleScrollPosition } = this;
     const {
-      handleChange,
-      handleLogin,
-      handleLogout,
-      loadTags,
-      loadVideos,
-      handleScrollPosition,
-    } = this;
-    const {
-      username,
-      password,
-      error,
-      loggedIn,
-      loginLoading,
-      videoTags,
-      tagsLoading,
-      successfulLogin,
       videosLoadingError,
       loading,
       hasMore,
@@ -262,6 +132,8 @@ class App extends Component {
       trendingVideos,
       trendingVideosLoading,
     } = this.state;
+
+    const { loggedIn, loginLoading, loginError } = this.props;
 
     return (
       <StyledEngineProvider injectFirst>
@@ -281,7 +153,7 @@ class App extends Component {
                   </div>
                 }
               >
-                <Nav loggedIn={loggedIn} handleLogout={handleLogout} />
+                <Nav />
 
                 <Switch>
                   {loggedIn ? <Redirect from='/login' to='/' /> : ""}
@@ -291,10 +163,6 @@ class App extends Component {
                     render={(props) => (
                       <Home
                         {...props}
-                        loggedIn={loggedIn}
-                        videoTags={videoTags}
-                        tagsLoading={tagsLoading}
-                        loadTags={loadTags}
                         error={videosLoadingError}
                         loading={loading}
                         hasMore={hasMore}
@@ -311,10 +179,6 @@ class App extends Component {
                     render={(props) => (
                       <FilteredVideos
                         {...props}
-                        videoTags={videoTags}
-                        loggedIn={loggedIn}
-                        tagsLoading={tagsLoading}
-                        loadTags={loadTags}
                         scrollPosition={scrollPosition}
                         handleScrollPosition={handleScrollPosition}
                       />
@@ -323,18 +187,7 @@ class App extends Component {
 
                   <Route
                     path='/login'
-                    render={(props) => (
-                      <Login
-                        {...props}
-                        username={username}
-                        password={password}
-                        loginLoading={loginLoading}
-                        error={error}
-                        handleChange={handleChange}
-                        handleSubmit={handleLogin}
-                        successfulLogin={successfulLogin}
-                      />
-                    )}
+                    render={(props) => <Login {...props} />}
                   />
 
                   <Route
@@ -343,7 +196,6 @@ class App extends Component {
                       <Video
                         trendingVideosLoading={trendingVideosLoading}
                         autoplayVideo={autoplayVideo}
-                        loggedIn={loggedIn}
                         trendingVideos={trendingVideos}
                       />
                     )}
@@ -358,4 +210,9 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return { ...state.users };
+};
+const mapDispatchToProps = { loginUser, loadTags };
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

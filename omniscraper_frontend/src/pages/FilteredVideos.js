@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { withRouter } from "react-router";
+import { connect } from "react-redux";
+
 const List = React.lazy(() => import("../components/List"));
 
 export class FilteredVideos extends Component {
@@ -25,16 +27,16 @@ export class FilteredVideos extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.slug !== this.props.match.params.slug) {
-      this.setState(
-        { slug: this.props.match.params.slug, videos: [], offset: 0 },
-        () => this.loadVideos()
-      );
+      const { slug } = this.props.match.params;
+      const offset = 0;
+
+      this.loadVideos(slug,offset);
     }
   }
 
-  loadVideos = () => {
-    const { limit, offset } = this.state;
-    const slug = this.props.match.params.slug;
+  loadVideos = (slug, offset) => {
+    const { limit } = this.state;
+
     const url = `/api/tags/${slug}?limit=${limit}&offset=${offset}`;
 
     this.setState({ loading: true }, () => {
@@ -61,28 +63,18 @@ export class FilteredVideos extends Component {
 
   render() {
     const { loading, videos, hasMore, videosLoadingError } = this.state;
-    const {
-      classes,
-      loggedIn,
-      videoTags,
-      loadTags,
-      location,
-      handleScrollPosition,
-    } = this.props;
+    const { classes, location, handleScrollPosition } = this.props;
     const pathParams = location.pathname.split("/");
     const clickedTag = pathParams[pathParams.length - 1];
 
     return (
       <>
         <List
-          loggedIn={loggedIn}
           videos={videos}
-          videoTags={videoTags}
           loading={loading}
           hasMore={hasMore}
           error={videosLoadingError}
           loadVideos={this.loadVideos}
-          loadTags={loadTags}
           clickedTag={clickedTag}
           scrollPosition={0}
           handleScrollPosition={handleScrollPosition}

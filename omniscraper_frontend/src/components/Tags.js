@@ -1,27 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Chip from "@mui/material/Chip";
 import { Menu, MenuItem } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import makeStyles from "@mui/styles/makeStyles";
-import { HideOnScroll } from "./HideOnScroll";
-import { useTheme } from "@mui/material/styles";
+
 import { useHistory } from "react-router-dom";
 import "./Tags.css";
-
-const styles = makeStyles((theme) => ({
-  toolBarRoot: {
-    paddingRight: 0,
-    paddingLeft: 0,
-    [theme.breakpoints.down("sm")]: {
-      // paddingTop: 16,
-    },
-    height: 64,
-  },
-
-  appBar: {},
-}));
+import { connect } from "react-redux";
 
 function Tags(props) {
   const {
@@ -36,7 +21,6 @@ function Tags(props) {
     loading,
     handleScrollPosition,
   } = props;
-  const classes = styles(props);
   const history = useHistory();
 
   const tagEditor = (
@@ -45,7 +29,7 @@ function Tags(props) {
       keepMounted
       open={mouseY !== null}
       onClose={handleClose}
-      anchorReference="anchorPosition"
+      anchorReference='anchorPosition'
       anchorPosition={
         mouseY !== null && mouseX !== null
           ? { top: mouseY, left: mouseX }
@@ -66,9 +50,9 @@ function Tags(props) {
         transition: "all 0.5s ease",
       }}
     >
-      <Toolbar classes={{ root: classes.toolBarRoot }}>
+      <Toolbar classes='toolBarRoot'>
         {loggedIn && tagEditor}
-        <div className="tags">
+        <div className='tags'>
           <div style={{ paddingRight: 16 }} />
           {videoTags.map((tag) => (
             <Chip
@@ -81,7 +65,7 @@ function Tags(props) {
               label={tag.tag_name}
               disabled={loading}
               clickable
-              color="primary"
+              color='primary'
               variant={clickedTag === tag.slug ? "default" : "outlined"}
               style={{ marginLeft: 4, marginRight: 4, fontWeight: 500 }}
             />
@@ -93,4 +77,8 @@ function Tags(props) {
   );
 }
 
-export default Tags;
+const mapStateToProps = (state) => {
+  return { ...state.users, ...state.tags };
+};
+
+export default connect(mapStateToProps)(Tags);

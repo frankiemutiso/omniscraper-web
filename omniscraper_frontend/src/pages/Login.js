@@ -9,7 +9,9 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Paper from "@mui/material/Paper";
 import Button from "../components/reusableComponents/Button";
+import { connect } from "react-redux";
 import "./Login.css";
+import { loginUser } from '../store/actions/usersActions'
 
 const styles = (theme) => ({
   paper: {
@@ -42,6 +44,8 @@ const styles = (theme) => ({
 export class Login extends PureComponent {
   state = {
     showPassword: false,
+    username: "",
+    password: "",
   };
 
   handleClickShowPassword = (event) => {
@@ -53,36 +57,57 @@ export class Login extends PureComponent {
     event.preventDefault();
   };
 
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleLogin = async (e) => {
+    const { handleRedirectionDelay } = this;
+    const { username, password } = this.state;
+    const { loginUser } = this.props;
+
+    e.preventDefault();
+
+    await loginUser(username, password);
+
+    if (this.props.loggedIn === true) {
+      this.setState({ successfulLogin: true }, () => handleRedirectionDelay());
+    }
+  };
+
+  handleRedirectionDelay = () => {
+    setTimeout(
+      () =>
+        this.setState({
+          username: "",
+          password: "",
+        }),
+      2500
+    );
+  };
+
   render() {
+    const { classes, loginLoading, error, loginError } = this.props;
+
+    const { showPassword, username, password } = this.state;
+
     const {
-      classes,
+      handleClickShowPassword,
+      handleMouseDownPassword,
+      handleLogin,
       handleChange,
-      handleSubmit,
-      username,
-      password,
-      loginLoading,
-      error,
-      successfulLogin,
-    } = this.props;
-
-    const { showPassword } = this.state;
-
-    const { handleClickShowPassword, handleMouseDownPassword } = this;
+    } = this;
 
     return (
       <div
         style={{ minHeight: "100vh", display: "grid", placeItems: "center" }}
       >
-        <Paper elevation={0} className={classes.paper} square elevation={3}>
+        <Paper elevation={0} className={classes.paper} square>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          {successfulLogin ? (
-            <p className="login__success-text">
-              You have successfully logged in.
-            </p>
-          ) : (
-            <p className="login__error-text">{error}</p>
+          {loginError.length > 0 && (
+            <p className='login__error-text'>{loginError}</p>
           )}
 
           <h4
@@ -97,16 +122,16 @@ export class Login extends PureComponent {
             Log In To Omniscraper
           </h4>
 
-          <form className={classes.form} noValidate onSubmit={handleSubmit}>
+          <form className={classes.form} noValidate onSubmit={handleLogin}>
             <Textfield
               error={error}
-              type="text"
-              id="username"
-              placeholder="Username"
-              name="username"
+              type='text'
+              id='username'
+              placeholder='Username'
+              name='username'
               value={username}
-              required="required"
-              autoComplete="on"
+              required='required'
+              autoComplete='on'
               autoFocus
               onChange={handleChange}
               style={{ width: "100%", marginBottom: 16 }}
@@ -115,20 +140,20 @@ export class Login extends PureComponent {
               <Textfield
                 error={error}
                 type={showPassword ? "text" : "password"}
-                id="password"
+                id='password'
                 value={password}
                 onChange={handleChange}
-                placeholder="Password"
-                name="password"
+                placeholder='Password'
+                name='password'
                 required
-                autoComplete="on"
+                autoComplete='on'
                 style={{
                   width: "100%",
                   marginBottom: 16,
                 }}
               />
               <Button
-                type="icon"
+                type='icon'
                 onClick={handleClickShowPassword}
                 onMouseDown={handleMouseDownPassword}
                 style={{
@@ -138,15 +163,15 @@ export class Login extends PureComponent {
                 }}
               >
                 {showPassword ? (
-                  <Visibility color="primary" style={{ fontSize: 18 }} />
+                  <Visibility color='primary' style={{ fontSize: 18 }} />
                 ) : (
-                  <VisibilityOff color="primary" style={{ fontSize: 18 }} />
+                  <VisibilityOff color='primary' style={{ fontSize: 18 }} />
                 )}
               </Button>
             </div>
 
             <Button
-              onClick={() => handleSubmit()}
+              onClick={() => handleLogin()}
               style={{ marginTop: 16, width: "100%" }}
               endIcon={
                 loginLoading ? (
@@ -164,5 +189,12 @@ export class Login extends PureComponent {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return { ...state.users };
+};
+const mapDispatchToProps = { loginUser };
 
-export default withStyles(styles)(Login);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Login));

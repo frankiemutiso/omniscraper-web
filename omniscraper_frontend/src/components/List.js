@@ -20,6 +20,7 @@ import "./List.css";
 import MediaCard from "./reusableComponents/MediaCard";
 import Placeholder from "./reusableComponents/Placeholder";
 import Modal from "./reusableComponents/Modal";
+import { connect } from "react-redux";
 
 // FIXME checkout https://mui.com/components/use-media-query/#using-material-uis-breakpoint-helpers
 const withMobileDialog = () => (WrappedComponent) => (props) =>
@@ -58,7 +59,6 @@ const styles = (theme) => ({
       marginTop: 16,
     },
   },
-
 });
 
 export class List extends Component {
@@ -158,7 +158,6 @@ export class List extends Component {
           if (response.status === 201) {
             this.setState({ creatingTag: false });
             this.handleCreateDialogClose();
-            // loadTags();
           }
         })
         .catch((err) => {
@@ -506,7 +505,6 @@ export class List extends Component {
         /> */}
 
         <Tags
-          videoTags={videoTags}
           clickedTag={this.props.clickedTag}
           handleEditTagDialogOpen={handleEditTagDialogOpen}
           handleEditTagDialogClose={handleEditTagDialogClose}
@@ -516,9 +514,9 @@ export class List extends Component {
           tagSlug={tagSlug}
           handleRightClick={handleRightClick}
           handleClose={handleTagMenuClose}
-          loggedIn={loggedIn}
           loading={loading}
           handleScrollPosition={handleScrollPosition}
+          videoTags={videoTags}
         />
         <Grid container spacing={2} style={{ paddingTop: 16 }}>
           <Hidden mdDown>
@@ -583,7 +581,6 @@ export class List extends Component {
                           </Button>
                         )
                       }
-                      // loggedIn={loggedIn}
                       text={text}
                       lapse={lapse}
                     />
@@ -639,4 +636,12 @@ export class List extends Component {
   }
 }
 
-export default withRouter(withStyles(styles)(withMobileDialog()(List)));
+const mapStateToProps = (state) => {
+  return { ...state.users, ...state.tags };
+};
+
+const mapDispatchToProps = {loadTags}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withRouter(withStyles(styles)(withMobileDialog()(List)))
+);

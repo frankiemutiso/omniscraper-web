@@ -22,6 +22,7 @@ import { SECONDARY } from "../theme";
 import DesktopTrendingVideo from "../components/DesktopTrendingVideo";
 import Paper from "../components/reusableComponents/Paper";
 import TrendingVideosPlaceholder from "../components/reusableComponents/TrendingVideosPlaceholder";
+import {connect} from 'react-redux';
 
 const styles = (theme) => ({
   root: {
@@ -549,4 +550,6 @@ export class Video extends React.PureComponent {
   }
 }
 
-export default withStyles(styles)(withRouter(Video));
+const mapStateToProps = (state) => {return{...state.users}}
+
+export default connect(mapStateToProps)(withStyles(styles)(withRouter(Video)));

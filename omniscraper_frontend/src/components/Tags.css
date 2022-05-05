@@ -8,3 +8,9 @@
 .tags::-webkit-scrollbar {
   display: none;
 }
+
+.toolBarRoot {
+  padding-right: 0;
+  padding-left: 0;
+  height: 64;
+}

@@ -17,27 +17,24 @@ export class Home extends Component {
   render() {
     const {
       classes,
-      loggedIn,
+  
       videoTags,
       error,
       loading,
       hasMore,
       videos,
-      loadTags,
+  
       loadVideos,
     } = this.props;
 
     return (
       <React.Fragment>
         <List
-          loggedIn={loggedIn}
-          videoTags={videoTags}
           hasMore={hasMore}
           loadVideos={loadVideos}
           error={error}
           videos={videos}
           loading={loading}
-          loadTags={loadTags}
           scrollPosition={this.props.scrollPosition}
           handleScrollPosition={this.props.handleScrollPosition}
         />

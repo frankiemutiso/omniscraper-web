@@ -35,7 +35,7 @@ def is_there_more_data(request, slug=None):
 
 
 class LogoutAndBlacklistToken(APIView):
-    permission_classes = (AllowAny,)
+    permission_classes = [AllowAny]
     authentication_classes = ()
 
     def post(self, request):
@@ -46,7 +46,6 @@ class LogoutAndBlacklistToken(APIView):
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-
 
 class Videos(APIView):
     def get(self, request):
