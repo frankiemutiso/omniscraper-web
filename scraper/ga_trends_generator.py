@@ -1,3 +1,4 @@
+from urllib import response
 from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 import json
@@ -59,10 +60,10 @@ def get_report(analytics):
                                     'operator': 'PARTIAL', 
                                     'expressions': 'tags'
                                 }
-                            ]\
+                            ]
                     }
                  ],
-            "pageSize": "10",
+            "pageSize": "50",
         }]
         }
     ).execute()
@@ -93,6 +94,18 @@ def package_response(response):
                         list_item_dict['path'] = dimension[1:]
                         list_item_dict['path_views'] = int(value)
                         trending_paths.append(list_item_dict)
-        
         return trending_paths
-            
+
+def get_ga_trending_videos(response):
+    for report in response.get('reports'):
+        trending_paths = []
+
+        for row in report.get("data").get("rows"):
+            path_metrics_dict = {}
+
+            path_metrics_dict['path'] = row.get("dimensions")[0][1:]
+            path_metrics_dict['path_views'] = int(row.get("metrics")[0].get("values")[0])
+
+            trending_paths.append(row.get("dimensions")[0][1:])
+
+        return trending_paths
