@@ -1,6 +1,5 @@
 from django.http.response import Http404
-from .models import TwitterVideo, VideoTag
-from .serializers import VideosSerializer, TagsSerializer, TrendingVideosSerializer
+from datetime import timedelta, date, datetime
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -8,7 +7,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.utils.decorators import method_decorator
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from .ga_trends_generator import get_report, initialize_analyticsreporting, package_response
+from .models import TwitterVideo, VideoTag
+from .serializers import VideosSerializer, TagsSerializer, TrendingVideosSerializer
+from .ga_trends_generator import get_report, initialize_analyticsreporting, package_response, get_ga_trending_videos
 
 def get_infinite_videos(request, slug=None):
     limit = request.GET.get("limit")
@@ -137,21 +138,26 @@ class TrendingVideos(APIView):
             return video
         except TwitterVideo.DoesNotExist:
             raise Http404
+
         
     def get(self, request):
         analytics = initialize_analyticsreporting()
         response = get_report(analytics)
-        packaged_response = package_response(response)
-        print(packaged_response)
+        # packaged_response = package_response(response)
+        trending_paths = get_ga_trending_videos(response)
         
         trending_videos = []
-        for obj in packaged_response:
-            slug = obj['path']
-            video = self.get_object(slug)
-            
-            if(video.flagged==False):
-                trending_videos.append(video)
 
-        serializer = VideosSerializer(trending_videos, many=True)
+        videos = TwitterVideo.objects.filter(slug__in=trending_paths, 
+                                            flagged=False, 
+                                            date_saved_utc__gt=datetime.today() - timedelta(7))[:10]
+        # for obj in packaged_response:
+        #     slug = obj['path']
+        #     video = self.get_object(slug)
+            
+        #     if(video.flagged==False):
+        #         trending_videos.append(video)
+
+        serializer = VideosSerializer(videos, many=True)
         
         return Response({"trending_videos": serializer.data})
