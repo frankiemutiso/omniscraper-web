@@ -34,3 +34,15 @@ class VideoTag(models.Model):
 
     class Meta:
         db_table = 'video_tags'
+
+class FlagRequest(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    video_id = models.UUIDField()
+    flagging_reason = models.TextField(null=True, blank=True)
+    twitter_handle = models.CharField(max_length=144, blank=True, null=True)
+    date_flagged = models.DateTimeField(auto_now_add=True)
+    date_approved = models.DateTimeField(null=True, blank=True)
+    is_approved = models.BooleanField(blank=True, null=True)
+
+    class Meta:
+        db_table = "flag_requests"

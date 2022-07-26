@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import TwitterVideo, VideoTag
+from .models import FlagRequest, TwitterVideo, VideoTag
 
 
 class VideosSerializer(serializers.ModelSerializer):
@@ -20,4 +20,9 @@ class TagsSerializer(serializers.ModelSerializer):
 class TrendingVideosSerializer(serializers.Serializer):
     path = serializers.CharField()
     path_views = serializers.IntegerField()
+
+class FlagRequestsSerializer(serializers.Serializer):
+    class Meta:
+        model = FlagRequest
+        fields = ["id", "flagging_reason", "video_id", "twitter_handle", 'is_approved']
         
