@@ -2,7 +2,7 @@
   "name": "omniscraper_frontend",
   "version": "1.0.0",
   "description": "",
-  "proxy": "https://omniscraper.herokuapp.com/",
+  "proxy": "http://localhost:8000/",
   "main": "index.js",
   "scripts": {
     "dev": "webpack --mode development --watch",
@@ -56,7 +56,11 @@
     "babel-plugin-transform-imports": "^2.0.0",
     "history": "^4.7.2",
     "json-bigint": "^1.0.0",
+    "react-redux": "^8.0.2",
     "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.2.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.4.1"
   }
 }
