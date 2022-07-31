@@ -380,15 +380,14 @@ export class Video extends React.PureComponent {
 											play={play}
 											buttons={
 												<>
-													{loggedIn && (
-														<Button
-															type='icon'
-															onClick={() => openReportPrompt(video)}
-															style={{ marginRight: 8 }}
-														>
-															<FlagCircleIcon style={{ fontSize: 18 }} />
-														</Button>
-													)}
+													<Button
+														type='icon'
+														onClick={() => openReportPrompt(video)}
+														style={{ marginRight: 8 }}
+													>
+														<FlagCircleIcon style={{ fontSize: 18 }} />
+													</Button>
+
 													<Button
 														type='icon'
 														target='_blank'
@@ -514,15 +513,14 @@ export class Video extends React.PureComponent {
 									lapse={lapse}
 									buttons={
 										<>
-											{loggedIn && (
-												<Button
-													type='icon'
-													onClick={() => openReportPrompt(video)}
-													style={{ margin: '0 4px' }}
-												>
-													<FlagCircleIcon style={{ fontSize: 18 }} />
-												</Button>
-											)}
+											<Button
+												type='icon'
+												onClick={() => openReportPrompt(video)}
+												style={{ margin: '0 4px' }}
+											>
+												<FlagCircleIcon style={{ fontSize: 18 }} />
+											</Button>
+
 											<Button
 												type='icon'
 												target='_blank'
