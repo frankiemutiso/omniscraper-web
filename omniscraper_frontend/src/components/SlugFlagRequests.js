@@ -79,7 +79,11 @@ class SlugFlagRequests extends Component {
 	};
 
 	handleFlagRequestsApproval = async () => {
-		const { submitFlagRequestsApprovalStatus, flagVideo } = this.props;
+		const {
+			submitFlagRequestsApprovalStatus,
+			flagVideo,
+			approvalStatusSubmissionError,
+		} = this.props;
 		const { reportedVideo } = this.state;
 
 		const flagged = true;
@@ -88,6 +92,10 @@ class SlugFlagRequests extends Component {
 
 		await submitFlagRequestsApprovalStatus(slug, requestStatus);
 		await flagVideo(slug, flagged);
+
+		if (!approvalStatusSubmissionError) {
+			this.closeReportPrompt();
+		}
 	};
 
 	openReportPrompt = (video) => {
