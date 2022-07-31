@@ -1,7 +1,7 @@
 from django.db import models
+from django.utils import timezone
 from django.utils.text import slugify
 import uuid
-
 
 class TwitterVideo(models.Model):
     id = models.UUIDField(primary_key=True)
@@ -36,13 +36,25 @@ class VideoTag(models.Model):
         db_table = 'video_tags'
 
 class FlagRequest(models.Model):
+    REQUEST_CHOICES = [
+        ('Approved', 'Approved'), 
+        ('Pending', 'Pending'), 
+        ('Rejected', 'Rejected')
+        ]
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    video_id = models.UUIDField()
+    slug = models.SlugField(unique=False,
+                            max_length=250, null=True, blank=True)
     flagging_reason = models.TextField(null=True, blank=True)
     twitter_handle = models.CharField(max_length=144, blank=True, null=True)
-    date_flagged = models.DateTimeField(auto_now_add=True)
-    date_approved = models.DateTimeField(null=True, blank=True)
-    is_approved = models.BooleanField(blank=True, null=True)
+    date_requested = models.DateTimeField(auto_now_add=True)
+    date_of_action = models.DateTimeField(null=True, blank=True)
+    request_status = models.CharField(max_length=100, choices=REQUEST_CHOICES, default="Pending")
+
+    def save(self, *args, **kwargs):
+        if self.id:
+           self.date_of_action = timezone.now()
+        super().save(*args, **kwargs)
 
     class Meta:
         db_table = "flag_requests"

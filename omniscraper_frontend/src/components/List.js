@@ -10,7 +10,6 @@ import Hidden from '@mui/material/Hidden';
 import ShareIcon from '@mui/icons-material/Share';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import AddIcon from '@mui/icons-material/Add';
-import Toolbar from '@mui/material/Toolbar';
 import { withRouter } from 'react-router';
 import Blank from './Blank';
 import { axiosInstance } from '../utils/axiosInstance';
@@ -466,7 +465,6 @@ export class List extends Component {
 
 		return (
 			<div className={classes.root} onScroll={this.handleInfiniteScroll}>
-				<Toolbar />
 				<Blank />
 
 				{editVideoTagsDialog}
@@ -549,28 +547,31 @@ export class List extends Component {
 												handleVideoClick(video.slug);
 												handleScrollPosition();
 											}}
-											leftButton={
-												<Button
-													style={{ marginRight: 8 }}
-													type='icon'
-													onClick={() => handleShare(video)}
-												>
-													<ShareIcon color='primary' style={{ fontSize: 18 }} />
-												</Button>
-											}
-											rightButton={
-												loggedIn && (
+											buttons={
+												<>
 													<Button
-														type='icon'
-														onClick={(e) => handleMenuClick(e, video)}
 														style={{ marginRight: 8 }}
+														type='icon'
+														onClick={() => handleShare(video)}
 													>
-														<MoreIcon
+														<ShareIcon
 															color='primary'
 															style={{ fontSize: 18 }}
 														/>
 													</Button>
-												)
+													{loggedIn && (
+														<Button
+															type='icon'
+															onClick={(e) => handleMenuClick(e, video)}
+															style={{ marginRight: 8 }}
+														>
+															<MoreIcon
+																color='primary'
+																style={{ fontSize: 18 }}
+															/>
+														</Button>
+													)}
+												</>
 											}
 											// loggedIn={loggedIn}
 											text={text}

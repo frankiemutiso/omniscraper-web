@@ -20,7 +20,7 @@
 }
 
 .trending__videos__container {
-  height: 66vh;
+  height: 67vh;
   overflow-y: auto;
 }
 .trending__videos__container::-webkit-scrollbar {

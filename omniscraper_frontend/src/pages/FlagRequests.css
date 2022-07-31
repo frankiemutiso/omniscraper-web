@@ -1,0 +1,38 @@
+.flag__requests {
+    text-align: center;
+}
+
+.flag__requests__container{
+    width:70vw;
+    margin:auto;
+    margin-top: 24px;
+}
+
+.flag__requests-text{
+    font-weight: 600;
+}
+
+.flag__requests-header {
+    background-color: #F7F7F7;
+}
+
+.flag__requests-row {
+    cursor: pointer;
+}
+
+.flag__requests-h3 {
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
+    color: #423f3e;
+    margin-bottom: 12px;
+}
+
+@media (max-width: 1250px) { 
+    .flag__requests__container{
+        width:90vw;
+        margin:auto;
+        margin-top: 24px;
+    }
+}
+

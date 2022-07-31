@@ -14,8 +14,7 @@ const MediaCard = React.forwardRef((props, ref) => {
 		text,
 		lapse,
 		handleClick,
-		leftButton,
-		rightButton,
+		buttons,
 		view,
 		device,
 		play,
@@ -122,8 +121,7 @@ const MediaCard = React.forwardRef((props, ref) => {
 							{lapse}
 						</p>
 						<div className='media-card__actions__buttons'>
-							{leftButton && leftButton}
-							{rightButton && rightButton}
+							{buttons && <>{buttons}</>}
 						</div>
 					</div>
 				</div>

@@ -1,17 +1,16 @@
-from pickle import TRUE
+import re
 from django.http.response import Http404
+from django.db.models import Count
 from datetime import timedelta, date, datetime
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from django.utils.decorators import method_decorator
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import FlagRequest, TwitterVideo, VideoTag
-from .serializers import FlagRequestsSerializer, VideosSerializer, TagsSerializer, TrendingVideosSerializer
+from .serializers import FlagRequestsListSerializer, FlagRequestsSerializer, VideosSerializer, TagsSerializer, TrendingVideosSerializer
 from .ga_trends_generator import get_report, initialize_analyticsreporting, package_response, get_ga_trending_videos
-from scraper import serializers
 
 def get_infinite_videos(request, slug=None):
     limit = request.GET.get("limit")
@@ -129,7 +128,7 @@ class Tag(APIView):
         
         if serializer.is_valid() and request.user.is_authenticated:
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
         
@@ -141,15 +140,12 @@ class TrendingVideos(APIView):
         except TwitterVideo.DoesNotExist:
             raise Http404
 
-        
     def get(self, request):
         analytics = initialize_analyticsreporting()
         response = get_report(analytics)
 
         trending_paths = get_ga_trending_videos(response)
         
-        trending_videos = []
-
         videos = TwitterVideo.objects.filter(slug__in=trending_paths, 
                                             flagged=False, 
                                             date_saved_utc__gt=datetime.today() - timedelta(7))[:10]
@@ -168,47 +164,34 @@ class FlagRequests(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
-        flag_requests = FlagRequest.objects.all()
+        slug = request.GET.get("slug")
+        request_status = request.GET.get("request_status")
 
-        serializer = FlagRequestsSerializer(flag_requests, many=True)
+        if request_status is not None:
+            flag_requests = FlagRequest.objects.filter(request_status=request_status).values("slug", "request_status").annotate(total=Count("slug")).order_by("-total")
+            serializer = FlagRequestsListSerializer(flag_requests, many=True)
 
-        print("Item count: ", flag_requests.count())
+            return Response({"flag_requests": serializer.data})
 
-        return Response({"flag_requests": serializer.data})
+        if slug is not None: 
+            flag_requests = FlagRequest.objects.filter(slug=slug)
+            serializer = FlagRequestsSerializer(flag_requests, many=True)
 
+            return Response({"flag_requests": serializer.data})
 
-# class FlagRequest(APIView):
-#     def get_object(self, flag_id):
-#         try:
-#             return FlagRequest.objects.get(id=flag_id)
-#         except FlagRequest.DoesNotExist:
-#             raise Http404
+        return Response(data=None, status=status.HTTP_400_BAD_REQUEST)
 
-#     def get(self, request, flag_id):
-#         flag_request = self.get_object(flag_id)
-#         serializer = FlagRequestsSerializer(flag_request)
-
-#         return Response({"flag_request": serializer.data})
-
-#     def patch(self, request, flag_id):
-#         flag_request = self.get_object(flag_id)
-
-#         try:
-#             video = TwitterVideo.objects.get(slug=flag_request.video_id)
-#             video_serializer = VideosSerializer(
-#             video, data=request.data, partial=True)
-
-#             if video_serializer.is_valid():
-#                 video_serializer.save()
-#                 return Response(video_serializer.data, status=status.HTTP_200_OK)
-#         except TwitterVideo.DoesNotExist:
-#             return Http404
-
-#         serializer = TagsSerializer(tag, data=request.data, partial=True)
+    def patch(self, request):
+        slug = request.GET.get("slug")
+        flag_requests = FlagRequest.objects.filter(slug=slug)  
         
-#         if serializer.is_valid() and request.user.is_authenticated:
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        for x in flag_requests:
+            serializer = FlagRequestsSerializer(x, data=request.data, partial=True)
 
+            if serializer.is_valid():
+                serializer.save()
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+        return Response(data="Action taken successfully", status=status.HTTP_200_OK)
+        

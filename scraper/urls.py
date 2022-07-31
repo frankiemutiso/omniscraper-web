@@ -18,5 +18,5 @@ urlpatterns = [
     path('tags/<slug:slug>',
          views.Tag.as_view(), name="video_tag_detail"),
     path("trending/", views.TrendingVideos.as_view(), name="trending"),
-    path("flag-requests", views.FlagRequests.as_view(), name="flag_requests")
+    path("flag-requests/", views.FlagRequests.as_view(), name="flag_requests"),
 ]

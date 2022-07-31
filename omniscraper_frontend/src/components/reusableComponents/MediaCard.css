@@ -69,7 +69,7 @@ media-card__action-area {
 
 @media screen and (min-width: 411px) {
   .media-card__actions__text-container {
-    height: 29px;
+    height: 37px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;

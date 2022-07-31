@@ -2,6 +2,7 @@ import React, { Suspense, Component } from 'react';
 import createTheme from '@mui/material/styles/createTheme';
 import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import Toolbar from '@mui/material/Toolbar';
 import StyledEngineProvider from '@mui/material/StyledEngineProvider';
 import createHistory from 'history/createBrowserHistory';
 import axios from 'axios';
@@ -9,7 +10,7 @@ import { ThreeDots } from '@bit/mhnpd.react-loader-spinner.three-dots';
 import { axiosInstance } from './utils/axiosInstance';
 import Nav from './components/Nav';
 import Login from './pages/Login';
-import FlaggedRequests from './pages/FlaggedRequests';
+import FlagRequests from './pages/FlagRequests';
 import ProtectedComponent from './components/ProtectedComponent';
 
 const Video = React.lazy(() => import('./pages/Video'));
@@ -18,7 +19,7 @@ const FilteredVideos = React.lazy(() => import('./pages/FilteredVideos'));
 
 const theme = createTheme({
 	typography: {
-		fontFamily: ['Inter', 'Sora'].join(','),
+		fontFamily: ['Open Sans', 'Sora'].join(','),
 	},
 	palette: {
 		primary: {
@@ -266,103 +267,106 @@ class App extends Component {
 		} = this.state;
 
 		return (
-			<StyledEngineProvider injectFirst>
-				<ThemeProvider theme={theme}>
-					<Router history={history}>
-						<div>
-							<Suspense
-								fallback={
-									<div
-										style={{
-											height: '100vh',
-											display: 'grid',
-											placeItems: 'center',
-										}}
-									>
-										<ThreeDots color='#185adb' height={50} width={50} />
-									</div>
-								}
-							>
-								<Nav loggedIn={loggedIn} handleLogout={handleLogout} />
+			<>
+				<Toolbar />
+				<StyledEngineProvider injectFirst>
+					<ThemeProvider theme={theme}>
+						<Router history={history}>
+							<div>
+								<Suspense
+									fallback={
+										<div
+											style={{
+												height: '100vh',
+												display: 'grid',
+												placeItems: 'center',
+											}}
+										>
+											<ThreeDots color='#185adb' height={50} width={50} />
+										</div>
+									}
+								>
+									<Nav loggedIn={loggedIn} handleLogout={handleLogout} />
 
-								<Switch>
-									{loggedIn ? <Redirect from='/login' to='/' /> : ''}
-									<Route
-										exact
-										path='/'
-										render={(props) => (
-											<Home
-												{...props}
-												loggedIn={loggedIn}
-												videoTags={videoTags}
-												tagsLoading={tagsLoading}
-												loadTags={loadTags}
-												error={videosLoadingError}
-												loading={loading}
-												hasMore={hasMore}
-												videos={videos}
-												loadVideos={loadVideos}
-												scrollPosition={scrollPosition}
-												handleScrollPosition={handleScrollPosition}
-											/>
-										)}
-									/>
+									<Switch>
+										{loggedIn ? <Redirect from='/login' to='/' /> : ''}
+										<Route
+											exact
+											path='/'
+											render={(props) => (
+												<Home
+													{...props}
+													loggedIn={loggedIn}
+													videoTags={videoTags}
+													tagsLoading={tagsLoading}
+													loadTags={loadTags}
+													error={videosLoadingError}
+													loading={loading}
+													hasMore={hasMore}
+													videos={videos}
+													loadVideos={loadVideos}
+													scrollPosition={scrollPosition}
+													handleScrollPosition={handleScrollPosition}
+												/>
+											)}
+										/>
 
-									<Route
-										path='/tags/:slug'
-										render={(props) => (
-											<FilteredVideos
-												{...props}
-												videoTags={videoTags}
-												loggedIn={loggedIn}
-												tagsLoading={tagsLoading}
-												loadTags={loadTags}
-												scrollPosition={scrollPosition}
-												handleScrollPosition={handleScrollPosition}
-											/>
-										)}
-									/>
+										<Route
+											path='/tags/:slug'
+											render={(props) => (
+												<FilteredVideos
+													{...props}
+													videoTags={videoTags}
+													loggedIn={loggedIn}
+													tagsLoading={tagsLoading}
+													loadTags={loadTags}
+													scrollPosition={scrollPosition}
+													handleScrollPosition={handleScrollPosition}
+												/>
+											)}
+										/>
 
-									<Route
-										path='/login'
-										render={(props) => (
-											<Login
-												{...props}
-												username={username}
-												password={password}
-												loginLoading={loginLoading}
-												error={error}
-												handleChange={handleChange}
-												handleSubmit={handleLogin}
-												successfulLogin={successfulLogin}
-											/>
-										)}
-									/>
-									<Route
-										path='/flag-requests'
-										render={() => (
-											<ProtectedComponent loggedIn={loggedIn}>
-												<FlaggedRequests />
-											</ProtectedComponent>
-										)}
-									/>
-									<Route
-										path='/:slug'
-										render={() => (
-											<Video
-												trendingVideosLoading={trendingVideosLoading}
-												autoplayVideo={autoplayVideo}
-												loggedIn={loggedIn}
-												trendingVideos={trendingVideos}
-											/>
-										)}
-									/>
-								</Switch>
-							</Suspense>
-						</div>
-					</Router>
-				</ThemeProvider>
-			</StyledEngineProvider>
+										<Route
+											path='/login'
+											render={(props) => (
+												<Login
+													{...props}
+													username={username}
+													password={password}
+													loginLoading={loginLoading}
+													error={error}
+													handleChange={handleChange}
+													handleSubmit={handleLogin}
+													successfulLogin={successfulLogin}
+												/>
+											)}
+										/>
+										<Route
+											path='/flag-requests'
+											render={() => (
+												<ProtectedComponent loggedIn={loggedIn}>
+													<FlagRequests />
+												</ProtectedComponent>
+											)}
+										/>
+										<Route
+											path='/:slug'
+											render={() => (
+												<Video
+													trendingVideosLoading={trendingVideosLoading}
+													autoplayVideo={autoplayVideo}
+													loggedIn={loggedIn}
+													trendingVideos={trendingVideos}
+												/>
+											)}
+										/>
+									</Switch>
+								</Suspense>
+							</div>
+						</Router>
+					</ThemeProvider>
+				</StyledEngineProvider>
+			</>
 		);
 	}
 }
