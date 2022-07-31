@@ -2,9 +2,15 @@ import {
 	GET_FLAG_REQUEST,
 	GET_FLAG_REQUEST_ERROR,
 	GET_FLAG_REQUEST_SUCCESS,
+	GET_SLUG_FLAG_REQUESTS,
+	GET_SLUG_FLAG_REQUESTS_ERROR,
+	GET_SLUG_FLAG_REQUESTS_SUCCESS,
 	POST_FLAG_REQUEST,
 	POST_FLAG_REQUEST_ERROR,
 	POST_FLAG_REQUEST_SUCCESS,
+	SUBMIT_FLAG_REQUESTS_APPROVAL_STATUS,
+	SUBMIT_FLAG_REQUESTS_APPROVAL_STATUS_ERROR,
+	SUBMIT_FLAG_REQUESTS_APPROVAL_STATUS_SUCCESS,
 } from '../actionTypes';
 
 const initalState = {
@@ -13,6 +19,11 @@ const initalState = {
 	flagRequestsLoading: false,
 	flagRequestLoading: false,
 	flagRequestError: false,
+	slugFlagRequests: [],
+	slugFlagRequestsLoading: false,
+	slugFlagRequestsError: false,
+	submittingApprovalStatus: false,
+	approvalStatusSubmissionError: false,
 };
 
 const flagRequestReducer = (state = initalState, action) => {
@@ -53,6 +64,43 @@ const flagRequestReducer = (state = initalState, action) => {
 				...state,
 				flagRequestLoading: false,
 				flagRequestError: true,
+			};
+
+		case GET_SLUG_FLAG_REQUESTS:
+			return {
+				...state,
+				slugFlagRequestsLoading: true,
+				slugFlagRequestsError: false,
+			};
+		case GET_SLUG_FLAG_REQUESTS_SUCCESS:
+			return {
+				...state,
+				slugFlagRequests: action.payload,
+				slugFlagRequestsLoading: false,
+			};
+		case GET_SLUG_FLAG_REQUESTS_ERROR:
+			return {
+				...state,
+				slugFlagRequestsError: true,
+				slugFlagRequestsLoading: false,
+			};
+		case SUBMIT_FLAG_REQUESTS_APPROVAL_STATUS:
+			return {
+				...state,
+				submittingApprovalStatus: true,
+				approvalStatusSubmissionError: false,
+			};
+		case SUBMIT_FLAG_REQUESTS_APPROVAL_STATUS_SUCCESS:
+			return {
+				...state,
+				submittingApprovalStatus: false,
+				approvalStatusSubmissionError: false,
+			};
+		case SUBMIT_FLAG_REQUESTS_APPROVAL_STATUS_ERROR:
+			return {
+				...state,
+				submittingApprovalStatus: false,
+				approvalStatusSubmissionError: true,
 			};
 		default:
 			return state;

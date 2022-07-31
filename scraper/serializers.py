@@ -21,8 +21,21 @@ class TrendingVideosSerializer(serializers.Serializer):
     path = serializers.CharField()
     path_views = serializers.IntegerField()
 
-class FlagRequestsSerializer(serializers.Serializer):
+class FlagRequestsListSerializer(serializers.Serializer):
+    slug = serializers.SlugField()
+    total = serializers.IntegerField()
+    request_status = serializers.CharField()
+
+class FlagRequestsSerializer(serializers.ModelSerializer):
     class Meta:
         model = FlagRequest
-        fields = ["id", "flagging_reason", "video_id", "twitter_handle", 'is_approved']
+        fields = ["id", 
+            "flagging_reason", 
+            "slug", 
+            "twitter_handle", 
+            'date_requested', 
+            'request_status',
+            'date_of_action'
+            ]
+        extra_kwargs = {"twitter_handle": {"required":  False}}
         

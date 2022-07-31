@@ -25,6 +25,9 @@ import Paper from '../components/reusableComponents/Paper';
 import TrendingVideosPlaceholder from '../components/reusableComponents/TrendingVideosPlaceholder';
 import Modal from '../components/reusableComponents/Modal';
 import { axiosInstance } from '../utils/axiosInstance';
+import { connect } from 'react-redux';
+import { postFlagRequest } from '../store/actions/flagRequestsActions';
+import FlagRequestDialog from '../components/FlagRequestDialog';
 
 const styles = (theme) => ({
 	root: {
@@ -38,8 +41,8 @@ const styles = (theme) => ({
 			justifyContent: 'center',
 			minHeight: '91vh',
 		},
+		[theme.breakpoints.down('sm')]: { paddingTop: 8, paddingBottom: 16 },
 		width: '100vw',
-		height: '94vh',
 	},
 
 	autoPlayTrending: false,
@@ -339,8 +342,13 @@ export class Video extends React.PureComponent {
 
 		return (
 			<>
-				{reportDialog}
-				<Toolbar ref={this.ref} />
+				{/* {reportDialog} */}
+				<FlagRequestDialog
+					open={reportPromptOpen}
+					handleClose={closeReportPrompt}
+					videoSlug={video?.slug}
+				/>
+				{/* <Toolbar ref={this.ref} /> */}
 				<div className={classes.root}>
 					{/* Desktop UI */}
 					<Hidden mdDown>
@@ -370,7 +378,7 @@ export class Video extends React.PureComponent {
 												handleVideoPlayState(e);
 											}}
 											play={play}
-											leftButton={
+											buttons={
 												<>
 													{loggedIn && (
 														<Button
@@ -389,10 +397,7 @@ export class Video extends React.PureComponent {
 													>
 														<TwitterIcon style={{ fontSize: 18 }} />
 													</Button>
-												</>
-											}
-											rightButton={
-												<>
+
 													<Button
 														type='icon'
 														onClick={() => handleShare(video)}
@@ -433,7 +438,7 @@ export class Video extends React.PureComponent {
 									<div className='trending__videos__container'>
 										{trendingVideosLoading || loading ? (
 											<>
-												{Array.from(new Array(5)).map((item, index) => (
+												{Array.from(new Array(10)).map((item, index) => (
 													<TrendingVideosPlaceholder key={index} />
 												))}
 											</>
@@ -507,13 +512,13 @@ export class Video extends React.PureComponent {
 									type='video'
 									text={text}
 									lapse={lapse}
-									leftButton={
+									buttons={
 										<>
 											{loggedIn && (
 												<Button
 													type='icon'
 													onClick={() => openReportPrompt(video)}
-													style={{ marginRight: 8 }}
+													style={{ margin: '0 4px' }}
 												>
 													<FlagCircleIcon style={{ fontSize: 18 }} />
 												</Button>
@@ -523,24 +528,22 @@ export class Video extends React.PureComponent {
 												target='_blank'
 												rel='noopener noreferrer'
 												href={`https://twitter.com/i/status/${video.parent_tweet_id}`}
+												style={{ margin: '0 4px' }}
 											>
 												<TwitterIcon style={{ fontSize: 18 }} />
 											</Button>
-										</>
-									}
-									rightButton={
-										<>
+
 											<Button
 												type='icon'
 												onClick={() => handleShare(video)}
-												style={{ margin: '0 8px' }}
+												style={{ margin: '0 4px' }}
 											>
 												<ShareIcon style={{ fontSize: 18 }} />
 											</Button>
 											<Button
 												type='icon'
 												onClick={() => downloadVideo(video)}
-												style={{ margin: '0 8px' }}
+												style={{ margin: '0 4px' }}
 											>
 												<Download style={{ fontSize: 18 }} />
 											</Button>
@@ -570,7 +573,7 @@ export class Video extends React.PureComponent {
 											<Placeholder
 												key={idx}
 												style={{ width: '35vw' }}
-												height='20vh'
+												height='25vh'
 												view='list'
 												hideTextContainer
 											/>
@@ -604,7 +607,7 @@ export class Video extends React.PureComponent {
 															handleTrendingVideoClick(video.slug)
 														}
 														autoPlay={autoplayVideo}
-														height='20vh'
+														height='25vh'
 														style={{ width: '35vw' }}
 														type={
 															video.video_thumbnail_link_https
@@ -627,4 +630,10 @@ export class Video extends React.PureComponent {
 	}
 }
 
-export default withStyles(styles)(withRouter(Video));
+const mapStateToProps = (state) => ({ ...state.flagRequests });
+const mapDispatchToProps = { postFlagRequest };
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(withStyles(styles)(withRouter(Video)));
