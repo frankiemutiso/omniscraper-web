@@ -10,14 +10,22 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import FlagRequest, TwitterVideo, VideoTag
 from .serializers import FlagRequestsListSerializer, FlagRequestsSerializer, VideosSerializer, TagsSerializer, TrendingVideosSerializer
-from .ga_trends_generator import get_report, initialize_analyticsreporting, package_response, get_ga_trending_videos
+from .ga_trends_generator import get_report, initialize_analyticsreporting, get_ga_trending_videos
 
 def get_infinite_videos(request, slug=None):
     limit = request.GET.get("limit")
     offset = request.GET.get("offset")
 
+    print("Running...")
+
     try:
         if slug is None:
+            # statuses = ["Pending", "Approved"]
+            # rejected_requests = FlagRequest.objects.filter(request_status__in=statuses)
+            # slugs = [x.slug for x in rejected_requests]
+
+            # print(slugs)
+
             return TwitterVideo.objects.exclude(flagged=True).order_by('-date_saved_utc')[int(offset): int(offset) + int(limit)]
         return VideoTag.objects.get(slug=slug).twitter_videos.all().order_by('-date_saved_utc')[int(offset): int(offset) + int(limit)]
     except:
