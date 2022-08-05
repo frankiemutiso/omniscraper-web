@@ -10,6 +10,8 @@ import Hidden from '@mui/material/Hidden';
 import ShareIcon from '@mui/icons-material/Share';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import AddIcon from '@mui/icons-material/Add';
+import FlagCircleIcon from '@mui/icons-material/FlagCircle';
+
 import { withRouter } from 'react-router';
 import Blank from './Blank';
 import { axiosInstance } from '../utils/axiosInstance';
@@ -19,6 +21,7 @@ import './List.css';
 import MediaCard from './reusableComponents/MediaCard';
 import Placeholder from './reusableComponents/Placeholder';
 import Modal from './reusableComponents/Modal';
+import FlagRequestDialog from './FlagRequestDialog';
 
 // FIXME checkout https://mui.com/components/use-media-query/#using-material-uis-breakpoint-helpers
 const withMobileDialog = () => (WrappedComponent) => (props) =>
@@ -84,6 +87,7 @@ export class List extends Component {
 		tagSlug: '',
 		tag: {},
 		editingDialogOpen: false,
+		reportPromptOpen: false,
 	};
 
 	componentWillMount = () => {
@@ -167,6 +171,8 @@ export class List extends Component {
 	};
 
 	handleMenuClick = (e, video) => {
+		e.stopPropagation();
+
 		const { videoTags } = this.props;
 		this.handleCheckedTags(videoTags, video);
 
@@ -310,7 +316,9 @@ export class List extends Component {
 		this.setState({ checkedTags: checked });
 	};
 
-	handleShare = (video) => {
+	handleShare = (e, video) => {
+		e.stopPropagation();
+
 		if (navigator.share) {
 			navigator
 				.share({
@@ -347,10 +355,18 @@ export class List extends Component {
 		history.push(`/${slug}`);
 	};
 
+	openReportPrompt = (e, clickedVideo) => {
+		e.stopPropagation();
+		this.setState({ reportPromptOpen: true, clickedVideo });
+	};
+
+	closeReportPrompt = () => {
+		this.setState({ reportPromptOpen: false });
+	};
+
 	render() {
 		const {
 			open,
-			clickedVideo,
 			flagging,
 			mouseX,
 			mouseY,
@@ -369,6 +385,8 @@ export class List extends Component {
 			tagSlug,
 			editingTag,
 			editingDialogOpen,
+			reportPromptOpen,
+			clickedVideo,
 		} = this.state;
 
 		const {
@@ -406,6 +424,8 @@ export class List extends Component {
 			handleRightClick,
 			handleTagMenuClose,
 			handleVideoClick,
+			openReportPrompt,
+			closeReportPrompt,
 		} = this;
 
 		const reportDialog = (
@@ -470,6 +490,12 @@ export class List extends Component {
 				{editVideoTagsDialog}
 				{createTagDialog}
 				{reportDialog}
+
+				<FlagRequestDialog
+					open={reportPromptOpen}
+					handleClose={closeReportPrompt}
+					videoSlug={clickedVideo?.slug}
+				/>
 				<Menu
 					keepMounted
 					open={mouseY !== null}
@@ -530,7 +556,15 @@ export class List extends Component {
 								const lapse = calculateTimeSinceSave(video);
 
 								return (
-									<Grid item md={4} sm={6} xs={12} key={index}>
+									<Grid
+										item
+										md={4}
+										sm={6}
+										xs={12}
+										key={index}
+										style={{ cursor: 'pointer' }}
+										onClick={() => handleVideoClick(video.slug)}
+									>
 										<MediaCard
 											displayBottomActions
 											view='list'
@@ -550,9 +584,16 @@ export class List extends Component {
 											buttons={
 												<>
 													<Button
+														type='icon'
+														onClick={(e) => openReportPrompt(e, video)}
+														style={{ marginRight: 8 }}
+													>
+														<FlagCircleIcon style={{ fontSize: 18 }} />
+													</Button>
+													<Button
 														style={{ marginRight: 8 }}
 														type='icon'
-														onClick={() => handleShare(video)}
+														onClick={(e) => handleShare(e, video)}
 													>
 														<ShareIcon
 															color='primary'
