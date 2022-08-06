@@ -20,13 +20,11 @@ def get_infinite_videos(request, slug=None):
 
     try:
         if slug is None:
-            # statuses = ["Pending", "Approved"]
-            # rejected_requests = FlagRequest.objects.filter(request_status__in=statuses)
-            # slugs = [x.slug for x in rejected_requests]
+            statuses = ["Pending", "Approved"]
+            rejected_requests = FlagRequest.objects.filter(request_status__in=statuses)
+            slugs = [x.slug for x in rejected_requests]
 
-            # print(slugs)
-
-            return TwitterVideo.objects.exclude(flagged=True).order_by('-date_saved_utc')[int(offset): int(offset) + int(limit)]
+            return TwitterVideo.objects.exclude(flagged=True).exclude(slug__in=slugs).order_by('-date_saved_utc')[int(offset): int(offset) + int(limit)]
         return VideoTag.objects.get(slug=slug).twitter_videos.all().order_by('-date_saved_utc')[int(offset): int(offset) + int(limit)]
     except:
         raise Http404
