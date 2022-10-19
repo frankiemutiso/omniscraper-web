@@ -28,6 +28,7 @@ import { axiosInstance } from '../utils/axiosInstance';
 import { connect } from 'react-redux';
 import { postFlagRequest } from '../store/actions/flagRequestsActions';
 import FlagRequestDialog from '../components/FlagRequestDialog';
+import { Helmet } from 'react-helmet';
 
 const styles = (theme) => ({
 	root: {
@@ -342,6 +343,30 @@ export class Video extends React.PureComponent {
 
 		return (
 			<>
+				<Helmet>
+					<meta
+						name='description'
+						content='The most efficient Twitter Videos and GIFs downloader. Log into Twitter, Find a tweet with a video and comment with @OMNISCRAPER, Click on the replied link, Download and share your video!'
+					/>
+					<meta
+						name='keywords'
+						content='Viral Tweets. Viral Videos. Funny Tweets. Funny Videos. Cat Videos. NFL. Rap. Sports. NFL players. Gaming. Barstool Sports. Joe Rogan. Actors. NBA players. MLB. Baseball. Bitcoin cryptocurrency. Tiktok Videos. Football Videos.'
+					/>
+					<meta name='twitter:card' content='summary' />
+					<meta name='twitter:title' content='Smart content delivery' />
+					<meta
+						name='twitter:description'
+						content='Log into Twitter, Find a tweet with a video and comment with @OMNISCRAPER, Click on the link, Download and share your video!'
+					/>
+					<meta
+						name='twitter:image'
+						content={`${video.video_thumbnail_link_https}`}
+					/>
+					<meta name='twitter:site' content='@omniscraper' />
+					<title>
+						Video - Omniscraper: The Best Twitter Videos Downloader!
+					</title>
+				</Helmet>
 				{/* {reportDialog} */}
 				<FlagRequestDialog
 					open={reportPromptOpen}

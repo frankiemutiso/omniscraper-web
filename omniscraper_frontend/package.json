@@ -41,7 +41,6 @@
     "webpack-cli": "^4.7.2"
   },
   "dependencies": {
-    "@bit/mhnpd.react-loader-spinner.three-dots": "^2.2.0",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@material-ui/core": "^4.11.4",
@@ -56,6 +55,7 @@
     "babel-plugin-transform-imports": "^2.0.0",
     "history": "^4.7.2",
     "json-bigint": "^1.0.0",
+    "react-helmet": "^6.1.0",
     "react-redux": "^8.0.2",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
