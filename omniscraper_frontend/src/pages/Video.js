@@ -352,8 +352,14 @@ export class Video extends React.PureComponent {
 						name='keywords'
 						content='Viral Tweets. Viral Videos. Funny Tweets. Funny Videos. Cat Videos. NFL. Rap. Sports. NFL players. Gaming. Barstool Sports. Joe Rogan. Actors. NBA players. MLB. Baseball. Bitcoin cryptocurrency. Tiktok Videos. Football Videos.'
 					/>
-					<meta name='twitter:card' content='summary' />
-					<meta name='twitter:title' content='Smart content delivery' />
+					<meta property='og:image:width' content='600' />
+					<meta property='og:image:height' content='314' />
+					<meta
+						property='og:image'
+						content={`${video.video_thumbnail_link_https}`}
+					/>
+					<meta name='twitter:card' content='summary_large_image' />
+					<meta name='twitter:title' content={`${text}`} />
 					<meta
 						name='twitter:description'
 						content='Log into Twitter, Find a tweet with a video and comment with @OMNISCRAPER, Click on the link, Download and share your video!'
