@@ -90,6 +90,9 @@ export class Video extends React.PureComponent {
 			flagging: false,
 			reportPromptOpen: false,
 			clickedVideo: null,
+			progress: 0,
+			currentTime: 0,
+			duration: 0,
 		};
 
 		this.vidRef = React.createRef();
@@ -98,6 +101,7 @@ export class Video extends React.PureComponent {
 
 	componentDidUpdate(prevProps) {
 		if (prevProps.match.params.slug !== this.props.match.params.slug) {
+			this.setState({ progress: 0 });
 			this.loadVideo();
 		}
 	}
@@ -114,7 +118,6 @@ export class Video extends React.PureComponent {
 	};
 
 	loadVideo = () => {
-		// this.handleVideoPlayState();
 		this.setState({ loading: true, play: false }, () => {
 			const slug = this.props.match.params.slug;
 			const url = `/api/${slug}`;
@@ -197,19 +200,49 @@ export class Video extends React.PureComponent {
 	};
 
 	handleVideoPlayState = (e) => {
-		console.log('Current time: ', this.vidRef.current.currentTime);
-		console.log('Duration: ', this.vidRef.current.duration);
+		const { current } = this.vidRef;
 
-		if (this.vidRef.current?.paused) {
-			this.setState({ play: true });
-			this.vidRef.current?.play();
-		} else {
-			this.setState({ play: false });
-			this.vidRef.current?.pause();
+		if (current) {
+			if (current.paused) {
+				this.handlePlay();
+				return;
+			}
+
+			this.handlePause();
 		}
 	};
 
+	handlePlayButtonState = (state) => {
+		this.setState({ play: state });
+	};
+
+	handlePlay = () => {
+		const { current } = this.vidRef;
+		current.play();
+
+		this.setState({ play: true });
+	};
+
+	handlePause = () => {
+		const { current } = this.vidRef;
+		current.pause();
+
+		this.setState({ play: false });
+	};
+
 	handlePlayTime = () => {};
+
+	updateCurrentTime = () => {
+		const { current } = this.vidRef;
+
+		let progress = Math.round((current.currentTime / current.duration) * 100);
+
+		this.setState({
+			progress,
+			currentTime: Math.round(current.currentTime),
+			duration: Math.round(current.duration),
+		});
+	};
 
 	handleShare = (video) => {
 		if (navigator.share) {
@@ -291,6 +324,8 @@ export class Video extends React.PureComponent {
 			flagVideo,
 			openReportPrompt,
 			closeReportPrompt,
+			handlePlayButtonState,
+			updateCurrentTime,
 		} = this;
 		const {
 			video,
@@ -301,6 +336,9 @@ export class Video extends React.PureComponent {
 			flagging,
 			reportPromptOpen,
 			clickedVideo,
+			progress,
+			currentTime,
+			duration,
 		} = this.state;
 		const {
 			classes,
@@ -415,6 +453,11 @@ export class Video extends React.PureComponent {
 											handleClick={(e) => {
 												handleVideoPlayState(e);
 											}}
+											handlePlayButtonState={handlePlayButtonState}
+											updateCurrentTime={updateCurrentTime}
+											progress={progress}
+											duration={duration}
+											currentTime={currentTime}
 											play={play}
 											buttons={
 												<>
@@ -542,6 +585,11 @@ export class Video extends React.PureComponent {
 									src={video.url}
 									play={play}
 									handleClick={() => handleVideoPlayState()}
+									handlePlayButtonState={handlePlayButtonState}
+									updateCurrentTime={updateCurrentTime}
+									progress={progress}
+									duration={duration}
+									currentTime={currentTime}
 									autoPlay={autoplayVideo}
 									height='42vh'
 									style={{ width: '100vw' }}
