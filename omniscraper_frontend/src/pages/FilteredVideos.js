@@ -21,9 +21,9 @@ export class FilteredVideos extends Component {
 	}
 
 	componentDidMount() {
-		const { location } = this.props;
+		const { location, match } = this.props;
 
-		const slug = convertSlugToString(this.props.match.params.slug);
+		const slug = this.convertSlugToString(match.params.slug);
 
 		window.gtag('event', 'page_view', {
 			page_title: slug,
