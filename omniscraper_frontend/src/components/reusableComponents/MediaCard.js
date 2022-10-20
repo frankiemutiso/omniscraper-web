@@ -2,6 +2,8 @@ import React from 'react';
 import ViewIcon from '@mui/icons-material/PlayArrow';
 import './MediaCard.css';
 import BrokenImage from '../../assets/broken-image.png';
+import ProgressBar from './ProgressBar';
+import TimeBubble from './TimeBubble';
 // Media Card Types: image, video
 
 const MediaCard = React.forwardRef((props, ref) => {
@@ -21,6 +23,11 @@ const MediaCard = React.forwardRef((props, ref) => {
 		displayBottomActions,
 		playIconSize,
 		desktopTrending,
+		handlePlayButtonState,
+		updateCurrentTime,
+		progress,
+		duration,
+		currentTime,
 		...restProps
 	} = props;
 
@@ -32,27 +39,41 @@ const MediaCard = React.forwardRef((props, ref) => {
 		<div {...restProps} className='media-card'>
 			<div style={{ position: 'relative' }}>
 				{type === 'video' ? (
-					<video
-						ref={ref && ref}
-						autoPlay={autoPlay}
-						disablePictureInPicture
-						controlsList='nodownload'
-						// height={height}
-						className={
-							desktopTrending
-								? 'media-card__desktop__trending'
-								: 'media-card__video'
-						}
-						onContextMenu={(e) => e.preventDefault()}
-						onClick={handleClick}
-						style={{
-							height: height,
-							objectFit: view !== 'detail' ? 'cover' : 'contain',
-							border: 'none',
-						}}
-					>
-						<source src={src} type='video/mp4' />
-					</video>
+					<>
+						<ProgressBar
+							style={{ width: `${progress}%` }}
+							onClick={handleClick}
+						/>
+						{/* <TimeBubble currentTime={currentTime} duration={duration} /> */}
+
+						<video
+							ref={ref && ref}
+							autoPlay={autoPlay}
+							disablePictureInPicture
+							// controls
+							controlsList='nodownload'
+							className={
+								desktopTrending
+									? 'media-card__desktop__trending'
+									: 'media-card__video'
+							}
+							onContextMenu={(e) => e.preventDefault()}
+							onClick={handleClick}
+							onPlay={() => handlePlayButtonState(true)}
+							onPause={() => handlePlayButtonState(false)}
+							onEnded={() => handlePlayButtonState(false)}
+							onTimeUpdate={updateCurrentTime}
+							style={{
+								height: height,
+								objectFit: view !== 'detail' ? 'cover' : 'contain',
+								border: 'none',
+								position: 'relative',
+								zIndex: 0,
+							}}
+						>
+							<source src={src} type='video/mp4' />
+						</video>
+					</>
 				) : (
 					<img
 						ref={ref && ref}
@@ -76,6 +97,7 @@ const MediaCard = React.forwardRef((props, ref) => {
 						}}
 					/>
 				)}
+
 				{!play && (
 					<ViewIcon
 						style={{
