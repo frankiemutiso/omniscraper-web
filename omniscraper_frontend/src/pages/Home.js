@@ -15,6 +15,16 @@ const styles = (theme) => ({
 });
 
 export class Home extends Component {
+	componentDidMount() {
+		const { location } = this.props;
+
+		window.gtag('event', 'page_view', {
+			page_title: 'Home',
+			page_path: location.pathname + location.search,
+			page_location: window.location.href,
+		});
+	}
+
 	render() {
 		const {
 			classes,

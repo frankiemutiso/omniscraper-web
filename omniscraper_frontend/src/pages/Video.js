@@ -103,6 +103,13 @@ export class Video extends React.PureComponent {
 	}
 
 	componentDidMount = () => {
+		const { location } = this.props;
+
+		window.gtag('event', 'page_view', {
+			page_title: 'Video',
+			page_path: location.pathname + location.search,
+			page_location: window.location.href,
+		});
 		this.loadVideo();
 	};
 
