@@ -1,17 +1,17 @@
 {
   "status": "done",
   "assets": {
-    "860-dee88889fa3e30198308.js": {
-      "name": "860-dee88889fa3e30198308.js",
-      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/860-dee88889fa3e30198308.js"
+    "860-6ed0b5606d1cd60f1d8f.js": {
+      "name": "860-6ed0b5606d1cd60f1d8f.js",
+      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/860-6ed0b5606d1cd60f1d8f.js"
     },
-    "806-c21b7e5525b285028150.js": {
-      "name": "806-c21b7e5525b285028150.js",
-      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/806-c21b7e5525b285028150.js"
+    "806-ea767f38409b798956f3.js": {
+      "name": "806-ea767f38409b798956f3.js",
+      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/806-ea767f38409b798956f3.js"
     },
-    "755-6891f4591a5348760b6d.js": {
-      "name": "755-6891f4591a5348760b6d.js",
-      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/755-6891f4591a5348760b6d.js"
+    "755-db9f1f2fd77eca86f6ad.js": {
+      "name": "755-db9f1f2fd77eca86f6ad.js",
+      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/755-db9f1f2fd77eca86f6ad.js"
     },
     "943-8157027df204ed4ebaa7.js": {
       "name": "943-8157027df204ed4ebaa7.js",
@@ -25,13 +25,13 @@
       "name": "main.7e16b39c.css",
       "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/main.7e16b39c.css"
     },
-    "main.400cc9fa2d18a9920f7c.js": {
-      "name": "main.400cc9fa2d18a9920f7c.js",
-      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/main.400cc9fa2d18a9920f7c.js"
+    "main.d47a7e281a6a4d00c8cc.js": {
+      "name": "main.d47a7e281a6a4d00c8cc.js",
+      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/main.d47a7e281a6a4d00c8cc.js"
     },
-    "runtime.cb499e02bd406edafbfe.js": {
-      "name": "runtime.cb499e02bd406edafbfe.js",
-      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/runtime.cb499e02bd406edafbfe.js"
+    "runtime.eb1404069f3242c45dc2.js": {
+      "name": "runtime.eb1404069f3242c45dc2.js",
+      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/runtime.eb1404069f3242c45dc2.js"
     },
     "860.456d9e8f.chunk.css": {
       "name": "860.456d9e8f.chunk.css",
@@ -56,10 +56,10 @@
   },
   "chunks": {
     "main": [
-      "runtime.cb499e02bd406edafbfe.js",
+      "runtime.eb1404069f3242c45dc2.js",
       "870.60a8b19077c1a8d8d3b1.js",
       "main.7e16b39c.css",
-      "main.400cc9fa2d18a9920f7c.js"
+      "main.d47a7e281a6a4d00c8cc.js"
     ]
   }
 }

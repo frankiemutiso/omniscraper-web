@@ -4,107 +4,123 @@
 {% load static %}
 
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#000000" />
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="theme-color" content="#000000" />
 
-    <meta
-      name="description"
-      content="The most efficient Twitter Videos and GIFs downloader. Log into Twitter, Find a tweet with a video and comment with @OMNISCRAPER, Click on the replied link, Download and share your video!"
-    />
-    <meta
-      name="keywords"
-      content="Viral Tweets. Viral Videos. Funny Tweets. Funny Videos. Cat Videos. NFL. Rap. Sports. NFL players. Gaming. Barstool Sports. Joe Rogan. Actors. NBA players. MLB. Baseball. Bitcoin cryptocurrency. Tiktok Videos. Football Videos."
-    />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Smart content delivery" />
-    <meta
-      name="twitter:description"
-      content="Log into Twitter, Find a tweet with a video and comment with @OMNISCRAPER, Click on the replied link, Download and share your video!"
-    />
-    <meta name="twitter:image" content="{% static 'omniscraper_logo.svg' %}" />
-    <meta name="twitter:site" content="@omniscraper" />
+		<meta
+			name="description"
+			content="The most efficient Twitter Videos and GIFs downloader. Log into Twitter, Find a tweet with a video and comment with @OMNISCRAPER, Click on the replied link, Download and share your video!"
+		/>
+		<meta
+			name="keywords"
+			content="Viral Tweets. Viral Videos. Funny Tweets. Funny Videos. Cat Videos. NFL. Rap. Sports. NFL players. Gaming. Barstool Sports. Joe Rogan. Actors. NBA players. MLB. Baseball. Bitcoin cryptocurrency. Tiktok Videos. Football Videos."
+		/>
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Smart content delivery" />
+		<meta
+			name="twitter:description"
+			content="Log into Twitter, Find a tweet with a video and comment with @OMNISCRAPER, Click on the replied link, Download and share your video!"
+		/>
+		<meta name="twitter:image" content="{% static 'omniscraper_logo.svg' %}" />
+		<meta name="twitter:site" content="@omniscraper" />
 
-    <title>Omniscraper: The Best Twitter Videos Downloader!</title>
+		<title>Omniscraper: The Best Twitter Videos Downloader!</title>
 
-    <link
-      rel="apple-touch-icon"
-      href="{% static 'omniscraper_frontend/omniscraper_logo.svg' %}"
-    />
-    <link
-      rel="manifest"
-      href="{% static 'omniscraper_frontend/manifest.json' %}"
-    />
-    <link
-      crossorigin="anonymous"
-      rel="preconnect"
-      href="https://fonts.googleapis.com"
-    />
-    <link
-      crossorigin="anonymous"
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin
-    />
-    <link 
-      crossorigin="anonymous"
-      rel="preload"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" 
-      rel="stylesheet">
-    <link
-      crossorigin="anonymous"
-      rel="preload"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
-      href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&display=swap"
-    />
-    <link rel="stylesheet" href={% static 'omniscraper_frontend/styles.css' %}>
+		<link
+			rel="apple-touch-icon"
+			href="{% static 'omniscraper_frontend/omniscraper_logo.svg' %}"
+		/>
+		<link
+			rel="manifest"
+			href="{% static 'omniscraper_frontend/manifest.json' %}"
+		/>
+		<link
+			crossorigin="anonymous"
+			rel="preconnect"
+			href="https://fonts.googleapis.com"
+		/>
+		<link
+			crossorigin="anonymous"
+			rel="preconnect"
+			href="https://fonts.gstatic.com"
+			crossorigin
+		/>
+		<link
+			crossorigin="anonymous"
+			rel="preload"
+			as="style"
+			onload="this.onload=null;this.rel='stylesheet'"
+			href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			crossorigin="anonymous"
+			rel="preload"
+			as="style"
+			onload="this.onload=null;this.rel='stylesheet'"
+			href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&display=swap"
+		/>
+		<link rel="stylesheet" href={% static 'omniscraper_frontend/styles.css' %}>
 
-    <link
-      rel="shortcut icon"
-      type="image/png"
-      href="{% static 'omniscraper_frontend/favicon.ico' %}"
-    />
-    {% render_bundle 'main' 'css' %}
+		<link
+			rel="shortcut icon"
+			type="image/png"
+			href="{% static 'omniscraper_frontend/favicon.ico' %}"
+		/>
+		{% render_bundle 'main' 'css' %}
 
-    <script defer>
-      (function (i, s, o, g, r, a, m) {
-        i["GoogleAnalyticsObject"] = r;
-        (i[r] =
-          i[r] ||
-          function () {
-            (i[r].q = i[r].q || []).push(arguments);
-          }),
-          (i[r].l = 1 * new Date());
-        (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m);
-      })(
-        window,
-        document,
-        "script",
-        "https://www.google-analytics.com/analytics.js",
-        "ga"
-      );
-    </script>
-  </head>
-  <body>
-    <div id="app" style="background: #f5f5f7; min-height: 100vh"></div>
-    {% render_bundle 'main' 'js' %}
+		<!-- Google tag (gtag.js) -->
+		<script
+			async
+			src="https://www.googletagmanager.com/gtag/js?id=G-BSL9K5VHDB"
+		></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
 
-    <script defer>
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker.register("{% url 'service-worker.js' %}", {
-            scope: "/",
-          });
-        });
-      }
-    </script>
-  </body>
+			gtag('config', 'G-BSL9K5VHDB');
+		</script>
+
+		<script defer>
+			(function (i, s, o, g, r, a, m) {
+				i['GoogleAnalyticsObject'] = r;
+				(i[r] =
+					i[r] ||
+					function () {
+						(i[r].q = i[r].q || []).push(arguments);
+					}),
+					(i[r].l = 1 * new Date());
+				(a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+				a.async = 1;
+				a.src = g;
+				m.parentNode.insertBefore(a, m);
+			})(
+				window,
+				document,
+				'script',
+				'https://www.google-analytics.com/analytics.js',
+				'ga'
+			);
+		</script>
+	</head>
+	<body>
+		<div id="app" style="background: #f5f5f7; min-height: 100vh"></div>
+		{% render_bundle 'main' 'js' %}
+
+		<script defer>
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', () => {
+					navigator.serviceWorker.register("{% url 'service-worker.js' %}", {
+						scope: '/',
+					});
+				});
+			}
+		</script>
+	</body>
 </html>

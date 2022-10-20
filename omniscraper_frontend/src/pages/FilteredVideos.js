@@ -21,6 +21,16 @@ export class FilteredVideos extends Component {
 	}
 
 	componentDidMount() {
+		const { location } = this.props;
+
+		const slug = convertSlugToString(this.props.match.params.slug);
+
+		window.gtag('event', 'page_view', {
+			page_title: slug,
+			page_path: location.pathname + location.search,
+			page_location: window.location.href,
+		});
+
 		this.loadVideos();
 	}
 
