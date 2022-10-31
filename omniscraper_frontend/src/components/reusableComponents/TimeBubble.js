@@ -10,26 +10,25 @@ const useStyles = makeStyles((theme) => ({
 		bottom: 10,
 		right: 10,
 		zIndex: 1,
-		opacity: 0.6,
+		opacity: 0.8,
 		padding: 8,
 		color: '#fff',
-		borderRadius: 10,
+		borderRadius: 3,
 		display: 'grid',
 		placeItems: 'center',
 		fontSize: 12,
 		fontFamily: 'inherit',
+		paddingBottom: 20,
+		paddingTop: 4,
+		transition: 'ease 0.25s',
 	},
 	container: {},
 }));
 
-function TimeBubble({ duration }) {
+function TimeBubble({ duration, children }) {
 	const classes = useStyles();
 
-	return (
-		<div className={classes.bubble}>
-			<p>{duration}</p>
-		</div>
-	);
+	return <div className={classes.bubble}>{children}</div>;
 }
 
 export default TimeBubble;

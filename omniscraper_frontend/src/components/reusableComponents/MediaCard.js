@@ -28,6 +28,7 @@ const MediaCard = React.forwardRef((props, ref) => {
 		progress,
 		duration,
 		currentTime,
+		formatDuration,
 		...restProps
 	} = props;
 
@@ -44,7 +45,11 @@ const MediaCard = React.forwardRef((props, ref) => {
 							style={{ width: `${progress}%` }}
 							onClick={handleClick}
 						/>
-						{/* <TimeBubble currentTime={currentTime} duration={duration} /> */}
+						{/* {duration && currentTime && (
+							<TimeBubble currentTime={currentTime} duration={duration}>
+								<p style={{ fontWeight: 700 }}>{formatDuration(duration)}</p>
+							</TimeBubble>
+						)} */}
 
 						<video
 							ref={ref && ref}

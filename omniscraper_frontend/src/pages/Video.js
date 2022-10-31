@@ -312,6 +312,19 @@ export class Video extends React.PureComponent {
 		this.setState({ reportPromptOpen: false });
 	};
 
+	formatDuration = (duration) => {
+		if (duration < 60) {
+			return `0:${duration}`;
+		}
+
+		if (duration > 60) {
+			let quotient = Math.round(duration / 60);
+			let remainder = duration % 60;
+
+			return `${quotient}:${remainder}`;
+		}
+	};
+
 	render() {
 		const {
 			downloadVideo,
@@ -326,6 +339,7 @@ export class Video extends React.PureComponent {
 			closeReportPrompt,
 			handlePlayButtonState,
 			updateCurrentTime,
+			formatDuration,
 		} = this;
 		const {
 			video,
@@ -457,6 +471,7 @@ export class Video extends React.PureComponent {
 											updateCurrentTime={updateCurrentTime}
 											progress={progress}
 											duration={duration}
+											formatDuration={formatDuration}
 											currentTime={currentTime}
 											play={play}
 											buttons={
@@ -589,6 +604,7 @@ export class Video extends React.PureComponent {
 									updateCurrentTime={updateCurrentTime}
 									progress={progress}
 									duration={duration}
+									formatDuration={formatDuration}
 									currentTime={currentTime}
 									autoPlay={autoplayVideo}
 									height='42vh'
