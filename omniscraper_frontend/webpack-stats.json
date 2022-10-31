@@ -1,9 +1,9 @@
 {
   "status": "done",
   "assets": {
-    "860-badd5a086b0d87617702.js": {
-      "name": "860-badd5a086b0d87617702.js",
-      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/860-badd5a086b0d87617702.js"
+    "860-ace4d236e4aa17064486.js": {
+      "name": "860-ace4d236e4aa17064486.js",
+      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/860-ace4d236e4aa17064486.js"
     },
     "806-ea767f38409b798956f3.js": {
       "name": "806-ea767f38409b798956f3.js",
@@ -25,13 +25,13 @@
       "name": "main.7e16b39c.css",
       "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/main.7e16b39c.css"
     },
-    "main.47c587eaee9e8cc613a2.js": {
-      "name": "main.47c587eaee9e8cc613a2.js",
-      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/main.47c587eaee9e8cc613a2.js"
+    "main.93d1a75f47b7357f89e2.js": {
+      "name": "main.93d1a75f47b7357f89e2.js",
+      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/main.93d1a75f47b7357f89e2.js"
     },
-    "runtime.95e3a0ac209a862d0c1a.js": {
-      "name": "runtime.95e3a0ac209a862d0c1a.js",
-      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/runtime.95e3a0ac209a862d0c1a.js"
+    "runtime.68688b1c1ddb4d080a3e.js": {
+      "name": "runtime.68688b1c1ddb4d080a3e.js",
+      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/runtime.68688b1c1ddb4d080a3e.js"
     },
     "860.456d9e8f.chunk.css": {
       "name": "860.456d9e8f.chunk.css",
@@ -56,10 +56,10 @@
   },
   "chunks": {
     "main": [
-      "runtime.95e3a0ac209a862d0c1a.js",
+      "runtime.68688b1c1ddb4d080a3e.js",
       "870.60a8b19077c1a8d8d3b1.js",
       "main.7e16b39c.css",
-      "main.47c587eaee9e8cc613a2.js"
+      "main.93d1a75f47b7357f89e2.js"
     ]
   }
 }
