@@ -18,7 +18,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['omniscraper.herokuapp.com']
+ALLOWED_HOSTS = ['omniscraper.herokuapp.com', "https://omniscraper-web.azurewebsites.net/"]
 
 # Application definition
 
@@ -207,7 +207,8 @@ WEBPACK_LOADER = {
 CORS_ALLOWED_ORIGINS = [
     "https://omniscraper.com",
     "https://omniscraper.herokuapp.com",
-    "http://127.0.0.1:8000"
+    "http://127.0.0.1:8000",
+    "https://omniscraper-web.azurewebsites.net/"
 ]
 
 VIEW_ID = env("VIEW_ID")
