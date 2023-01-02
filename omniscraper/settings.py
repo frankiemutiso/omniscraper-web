@@ -18,7 +18,11 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['omniscraper.herokuapp.com', "https://omniscraper-web.azurewebsites.net/"]
+ALLOWED_HOSTS = [
+    'omniscraper.herokuapp.com', 
+    "https://omniscraper-web.azurewebsites.net"
+    "omniscraper-web.azurewebsites.net"
+]
 
 # Application definition
 
@@ -148,12 +152,14 @@ LOGOUT_REDIRECT_URL = "home"
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 # enforce site-wide HTTPS
-
-CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE')
-
-SESSION_COOKIE_SECURE = env('SESSION_COOKIE_SECURE')
-
-SECURE_SSL_REDIRECT = env('SECURE_SSL_REDIRECT')
+if DEBUG:
+    CSRF_COOKIE_SECURE = False
+    SESSION_COOKIE_SECURE = False
+    SECURE_SSL_REDIRECT = False
+else:
+    CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE')
+    SESSION_COOKIE_SECURE = env('SESSION_COOKIE_SECURE')
+    SECURE_SSL_REDIRECT = env('SECURE_SSL_REDIRECT')
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
