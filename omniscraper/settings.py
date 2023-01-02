@@ -89,19 +89,6 @@ WSGI_APPLICATION = 'omniscraper.wsgi.application'
 #     }
 # }
 
-
-# PRODUCTION
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': env('DB_NAME'),
-#         'USER': env('DB_USER'),
-#         'PASSWORD': env('DB_PASS'),
-#         'HOST': env('DB_HOST'),
-#         'PORT': env('DB_PORT')
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -112,8 +99,6 @@ DATABASES = {
         'PORT': env('DB_PORT')
     }
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -226,7 +211,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://omniscraper.com",
     "https://omniscraper.herokuapp.com",
     "http://127.0.0.1:8000",
-    "https://omniscraper-web.azurewebsites.net/"
+    "https://omniscraper-web.azurewebsites.net"
+    "omniscraper-web.azurewebsites.net"
 ]
 
 VIEW_ID = env("VIEW_ID")
