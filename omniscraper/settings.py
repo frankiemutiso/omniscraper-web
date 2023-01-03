@@ -19,6 +19,7 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = [
+    "127.0.0.1",
     'omniscraper.herokuapp.com', 
     "https://omniscraper-web.azurewebsites.net"
     "omniscraper-web.azurewebsites.net"
@@ -118,7 +119,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -188,10 +188,10 @@ SIMPLE_JWT = {
 
 
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
+# db_from_env = dj_database_url.config(conn_max_age=600)
+# DATABASES['default'].update(db_from_env)
 
 GA_TRACKING_ID = env('GA_TRACKING_ID')
 

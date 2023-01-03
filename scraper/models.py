@@ -4,18 +4,17 @@ from django.utils.text import slugify
 import uuid
 
 class TwitterVideo(models.Model):
-    id = models.UUIDField(primary_key=True)
-    url = models.TextField(blank=True, null=True)
+    id = models.CharField(primary_key=True, max_length=36)
     date_saved_utc = models.DateTimeField()
+    slug = models.CharField(unique=True, max_length=10, blank=True, null=True)
+    url = models.TextField(blank=True, null=True)
     parent_tweet_id = models.BigIntegerField()
-    slug = models.TextField(unique=True, blank=True, null=True)
-    flagged = models.BooleanField(blank=True, null=True)
     video_thumbnail_link_https = models.TextField(blank=True, null=True)
     text = models.CharField(max_length=290, blank=True, null=True)
+    flagged = models.BooleanField(blank=True, null=True, default=False)
 
     class Meta:
         db_table = 'twitter_videos'
-
 
 class VideoTag(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -33,6 +32,7 @@ class VideoTag(models.Model):
         super(VideoTag, self).save(*args, **kwargs)
 
     class Meta:
+        managed = True
         db_table = 'video_tags'
 
 class FlagRequest(models.Model):
@@ -57,4 +57,5 @@ class FlagRequest(models.Model):
         super().save(*args, **kwargs)
 
     class Meta:
+        managed = True
         db_table = "flag_requests"

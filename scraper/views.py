@@ -8,6 +8,7 @@ from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from django.conf import settings
 from .models import FlagRequest, TwitterVideo, VideoTag
 from .serializers import FlagRequestsListSerializer, FlagRequestsSerializer, VideosSerializer, TagsSerializer, TrendingVideosSerializer
 from .ga_trends_generator import get_report, initialize_analyticsreporting, get_ga_trending_videos
@@ -60,6 +61,8 @@ class Videos(APIView):
     def get(self, request):
         videos = get_infinite_videos(request)
         serializer = VideosSerializer(videos, many=True)
+        
+        print(f'---DATABASE HOST: {settings.DATABASES["default"]["ENGINE"]}---')
 
         return Response({
             "videos": serializer.data,
