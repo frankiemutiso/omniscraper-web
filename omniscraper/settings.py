@@ -132,7 +132,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
@@ -186,15 +185,13 @@ SIMPLE_JWT = {
     "TOKEN_TYPE_CLAIM": "token_type"
 }
 
-
 # Activate Django-Heroku.
 # django_heroku.settings(locals())
 
 # db_from_env = dj_database_url.config(conn_max_age=600)
 # DATABASES['default'].update(db_from_env)
 
-GA_TRACKING_ID = env('GA_TRACKING_ID')
-
+# del DATABASES['default']['OPTIONS']['sslmode'] 
 
 USE_GA = env('DJANGO_USE_GA')
 USE_GA = {'True': True, 'False': False}.get(USE_GA, False)
@@ -215,5 +212,7 @@ CORS_ALLOWED_ORIGINS = [
     "omniscraper-web.azurewebsites.net"
 ]
 
+# google analytics access
+GA_TRACKING_ID = env('GA_TRACKING_ID')
 VIEW_ID = env("VIEW_ID")
 GA_JSON_FILE=env("GA_JSON_FILE")

@@ -9,6 +9,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.conf import settings
+from django.utils.text import slugify
+
 from .models import FlagRequest, TwitterVideo, VideoTag
 from .serializers import FlagRequestsListSerializer, FlagRequestsSerializer, VideosSerializer, TagsSerializer, TrendingVideosSerializer
 from .ga_trends_generator import get_report, initialize_analyticsreporting, get_ga_trending_videos
@@ -114,7 +116,9 @@ class Tags(APIView):
     def post(self, request):
         serializer = TagsSerializer(data=request.data)
         if serializer.is_valid() and request.user.is_authenticated:
-            serializer.save()
+            
+            serializer.save(slug=slugify(serializer.data["tag_name"]))
+            
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -136,7 +140,8 @@ class Tag(APIView):
         serializer = TagsSerializer(tag, data=request.data, partial=True)
         
         if serializer.is_valid() and request.user.is_authenticated:
-            serializer.save()
+            serializer.save(slug=slugify(serializer.data["tag_name"]))
+            
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
