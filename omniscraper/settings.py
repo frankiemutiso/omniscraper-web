@@ -22,7 +22,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     'omniscraper.herokuapp.com', 
     "omniscraper.com",
-    "https://omniscraper-web.azurewebsites.net"
+    "https://omniscraper-web.azurewebsites.net",
     "omniscraper-web.azurewebsites.net"
 ]
 
