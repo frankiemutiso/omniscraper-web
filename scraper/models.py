@@ -3,20 +3,6 @@ from django.utils import timezone
 from django.utils.text import slugify
 import uuid
 
-class TwitterVideo(models.Model):
-    id = models.UUIDField(primary_key=True)
-    url = models.TextField(blank=True, null=True)
-    date_saved_utc = models.DateTimeField()
-    parent_tweet_id = models.BigIntegerField()
-    slug = models.TextField(unique=True, blank=True, null=True)
-    flagged = models.BooleanField()
-    video_thumbnail_link_https = models.TextField(blank=True, null=True)
-    text = models.CharField(max_length=290, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'twitter_videos'
-
 class VideoTag(models.Model):
     id = models.UUIDField(primary_key=True)
     tag_name = models.CharField(unique=True, max_length=100)
@@ -27,6 +13,22 @@ class VideoTag(models.Model):
     class Meta:
         managed = False
         db_table = 'video_tags'
+    
+class TwitterVideo(models.Model):
+    id = models.UUIDField(primary_key=True)
+    url = models.TextField(blank=True, null=True)
+    date_saved_utc = models.DateTimeField()
+    parent_tweet_id = models.BigIntegerField()
+    slug = models.TextField(unique=True, blank=True, null=True)
+    flagged = models.BooleanField()
+    video_thumbnail_link_https = models.TextField(blank=True, null=True)
+    text = models.CharField(max_length=290, blank=True, null=True)
+    video_tags = models.ManyToManyField(
+        VideoTag, related_name="twitter_videos", blank=True)
+
+    class Meta:
+        managed = False
+        db_table = 'twitter_videos'
 
 class FlagRequest(models.Model):
     id = models.UUIDField(primary_key=True)

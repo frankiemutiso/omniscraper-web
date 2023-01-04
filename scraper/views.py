@@ -19,18 +19,18 @@ def get_infinite_videos(request, slug=None):
     limit = request.GET.get("limit")
     offset = request.GET.get("offset")
 
-    print("Running...")
+    # try:
+    if slug is None:
+        statuses = ["Pending", "Approved"]
+        rejected_requests = FlagRequest.objects.filter(request_status__in=statuses)
+        slugs = [x.slug for x in rejected_requests]
+        
+        print(f'---{rejected_requests}---')
 
-    try:
-        if slug is None:
-            statuses = ["Pending", "Approved"]
-            rejected_requests = FlagRequest.objects.filter(request_status__in=statuses)
-            slugs = [x.slug for x in rejected_requests]
-
-            return TwitterVideo.objects.exclude(flagged=True).exclude(slug__in=slugs).order_by('-date_saved_utc')[int(offset): int(offset) + int(limit)]
-        return VideoTag.objects.get(slug=slug).twitter_videos.all().order_by('-date_saved_utc')[int(offset): int(offset) + int(limit)]
-    except:
-        raise Http404
+        return TwitterVideo.objects.exclude(flagged=True).exclude(slug__in=slugs).order_by('-date_saved_utc')[int(offset): int(offset) + int(limit)]
+    return VideoTag.objects.get(slug=slug).twitter_videos.all().order_by('-date_saved_utc')[int(offset): int(offset) + int(limit)]
+    # except:
+        # raise Http404
 
 
 def is_there_more_data(request, slug=None):
