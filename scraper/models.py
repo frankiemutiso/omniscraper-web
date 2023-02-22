@@ -3,58 +3,42 @@ from django.utils import timezone
 from django.utils.text import slugify
 import uuid
 
+class VideoTag(models.Model):
+    id = models.UUIDField(primary_key=True)
+    tag_name = models.CharField(unique=True, max_length=100)
+    slug = models.CharField(unique=True, max_length=250, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    date_created = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'video_tags'
+    
 class TwitterVideo(models.Model):
     id = models.UUIDField(primary_key=True)
     url = models.TextField(blank=True, null=True)
     date_saved_utc = models.DateTimeField()
     parent_tweet_id = models.BigIntegerField()
     slug = models.TextField(unique=True, blank=True, null=True)
-    flagged = models.BooleanField(blank=True, null=True)
+    flagged = models.BooleanField()
     video_thumbnail_link_https = models.TextField(blank=True, null=True)
     text = models.CharField(max_length=290, blank=True, null=True)
+    video_tags = models.ManyToManyField(
+        VideoTag, related_name="twitter_videos", blank=True)
 
     class Meta:
+        managed = False
         db_table = 'twitter_videos'
 
-
-class VideoTag(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    tag_name = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(unique=True,
-                            max_length=250, null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
-    date_created = models.DateTimeField(auto_now_add=True)
-    twitter_videos = models.ManyToManyField(
-        TwitterVideo, related_name="tags", blank=True)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.tag_name)
-        super(VideoTag, self).save(*args, **kwargs)
-
-    class Meta:
-        db_table = 'video_tags'
-
 class FlagRequest(models.Model):
-    REQUEST_CHOICES = [
-        ('Approved', 'Approved'), 
-        ('Pending', 'Pending'), 
-        ('Rejected', 'Rejected')
-        ]
-
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    slug = models.SlugField(unique=False,
-                            max_length=250, null=True, blank=True)
-    flagging_reason = models.TextField(null=True, blank=True)
+    id = models.UUIDField(primary_key=True)
+    flagging_reason = models.TextField(blank=True, null=True)
     twitter_handle = models.CharField(max_length=144, blank=True, null=True)
-    date_requested = models.DateTimeField(auto_now_add=True)
-    date_of_action = models.DateTimeField(null=True, blank=True)
-    request_status = models.CharField(max_length=100, choices=REQUEST_CHOICES, default="Pending")
-
-    def save(self, *args, **kwargs):
-        if self.id:
-           self.date_of_action = timezone.now()
-        super().save(*args, **kwargs)
+    date_requested = models.DateTimeField()
+    date_of_action = models.DateTimeField(blank=True, null=True)
+    slug = models.CharField(max_length=250, blank=True, null=True)
+    request_status = models.CharField(max_length=100)
 
     class Meta:
-        db_table = "flag_requests"
+        managed = False
+        db_table = 'flag_requests'

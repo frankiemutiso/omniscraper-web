@@ -8,6 +8,9 @@ from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from django.conf import settings
+from django.utils.text import slugify
+
 from .models import FlagRequest, TwitterVideo, VideoTag
 from .serializers import FlagRequestsListSerializer, FlagRequestsSerializer, VideosSerializer, TagsSerializer, TrendingVideosSerializer
 from .ga_trends_generator import get_report, initialize_analyticsreporting, get_ga_trending_videos
@@ -16,18 +19,18 @@ def get_infinite_videos(request, slug=None):
     limit = request.GET.get("limit")
     offset = request.GET.get("offset")
 
-    print("Running...")
+    # try:
+    if slug is None:
+        statuses = ["Pending", "Approved"]
+        rejected_requests = FlagRequest.objects.filter(request_status__in=statuses)
+        slugs = [x.slug for x in rejected_requests]
+        
+        print(f'---{rejected_requests}---')
 
-    try:
-        if slug is None:
-            statuses = ["Pending", "Approved"]
-            rejected_requests = FlagRequest.objects.filter(request_status__in=statuses)
-            slugs = [x.slug for x in rejected_requests]
-
-            return TwitterVideo.objects.exclude(flagged=True).exclude(slug__in=slugs).order_by('-date_saved_utc')[int(offset): int(offset) + int(limit)]
-        return VideoTag.objects.get(slug=slug).twitter_videos.all().order_by('-date_saved_utc')[int(offset): int(offset) + int(limit)]
-    except:
-        raise Http404
+        return TwitterVideo.objects.exclude(flagged=True).exclude(slug__in=slugs).order_by('-date_saved_utc')[int(offset): int(offset) + int(limit)]
+    return VideoTag.objects.get(slug=slug).twitter_videos.all().order_by('-date_saved_utc')[int(offset): int(offset) + int(limit)]
+    # except:
+        # raise Http404
 
 
 def is_there_more_data(request, slug=None):
@@ -60,6 +63,8 @@ class Videos(APIView):
     def get(self, request):
         videos = get_infinite_videos(request)
         serializer = VideosSerializer(videos, many=True)
+        
+        print(f'---DATABASE HOST: {settings.DATABASES["default"]["ENGINE"]}---')
 
         return Response({
             "videos": serializer.data,
@@ -111,7 +116,9 @@ class Tags(APIView):
     def post(self, request):
         serializer = TagsSerializer(data=request.data)
         if serializer.is_valid() and request.user.is_authenticated:
-            serializer.save()
+            
+            serializer.save(slug=slugify(serializer.data["tag_name"]))
+            
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -133,7 +140,8 @@ class Tag(APIView):
         serializer = TagsSerializer(tag, data=request.data, partial=True)
         
         if serializer.is_valid() and request.user.is_authenticated:
-            serializer.save()
+            serializer.save(slug=slugify(serializer.data["tag_name"]))
+            
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     

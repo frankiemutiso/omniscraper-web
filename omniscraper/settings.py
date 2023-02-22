@@ -18,7 +18,13 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['omniscraper.herokuapp.com', "https://omniscraper-web.azurewebsites.net/"]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    'omniscraper.herokuapp.com', 
+    "omniscraper.com",
+    "https://omniscraper-web.azurewebsites.net",
+    "omniscraper-web.azurewebsites.net"
+]
 
 # Application definition
 
@@ -85,11 +91,9 @@ WSGI_APPLICATION = 'omniscraper.wsgi.application'
 #     }
 # }
 
-
-# PRODUCTION
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': env('DB_NAME'),
         'USER': env('DB_USER'),
         'PASSWORD': env('DB_PASS'),
@@ -97,7 +101,6 @@ DATABASES = {
         'PORT': env('DB_PORT')
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -117,7 +120,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -130,7 +132,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -148,12 +149,14 @@ LOGOUT_REDIRECT_URL = "home"
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 # enforce site-wide HTTPS
-
-CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE')
-
-SESSION_COOKIE_SECURE = env('SESSION_COOKIE_SECURE')
-
-SECURE_SSL_REDIRECT = env('SECURE_SSL_REDIRECT')
+if DEBUG:
+    CSRF_COOKIE_SECURE = False
+    SESSION_COOKIE_SECURE = False
+    SECURE_SSL_REDIRECT = False
+else:
+    CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE')
+    SESSION_COOKIE_SECURE = env('SESSION_COOKIE_SECURE')
+    SECURE_SSL_REDIRECT = env('SECURE_SSL_REDIRECT')
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -183,15 +186,13 @@ SIMPLE_JWT = {
     "TOKEN_TYPE_CLAIM": "token_type"
 }
 
-
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
+# db_from_env = dj_database_url.config(conn_max_age=600)
+# DATABASES['default'].update(db_from_env)
 
-GA_TRACKING_ID = env('GA_TRACKING_ID')
-
+# del DATABASES['default']['OPTIONS']['sslmode'] 
 
 USE_GA = env('DJANGO_USE_GA')
 USE_GA = {'True': True, 'False': False}.get(USE_GA, False)
@@ -208,8 +209,11 @@ CORS_ALLOWED_ORIGINS = [
     "https://omniscraper.com",
     "https://omniscraper.herokuapp.com",
     "http://127.0.0.1:8000",
-    "https://omniscraper-web.azurewebsites.net/"
+    "https://omniscraper-web.azurewebsites.net"
+    "omniscraper-web.azurewebsites.net"
 ]
 
+# google analytics access
+GA_TRACKING_ID = env('GA_TRACKING_ID')
 VIEW_ID = env("VIEW_ID")
 GA_JSON_FILE=env("GA_JSON_FILE")
