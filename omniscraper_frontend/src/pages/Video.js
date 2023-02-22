@@ -28,6 +28,7 @@ import { axiosInstance } from '../utils/axiosInstance';
 import { connect } from 'react-redux';
 import { postFlagRequest } from '../store/actions/flagRequestsActions';
 import FlagRequestDialog from '../components/FlagRequestDialog';
+import { Helmet } from 'react-helmet';
 
 const styles = (theme) => ({
 	root: {
@@ -89,6 +90,9 @@ export class Video extends React.PureComponent {
 			flagging: false,
 			reportPromptOpen: false,
 			clickedVideo: null,
+			progress: 0,
+			currentTime: 0,
+			duration: 0,
 		};
 
 		this.vidRef = React.createRef();
@@ -97,16 +101,23 @@ export class Video extends React.PureComponent {
 
 	componentDidUpdate(prevProps) {
 		if (prevProps.match.params.slug !== this.props.match.params.slug) {
+			this.setState({ progress: 0 });
 			this.loadVideo();
 		}
 	}
 
 	componentDidMount = () => {
+		const { location } = this.props;
+
+		window.gtag('event', 'page_view', {
+			page_title: 'Video',
+			page_path: location.pathname + location.search,
+			page_location: window.location.href,
+		});
 		this.loadVideo();
 	};
 
 	loadVideo = () => {
-		// this.handleVideoPlayState();
 		this.setState({ loading: true, play: false }, () => {
 			const slug = this.props.match.params.slug;
 			const url = `/api/${slug}`;
@@ -189,19 +200,49 @@ export class Video extends React.PureComponent {
 	};
 
 	handleVideoPlayState = (e) => {
-		console.log('Current time: ', this.vidRef.current.currentTime);
-		console.log('Duration: ', this.vidRef.current.duration);
+		const { current } = this.vidRef;
 
-		if (this.vidRef.current?.paused) {
-			this.setState({ play: true });
-			this.vidRef.current?.play();
-		} else {
-			this.setState({ play: false });
-			this.vidRef.current?.pause();
+		if (current) {
+			if (current.paused) {
+				this.handlePlay();
+				return;
+			}
+
+			this.handlePause();
 		}
 	};
 
+	handlePlayButtonState = (state) => {
+		this.setState({ play: state });
+	};
+
+	handlePlay = () => {
+		const { current } = this.vidRef;
+		current.play();
+
+		this.setState({ play: true });
+	};
+
+	handlePause = () => {
+		const { current } = this.vidRef;
+		current.pause();
+
+		this.setState({ play: false });
+	};
+
 	handlePlayTime = () => {};
+
+	updateCurrentTime = () => {
+		const { current } = this.vidRef;
+
+		let progress = Math.round((current.currentTime / current.duration) * 100);
+
+		this.setState({
+			progress,
+			currentTime: Math.round(current.currentTime),
+			duration: Math.round(current.duration),
+		});
+	};
 
 	handleShare = (video) => {
 		if (navigator.share) {
@@ -271,6 +312,19 @@ export class Video extends React.PureComponent {
 		this.setState({ reportPromptOpen: false });
 	};
 
+	formatDuration = (duration) => {
+		if (duration < 60) {
+			return `0:${duration}`;
+		}
+
+		if (duration > 60) {
+			let quotient = Math.round(duration / 60);
+			let remainder = duration % 60;
+
+			return `${quotient}:${remainder}`;
+		}
+	};
+
 	render() {
 		const {
 			downloadVideo,
@@ -283,6 +337,9 @@ export class Video extends React.PureComponent {
 			flagVideo,
 			openReportPrompt,
 			closeReportPrompt,
+			handlePlayButtonState,
+			updateCurrentTime,
+			formatDuration,
 		} = this;
 		const {
 			video,
@@ -293,6 +350,9 @@ export class Video extends React.PureComponent {
 			flagging,
 			reportPromptOpen,
 			clickedVideo,
+			progress,
+			currentTime,
+			duration,
 		} = this.state;
 		const {
 			classes,
@@ -342,6 +402,36 @@ export class Video extends React.PureComponent {
 
 		return (
 			<>
+				<Helmet>
+					<meta
+						name='description'
+						content='The most efficient Twitter Videos and GIFs downloader. Log into Twitter, Find a tweet with a video and comment with @OMNISCRAPER, Click on the replied link, Download and share your video!'
+					/>
+					<meta
+						name='keywords'
+						content='Viral Tweets. Viral Videos. Funny Tweets. Funny Videos. Cat Videos. NFL. Rap. Sports. NFL players. Gaming. Barstool Sports. Joe Rogan. Actors. NBA players. MLB. Baseball. Bitcoin cryptocurrency. Tiktok Videos. Football Videos.'
+					/>
+					<meta property='og:image:width' content='600' />
+					<meta property='og:image:height' content='314' />
+					<meta
+						property='og:image'
+						content={`${video.video_thumbnail_link_https}`}
+					/>
+					<meta name='twitter:card' content='summary_large_image' />
+					<meta name='twitter:title' content={`${text}`} />
+					<meta
+						name='twitter:description'
+						content='Log into Twitter, Find a tweet with a video and comment with @OMNISCRAPER, Click on the link, Download and share your video!'
+					/>
+					<meta
+						name='twitter:image'
+						content={`${video.video_thumbnail_link_https}`}
+					/>
+					<meta name='twitter:site' content='@omniscraper' />
+					<title>
+						Video - Omniscraper: The Best Twitter Videos Downloader!
+					</title>
+				</Helmet>
 				{/* {reportDialog} */}
 				<FlagRequestDialog
 					open={reportPromptOpen}
@@ -377,6 +467,12 @@ export class Video extends React.PureComponent {
 											handleClick={(e) => {
 												handleVideoPlayState(e);
 											}}
+											handlePlayButtonState={handlePlayButtonState}
+											updateCurrentTime={updateCurrentTime}
+											progress={progress}
+											duration={duration}
+											formatDuration={formatDuration}
+											currentTime={currentTime}
 											play={play}
 											buttons={
 												<>
@@ -504,6 +600,12 @@ export class Video extends React.PureComponent {
 									src={video.url}
 									play={play}
 									handleClick={() => handleVideoPlayState()}
+									handlePlayButtonState={handlePlayButtonState}
+									updateCurrentTime={updateCurrentTime}
+									progress={progress}
+									duration={duration}
+									formatDuration={formatDuration}
+									currentTime={currentTime}
 									autoPlay={autoplayVideo}
 									height='42vh'
 									style={{ width: '100vw' }}

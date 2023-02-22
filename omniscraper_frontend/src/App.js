@@ -6,12 +6,12 @@ import Toolbar from '@mui/material/Toolbar';
 import StyledEngineProvider from '@mui/material/StyledEngineProvider';
 import createHistory from 'history/createBrowserHistory';
 import axios from 'axios';
-import { ThreeDots } from '@bit/mhnpd.react-loader-spinner.three-dots';
 import { axiosInstance } from './utils/axiosInstance';
 import Nav from './components/Nav';
 import Login from './pages/Login';
 import FlagRequests from './pages/FlagRequests';
 import ProtectedComponent from './components/ProtectedComponent';
+import DotPulse from './components/reusableComponents/DotPulse';
 
 const Video = React.lazy(() => import('./pages/Video'));
 const Home = React.lazy(() => import('./pages/Home'));
@@ -282,7 +282,7 @@ class App extends Component {
 												placeItems: 'center',
 											}}
 										>
-											<ThreeDots color='#185adb' height={50} width={50} />
+											<DotPulse />
 										</div>
 									}
 								>
