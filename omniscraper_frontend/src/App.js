@@ -14,12 +14,12 @@ import ProtectedComponent from './components/ProtectedComponent';
 import DotPulse from './components/reusableComponents/DotPulse';
 
 const Video = React.lazy(() => import('./pages/Video'));
-const Home = React.lazy(() => import('./pages/Home'));
+const Home = React.lazy(() => import('./pages/Home/Home'));
 const FilteredVideos = React.lazy(() => import('./pages/FilteredVideos'));
 
 const theme = createTheme({
 	typography: {
-		fontFamily: ['Open Sans', 'Sora'].join(','),
+		fontFamily: ['Plus Jakarta Sans', 'Sora'].join(','),
 	},
 	palette: {
 		primary: {
@@ -74,7 +74,7 @@ class App extends Component {
 		window.ga('send', 'pageview');
 
 		await this.loadTags();
-		await this.loadVideos();
+		// await this.loadVideos();
 		await this.loadTrendingVideos();
 	};
 
@@ -296,15 +296,7 @@ class App extends Component {
 											render={(props) => (
 												<Home
 													{...props}
-													loggedIn={loggedIn}
-													videoTags={videoTags}
-													tagsLoading={tagsLoading}
-													loadTags={loadTags}
-													error={videosLoadingError}
-													loading={loading}
-													hasMore={hasMore}
-													videos={videos}
-													loadVideos={loadVideos}
+													// loadVideos={loadVideos}
 													scrollPosition={scrollPosition}
 													handleScrollPosition={handleScrollPosition}
 												/>

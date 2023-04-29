@@ -1,0 +1,68 @@
+.videoCard {
+	width: 340px;
+	cursor: pointer;
+}
+
+.videoCard-bottom {
+	height: 48px;
+}
+
+videoCard-elapsed-time {
+}
+
+.videoCard-btn {
+	display: none;
+}
+
+.videoCard-btn-hover {
+	display: block;
+}
+
+.videoCard-btn:hover {
+}
+
+/* For Mobile Screens */
+@media screen and (max-width: 640px) {
+	.videoCard {
+		width: 100%;
+		cursor: pointer;
+		padding: 0;
+	}
+
+	.rounded-lg {
+		border-radius: 0px;
+	}
+
+	.videoCard-actions {
+		padding: 8px;
+		margin-top: 0;
+	}
+
+	.videoCard-btn {
+		display: block;
+	}
+}
+
+/* For tabs */
+@media screen and (max-width: 1300px) and (min-width: 640px) {
+	.videoCard {
+		width: 390px;
+		cursor: pointer;
+	}
+
+	.videoCard-btn {
+		display: none;
+	}
+}
+
+@media screen and (min-width: 411px) {
+	.videoCard-text-container {
+		max-height: 42px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		white-space: initial;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+	}
+}

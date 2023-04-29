@@ -3,6 +3,9 @@ import {
 	FLAG_VIDEO_ERROR,
 	FLAG_VIDEO_SUCCESS,
 	GET_VIDEO,
+	GET_VIDEOS_LIST,
+	GET_VIDEOS_LIST_ERROR,
+	GET_VIDEOS_LIST_SUCCESS,
 	GET_VIDEO_ERROR,
 	GET_VIDEO_SUCCESS,
 } from '../actionTypes';
@@ -13,6 +16,10 @@ const initalState = {
 	videoObject: null,
 	flaggingVideo: false,
 	flaggingError: false,
+
+	videosLoading: false,
+	videos: [],
+	videosLoadingError: false,
 };
 
 const videosReducer = (state = initalState, action) => {
@@ -57,6 +64,28 @@ const videosReducer = (state = initalState, action) => {
 				...state,
 				flaggingVideo: false,
 				flaggingError: true,
+			};
+
+		case GET_VIDEOS_LIST:
+			return {
+				...state,
+				videosLoading: true,
+				videosLoadingError: false,
+			};
+
+		case GET_VIDEOS_LIST_SUCCESS:
+			return {
+				...state,
+				videosLoading: false,
+				videos: [...state.videos, ...action.videosData.videos],
+				hasMoreVideos: action.videosData.hasMore,
+			};
+
+		case GET_VIDEOS_LIST_ERROR:
+			return {
+				...state,
+				videosLoadingError: true,
+				videosLoading: false,
 			};
 
 		default:

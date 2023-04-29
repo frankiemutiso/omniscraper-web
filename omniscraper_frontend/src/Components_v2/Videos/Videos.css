@@ -1,0 +1,12 @@
+.videos-grid {
+	overflow-y: auto;
+	min-height: 100vh;
+}
+
+@media screen and (max-width: 640px) {
+	.videos-grid {
+		padding-bottom: 0 !important;
+		padding-right: 0 !important;
+		padding-left: 0 !important;
+	}
+}

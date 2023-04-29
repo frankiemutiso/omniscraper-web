@@ -6,6 +6,9 @@ import {
 	FLAG_VIDEO_ERROR,
 	FLAG_VIDEO_SUCCESS,
 	GET_VIDEO,
+	GET_VIDEOS_LIST,
+	GET_VIDEOS_LIST_ERROR,
+	GET_VIDEOS_LIST_SUCCESS,
 	GET_VIDEO_ERROR,
 	GET_VIDEO_SUCCESS,
 } from '../actionTypes';
@@ -48,3 +51,23 @@ export const flagVideo = (slug, flagged) => async (dispatch) => {
 		dispatch({ type: FLAG_VIDEO_ERROR });
 	}
 };
+
+export const getVideos = (offset, limit) => async (dispatch) => {
+	dispatch({ type: GET_VIDEOS_LIST });
+
+	try {
+		const url = `/api/videos/?limit=${limit}&offset=${offset}`;
+
+		const res = await axios.get(url);
+
+		if (res.statusText === 'OK') {
+			dispatch({ type: GET_VIDEOS_LIST_SUCCESS, videosData: res.data });
+		} else {
+			dispatch({ type: GET_VIDEOS_LIST_ERROR });
+		}
+	} catch (error) {
+		dispatch({ type: GET_VIDEOS_LIST_ERROR });
+	}
+};
+
+export const getTaggedVideos = (tag) => async (dispatch) => {};

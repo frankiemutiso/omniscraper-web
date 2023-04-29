@@ -1,0 +1,12 @@
+.menu {
+	z-index: 1;
+	background-color: #fff;
+}
+
+.menu-open {
+	display: block;
+}
+
+.menu-closed {
+	display: none;
+}

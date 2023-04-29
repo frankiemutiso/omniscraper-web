@@ -1,7 +1,7 @@
 import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import logo from '../assets/omniscraperLogo.svg';
+import logo from '../assets/omniscraperLogo.png';
 import { useHistory } from 'react-router-dom';
 import Button from './reusableComponents/Button';
 import './Nav.css';
