@@ -9,5 +9,9 @@ body {
 	font-family: 'Open Sans', sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	background-color: #0e0e0e;
+}
+
+#app {
+	background-color: #fff !important;
+	min-height: 100vh;
 }

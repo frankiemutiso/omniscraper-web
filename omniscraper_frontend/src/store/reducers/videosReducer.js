@@ -1,7 +1,14 @@
 import {
+	DOWNLOAD_VIDEO,
+	DOWNLOAD_VIDEO_ERROR,
+	DOWNLOAD_VIDEO_PROGRESS,
+	DOWNLOAD_VIDEO_SUCCESS,
 	FLAG_VIDEO,
 	FLAG_VIDEO_ERROR,
 	FLAG_VIDEO_SUCCESS,
+	GET_TRENDING_VIDEOS,
+	GET_TRENDING_VIDEOS_ERROR,
+	GET_TRENDING_VIDEOS_SUCCESS,
 	GET_VIDEO,
 	GET_VIDEOS_LIST,
 	GET_VIDEOS_LIST_ERROR,
@@ -20,6 +27,15 @@ const initalState = {
 	videosLoading: false,
 	videos: [],
 	videosLoadingError: false,
+	hasMoreVideos: true,
+
+	trendingVideos: [],
+	trendingVideosLoadingError: false,
+	trendingVideosLoading: false,
+
+	downloadingVideo: false,
+	videoDownloadingError: false,
+	downloadingVideoProgress: 0,
 };
 
 const videosReducer = (state = initalState, action) => {
@@ -77,7 +93,7 @@ const videosReducer = (state = initalState, action) => {
 			return {
 				...state,
 				videosLoading: false,
-				videos: [...state.videos, ...action.videosData.videos],
+				videos: state.videos.concat(action.videosData.videos),
 				hasMoreVideos: action.videosData.hasMore,
 			};
 
@@ -86,6 +102,53 @@ const videosReducer = (state = initalState, action) => {
 				...state,
 				videosLoadingError: true,
 				videosLoading: false,
+			};
+
+		case GET_TRENDING_VIDEOS:
+			return {
+				...state,
+				trendingVideosLoading: true,
+				trendingVideosLoadingError: false,
+			};
+
+		case GET_TRENDING_VIDEOS_SUCCESS:
+			return {
+				...state,
+				trendingVideosLoading: false,
+				trendingVideos: action.trendingVideos,
+			};
+
+		case GET_TRENDING_VIDEOS_ERROR:
+			return {
+				...state,
+				trendingVideosLoadingError: true,
+				trendingVideosLoading: false,
+			};
+
+		case DOWNLOAD_VIDEO:
+			return {
+				...state,
+				downloadingVideo: true,
+				videoDownloadingError: false,
+			};
+		case DOWNLOAD_VIDEO_PROGRESS:
+			return {
+				...state,
+				downloadingVideo: true,
+				videoDownloadingError: false,
+				downloadingVideoProgress: action.downloadProgress,
+			};
+		case DOWNLOAD_VIDEO_SUCCESS:
+			return {
+				...state,
+				downloadingVideo: false,
+				videoDownloadingError: false,
+			};
+		case DOWNLOAD_VIDEO_ERROR:
+			return {
+				...state,
+				downloadingVideo: false,
+				videoDownloadingError: true,
 			};
 
 		default:

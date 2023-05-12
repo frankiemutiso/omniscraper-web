@@ -1,0 +1,48 @@
+.videoPlayer-container {
+	width: 100%;
+	position: relative;
+	z-index: 0;
+}
+
+.videoPlayer {
+	object-fit: contain;
+	border: none;
+	position: relative;
+	width: 100%;
+	background-color: #000;
+	outline-width: 0px;
+}
+
+.videoPlayer-fullscreen {
+	height: 100vh;
+	object-fit: contain;
+	border: none;
+	position: relative;
+	width: 100%;
+	background-color: #000;
+	outline-width: 0px;
+}
+
+.videoPlayer-actions {
+	/* height: 100px; */
+}
+
+/* For Mobile Screens */
+@media screen and (max-width: 640px) {
+	.videoPlayer {
+		height: 45vh !important;
+	}
+}
+
+/* For tabs */
+@media screen and (max-width: 1300px) and (min-width: 640px) {
+	.videoPlayer {
+		height: 40vh !important;
+	}
+}
+
+@media screen and (min-width: 411px) {
+	.videoPlayer {
+		height: 65vh;
+	}
+}

@@ -5,11 +5,11 @@
 	"proxy": "https://omniscraper-web.azurewebsites.net/",
 	"main": "index.js",
 	"scripts": {
-		"dev": "webpack --mode development --watch && build-tailwind",
+		"dev": "webpack --mode development --watch",
 		"build": "webpack --mode production build-tailwind",
 		"report": "npm run build",
 		"help": "webpack --help",
-		"build-tailwind": "npx tailwindcss -i ./src/index.css -o ./static/dist/output.css --watch"
+		"tailwind": "npx tailwindcss -i ./src/index.css -o ./static/omniscraper_frontend/dist/output.css --watch"
 	},
 	"keywords": [],
 	"author": "",

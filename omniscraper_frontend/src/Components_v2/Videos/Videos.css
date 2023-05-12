@@ -3,10 +3,38 @@
 	min-height: 100vh;
 }
 
+.videos-grid::-webkit-scrollbar {
+	width: 8px;
+}
+
+.videos-grid::-webkit-scrollbar-track {
+	background-color: transparent;
+	border-radius: 999px;
+}
+
+.videos-grid::-webkit-scrollbar-thumb {
+	background-color: #c4c4c4;
+	border-radius: 999px;
+}
+
 @media screen and (max-width: 640px) {
 	.videos-grid {
 		padding-bottom: 0 !important;
 		padding-right: 0 !important;
 		padding-left: 0 !important;
+	}
+
+	.videos-grid::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	.videos-grid::-webkit-scrollbar-track {
+		background-color: transparent;
+		border-radius: 999px;
+	}
+
+	.videos-grid::-webkit-scrollbar-thumb {
+		background-color: #c4c4c4;
+		border-radius: 999px;
 	}
 }
