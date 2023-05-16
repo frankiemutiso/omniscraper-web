@@ -94,12 +94,12 @@ function VideoPlayer({
 			element.classList.remove('videoPlayer');
 			element.classList.add('videoPlayer-fullscreen');
 			setFullScreen(true);
+			console.log(window.innerHeight);
 		}
 	};
 
 	const handleVolumeBtnClick = () => {
 		const target = videoRef?.current;
-		debugger;
 
 		if (target?.muted) {
 			target.volume = 1;
@@ -116,11 +116,51 @@ function VideoPlayer({
 		}
 	};
 
+	const handleVolumeChange = (e) => {
+		const videoTarget = videoRef?.current;
+
+		let target = e?.currentTarget;
+		let rect = target.getBoundingClientRect();
+
+		const mouseXPos = e.clientX - rect.left;
+		const vol = Number((mouseXPos / rect?.width).toFixed(1));
+
+		videoTarget.volume = vol;
+
+		setVolumeLevel(vol * 100);
+	};
+
+	const onKeyDown = () => {
+		const element = document.getElementById('videoPlayer');
+
+		debugger;
+
+		if (
+			document.fullscreenElement &&
+			(window.event.key === 'Escape' ||
+				window.event.key === 'Esc' ||
+				window.event.keyCode === 27)
+		) {
+			element.classList.remove('videoPlayer-fullscreen');
+			element.classList.add('videoPlayer');
+			setFullScreen(false);
+			document.exitFullscreen();
+		}
+	};
+
 	const strippedText = getStrippedVideoText(videoText);
 
 	return (
-		<div>
-			<div className='videoPlayer-container' id='videoPlayer-container'>
+		<div
+			onKeyDown={() => {
+				debugger;
+			}}
+		>
+			<div
+				className='videoPlayer-container'
+				id='videoPlayer-container'
+				onKeyDown={() => onKeyDown()}
+			>
 				<video
 					ref={videoRef}
 					autoPlay={true}
@@ -131,9 +171,10 @@ function VideoPlayer({
 					onMouseEnter={() => handleMouseEnter()}
 					onMouseLeave={() => setActionsState(false)}
 					onLoadedMetadata={() => getVideoMetadata()}
-					onTimeUpdate={() => updateCurrentTime()}
+					onTimeUpdate={(e) => updateCurrentTime()}
 					onEnded={() => setPlayState(false)}
 					id='videoPlayer'
+					onClick={() => handlePlayState()}
 				>
 					<source src={videoUrl} type='video/mp4' />
 				</video>
@@ -150,12 +191,13 @@ function VideoPlayer({
 					isMuted={isMuted}
 					isPlaying={isPlaying}
 					volumeLevel={volumeLevel}
+					handleVolumeChange={handleVolumeChange}
 				/>
 			</div>
-			<div className='mt-4 sm:px-4'>
+			<div className='mt-4 videoPlayer-video-info'>
 				{strippedText && strippedText.length > 0 ? (
 					<div className=''>
-						<p className='videoPlayer-text text-lg font-semibold'>
+						<p className='videoPlayer-text lg:text-lg font-semibold'>
 							{strippedText}
 						</p>
 					</div>

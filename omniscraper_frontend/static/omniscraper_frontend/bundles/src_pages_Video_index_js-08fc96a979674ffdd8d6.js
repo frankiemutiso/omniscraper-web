@@ -1,4 +1,4 @@
-(self["webpackChunkomniscraper_frontend"] = self["webpackChunkomniscraper_frontend"] || []).push([["src_pages_Home_index_js"],{
+(self["webpackChunkomniscraper_frontend"] = self["webpackChunkomniscraper_frontend"] || []).push([["src_pages_Video_index_js"],{
 
 /***/ 3263:
 /*!*****************************************************!*\
@@ -132,10 +132,10 @@ function Components_v2_MenuItem_MenuItem(_ref) {
 
 /***/ }),
 
-/***/ 2648:
-/*!*********************************************!*\
-  !*** ./src/pages/Home/index.js + 6 modules ***!
-  \*********************************************/
+/***/ 2509:
+/*!***********************************************!*\
+  !*** ./src/pages/Video/index.js + 23 modules ***!
+  \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -144,8 +144,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
-  "Home": () => (/* binding */ pages_Home_Home),
-  "default": () => (/* binding */ pages_Home)
+  "default": () => (/* binding */ src_pages_Video)
 });
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
@@ -169,18 +168,12 @@ var regenerator = __webpack_require__(4687);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 // EXTERNAL MODULE: ./node_modules/react/index.js
 var react = __webpack_require__(7294);
-// EXTERNAL MODULE: ./node_modules/@mui/styles/withStyles/withStyles.js + 1 modules
-var withStyles = __webpack_require__(1366);
-// EXTERNAL MODULE: ./node_modules/react-helmet/es/Helmet.js
-var Helmet = __webpack_require__(4593);
-// EXTERNAL MODULE: ./node_modules/react-redux/es/index.js + 26 modules
-var es = __webpack_require__(1399);
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(3379);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
-// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./src/pages/Home/Home.css
-var Home = __webpack_require__(8901);
-;// CONCATENATED MODULE: ./src/pages/Home/Home.css
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./src/pages/Video/index.css
+var Video = __webpack_require__(5879);
+;// CONCATENATED MODULE: ./src/pages/Video/index.css
 
             
 
@@ -189,48 +182,611 @@ var options = {};
 options.insert = "head";
 options.singleton = false;
 
-var update = injectStylesIntoStyleTag_default()(Home["default"], options);
+var update = injectStylesIntoStyleTag_default()(Video["default"], options);
 
 
 
-/* harmony default export */ const Home_Home = (Home["default"].locals || {});
-// EXTERNAL MODULE: ./src/store/actions/videosActions.js
-var videosActions = __webpack_require__(3953);
-// EXTERNAL MODULE: ./src/utils/calculateTimeLapse.js
-var calculateTimeLapse = __webpack_require__(128);
+/* harmony default export */ const pages_Video = (Video["default"].locals || {});
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js + 3 modules
 var slicedToArray = __webpack_require__(885);
-// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./src/Components_v2/VideoCard/VideoCard.css
-var VideoCard = __webpack_require__(6677);
-;// CONCATENATED MODULE: ./src/Components_v2/VideoCard/VideoCard.css
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./src/Components_v2/VideoPlayer/index.css
+var VideoPlayer = __webpack_require__(4234);
+;// CONCATENATED MODULE: ./src/Components_v2/VideoPlayer/index.css
 
             
 
-var VideoCard_options = {};
+var VideoPlayer_options = {};
 
-VideoCard_options.insert = "head";
-VideoCard_options.singleton = false;
+VideoPlayer_options.insert = "head";
+VideoPlayer_options.singleton = false;
 
-var VideoCard_update = injectStylesIntoStyleTag_default()(VideoCard["default"], VideoCard_options);
+var VideoPlayer_update = injectStylesIntoStyleTag_default()(VideoPlayer["default"], VideoPlayer_options);
 
 
 
-/* harmony default export */ const VideoCard_VideoCard = (VideoCard["default"].locals || {});
+/* harmony default export */ const Components_v2_VideoPlayer = (VideoPlayer["default"].locals || {});
+// EXTERNAL MODULE: ./src/utils/utilFunctions.js
+var utilFunctions = __webpack_require__(1175);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
+var esm_extends = __webpack_require__(7462);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js
+var objectWithoutProperties = __webpack_require__(5987);
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./src/Components_v2/IconButton/index.css
+var IconButton = __webpack_require__(566);
+;// CONCATENATED MODULE: ./src/Components_v2/IconButton/index.css
+
+            
+
+var IconButton_options = {};
+
+IconButton_options.insert = "head";
+IconButton_options.singleton = false;
+
+var IconButton_update = injectStylesIntoStyleTag_default()(IconButton["default"], IconButton_options);
+
+
+
+/* harmony default export */ const Components_v2_IconButton = (IconButton["default"].locals || {});
+;// CONCATENATED MODULE: ./src/Components_v2/IconButton/index.js
+
+
+var _excluded = ["show", "children"];
+
+
+function IconButton_IconButton(_ref) {
+  var show = _ref.show,
+    children = _ref.children,
+    restProps = (0,objectWithoutProperties["default"])(_ref, _excluded);
+  return /*#__PURE__*/react.createElement("button", (0,esm_extends["default"])({
+    className: "".concat(show ? 'icon-btn ml-2 bg-neutral-200 rounded-full p-2 hover:bg-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-500' : 'icon-btn-hide')
+  }, restProps), children);
+}
+/* harmony default export */ const src_Components_v2_IconButton = (IconButton_IconButton);
+;// CONCATENATED MODULE: ./src/assets/download.svg
+/* harmony default export */ const download = ("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgOTYgOTYwIDk2MCIgd2lkdGg9IjIwIj48cGF0aCBkPSJNMjIwIDg5NnEtMjQgMC00Mi0xOHQtMTgtNDJWNjkzaDYwdjE0M2g1MjBWNjkzaDYwdjE0M3EwIDI0LTE4IDQydC00MiAxOEgyMjBabTI2MC0xNTNMMjg3IDU1MGw0My00MyAxMjAgMTIwVjI1Nmg2MHYzNzFsMTIwLTEyMCA0MyA0My0xOTMgMTkzWiIvPjwvc3ZnPg==");
+;// CONCATENATED MODULE: ./src/assets/twitter.svg
+/* harmony default export */ const twitter = ("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGhlaWdodD0iMjAiIHdpZHRoPSIyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjIuNDYsNkMyMS42OSw2LjM1IDIwLjg2LDYuNTggMjAsNi42OUMyMC44OCw2LjE2IDIxLjU2LDUuMzIgMjEuODgsNC4zMUMyMS4wNSw0LjgxIDIwLjEzLDUuMTYgMTkuMTYsNS4zNkMxOC4zNyw0LjUgMTcuMjYsNCAxNiw0QzEzLjY1LDQgMTEuNzMsNS45MiAxMS43Myw4LjI5QzExLjczLDguNjMgMTEuNzcsOC45NiAxMS44NCw5LjI3QzguMjgsOS4wOSA1LjExLDcuMzggMyw0Ljc5QzIuNjMsNS40MiAyLjQyLDYuMTYgMi40Miw2Ljk0QzIuNDIsOC40MyAzLjE3LDkuNzUgNC4zMywxMC41QzMuNjIsMTAuNSAyLjk2LDEwLjMgMi4zOCwxMEMyLjM4LDEwIDIuMzgsMTAgMi4zOCwxMC4wM0MyLjM4LDEyLjExIDMuODYsMTMuODUgNS44MiwxNC4yNEM1LjQ2LDE0LjM0IDUuMDgsMTQuMzkgNC42OSwxNC4zOUM0LjQyLDE0LjM5IDQuMTUsMTQuMzYgMy44OSwxNC4zMUM0LjQzLDE2IDYsMTcuMjYgNy44OSwxNy4yOUM2LjQzLDE4LjQ1IDQuNTgsMTkuMTMgMi41NiwxOS4xM0MyLjIyLDE5LjEzIDEuODgsMTkuMTEgMS41NCwxOS4wN0MzLjQ0LDIwLjI5IDUuNywyMSA4LjEyLDIxQzE2LDIxIDIwLjMzLDE0LjQ2IDIwLjMzLDguNzlDMjAuMzMsOC42IDIwLjMzLDguNDIgMjAuMzIsOC4yM0MyMS4xNiw3LjYzIDIxLjg4LDYuODcgMjIuNDYsNloiLz48L3N2Zz4=");
+// EXTERNAL MODULE: ./src/assets/share.svg
+var share = __webpack_require__(6825);
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./src/Components_v2/VideoPlayer/VideoPlayerActions/index.css
+var VideoPlayerActions = __webpack_require__(3584);
+;// CONCATENATED MODULE: ./src/Components_v2/VideoPlayer/VideoPlayerActions/index.css
+
+            
+
+var VideoPlayerActions_options = {};
+
+VideoPlayerActions_options.insert = "head";
+VideoPlayerActions_options.singleton = false;
+
+var VideoPlayerActions_update = injectStylesIntoStyleTag_default()(VideoPlayerActions["default"], VideoPlayerActions_options);
+
+
+
+/* harmony default export */ const VideoPlayer_VideoPlayerActions = (VideoPlayerActions["default"].locals || {});
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./src/Components_v2/VideoPlayer/VideoPlayerActions/IconButton/index.css
+var VideoPlayerActions_IconButton = __webpack_require__(1896);
+;// CONCATENATED MODULE: ./src/Components_v2/VideoPlayer/VideoPlayerActions/IconButton/index.css
+
+            
+
+var VideoPlayerActions_IconButton_options = {};
+
+VideoPlayerActions_IconButton_options.insert = "head";
+VideoPlayerActions_IconButton_options.singleton = false;
+
+var VideoPlayerActions_IconButton_update = injectStylesIntoStyleTag_default()(VideoPlayerActions_IconButton["default"], VideoPlayerActions_IconButton_options);
+
+
+
+/* harmony default export */ const VideoPlayer_VideoPlayerActions_IconButton = (VideoPlayerActions_IconButton["default"].locals || {});
+;// CONCATENATED MODULE: ./src/Components_v2/VideoPlayer/VideoPlayerActions/IconButton/index.js
+
+
+var IconButton_excluded = ["show", "children"];
+
+
+function VideoPlayerActions_IconButton_IconButton(_ref) {
+  var show = _ref.show,
+    children = _ref.children,
+    restProps = (0,objectWithoutProperties["default"])(_ref, IconButton_excluded);
+  return /*#__PURE__*/react.createElement("button", (0,esm_extends["default"])({
+    className: "".concat(show ? 'icon-btn rounded-full p-2 focus:outline-none focus:ring-1 focus:ring-white' : 'icon-btn-hide')
+  }, restProps), children);
+}
+/* harmony default export */ const Components_v2_VideoPlayer_VideoPlayerActions_IconButton = (VideoPlayerActions_IconButton_IconButton);
+;// CONCATENATED MODULE: ./src/assets/play.svg
+/* harmony default export */ const play = ("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IndoaXRlIiBoZWlnaHQ9IjIwIiB2aWV3Qm94PSIwIDk2IDk2MCA5NjAiIHdpZHRoPSIyMCI+PHBhdGggZD0iTTMyMCA4NTNWMjkzbDQ0MCAyODAtNDQwIDI4MFptNjAtMjgwWm0wIDE3MSAyNjktMTcxLTI2OS0xNzF2MzQyWiIvPjwvc3ZnPg==");
+;// CONCATENATED MODULE: ./src/assets/pause.svg
+/* harmony default export */ const pause = ("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IndoaXRlIiBoZWlnaHQ9IjIwIiB2aWV3Qm94PSIwIDk2IDk2MCA5NjAiIHdpZHRoPSIyMCI+PHBhdGggZD0iTTUyNSA4NTZWMjk2aDIzNXY1NjBINTI1Wm0tMzI1IDBWMjk2aDIzNXY1NjBIMjAwWm0zODUtNjBoMTE1VjM1Nkg1ODV2NDQwWm0tMzI1IDBoMTE1VjM1NkgyNjB2NDQwWm0wLTQ0MHY0NDAtNDQwWm0zMjUgMHY0NDAtNDQwWiIvPjwvc3ZnPg==");
+;// CONCATENATED MODULE: ./src/assets/volume.svg
+/* harmony default export */ const volume = ("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IndoaXRlIiBoZWlnaHQ9IjIwIiB2aWV3Qm94PSIwIDk2IDk2MCA5NjAiIHdpZHRoPSIyMCI+PHBhdGggZD0iTTU2MCA5MjV2LTYycTk3LTI4IDE1OC41LTEwNy41VDc4MCA1NzVxMC0xMDEtNjEtMTgxVDU2MCAyODd2LTYycTEyNCAyOCAyMDIgMTI1LjVUODQwIDU3NXEwIDEyNy03OCAyMjQuNVQ1NjAgOTI1Wk0xMjAgNjk2VjQ1NmgxNjBsMjAwLTIwMHY2NDBMMjgwIDY5NkgxMjBabTQyMCA0OFY0MDdxNTUgMTcgODcuNSA2NFQ2NjAgNTc2cTAgNTctMzMgMTA0dC04NyA2NFpNNDIwIDQwOCAzMDcgNTE2SDE4MHYxMjBoMTI3bDExMyAxMDlWNDA4Wm0tOTQgMTY4WiIvPjwvc3ZnPg==");
+;// CONCATENATED MODULE: ./src/assets/volume_off.svg
+/* harmony default export */ const volume_off = ("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IndoaXRlIiBoZWlnaHQ9IjIwIiB2aWV3Qm94PSIwIDk2IDk2MCA5NjAiIHdpZHRoPSIyMCI+PHBhdGggZD0iTTgxMyAxMDAwIDY4MSA4NjhxLTI4IDIwLTYwLjUgMzQuNVQ1NTMgOTI1di02MnEyMy03IDQ0LjUtMTUuNVQ2MzggODI1TDQ3MyA2NTl2MjM3TDI3MyA2OTZIMTEzVjQ1NmgxNTZMNDkgMjM2bDQzLTQzIDc2NCA3NjMtNDMgNDRabS0zNi0yMzItNDMtNDNxMjAtMzQgMjkuNS03MS45MjNUNzczIDU3NXEwLTEwMy4zMjItNjAtMTg0LjY2MVQ1NTMgMjg3di02MnExMjQgMjggMjAyIDEyNS41VDgzMyA1NzVxMCA1MS0xNCAxMDB0LTQyIDkzWk02NDMgNjM0bC05MC05MFY0MTRxNDcgMjIgNzMuNSA2NnQyNi41IDk2cTAgMTUtMi41IDI5LjVUNjQzIDYzNFpNNDczIDQ2NCAzNjkgMzYwbDEwNC0xMDR2MjA4Wm0tNjAgMjg2VjYwMGwtODQtODRIMTczdjEyMGgxMjZsMTE0IDExNFptLTQyLTE5MloiLz48L3N2Zz4=");
+;// CONCATENATED MODULE: ./src/assets/fullscreen.svg
+/* harmony default export */ const fullscreen = ("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IndoaXRlIiBoZWlnaHQ9IjIwIiB2aWV3Qm94PSIwIDk2IDk2MCA5NjAiIHdpZHRoPSIyMCI+PHBhdGggZD0iTTIwMCA4NTZWNjYzaDYwdjEzM2gxMzN2NjBIMjAwWm0wLTM2N1YyOTZoMTkzdjYwSDI2MHYxMzNoLTYwWm0zNjcgMzY3di02MGgxMzNWNjYzaDYwdjE5M0g1NjdabTEzMy0zNjdWMzU2SDU2N3YtNjBoMTkzdjE5M2gtNjBaIi8+PC9zdmc+");
+;// CONCATENATED MODULE: ./src/assets/fullscreen_exit.svg
+/* harmony default export */ const fullscreen_exit = ("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IndoaXRlIiBoZWlnaHQ9IjIwIiB2aWV3Qm94PSIwIDk2IDk2MCA5NjAiIHdpZHRoPSIyMCI+PHBhdGggZD0iTTMzMyA4NTZWNzIzSDIwMHYtNjBoMTkzdjE5M2gtNjBabTIzNCAwVjY2M2gxOTN2NjBINjI3djEzM2gtNjBaTTIwMCA0ODl2LTYwaDEzM1YyOTZoNjB2MTkzSDIwMFptMzY3IDBWMjk2aDYwdjEzM2gxMzN2NjBINTY3WiIvPjwvc3ZnPg==");
+;// CONCATENATED MODULE: ./src/Components_v2/VideoPlayer/VideoPlayerActions/index.js
+
+
+
+
+
+
+
+
+
+
+function formatVideoTime(time) {
+  if (time < 60) {
+    return "00: ".concat(Math.floor(time).toString().padStart(2, '0'));
+  }
+  var minutes = Math.floor(time / 60).toString().padStart(2, '0');
+  var seconds = Math.floor(time % 60).toString().padStart(2, '0');
+  return "".concat(minutes, ":").concat(seconds);
+}
+function VideoPlayerActions_VideoPlayerActions(_ref) {
+  var canShowAction = _ref.canShowAction,
+    setActionsState = _ref.setActionsState,
+    handlePlayState = _ref.handlePlayState,
+    videoDuration = _ref.videoDuration,
+    currentTime = _ref.currentTime,
+    changeCurrentTime = _ref.changeCurrentTime,
+    toggleFullscreen = _ref.toggleFullscreen,
+    isFullScreen = _ref.isFullScreen,
+    handleVolumeBtnClick = _ref.handleVolumeBtnClick,
+    isMuted = _ref.isMuted,
+    isPlaying = _ref.isPlaying,
+    volumeLevel = _ref.volumeLevel,
+    handleVolumeChange = _ref.handleVolumeChange;
+  var _useState = (0,react.useState)(false),
+    _useState2 = (0,slicedToArray["default"])(_useState, 2),
+    canShowDraggablePoint = _useState2[0],
+    setDraggablePointState = _useState2[1];
+  var _useState3 = (0,react.useState)(false),
+    _useState4 = (0,slicedToArray["default"])(_useState3, 2),
+    isHovered = _useState4[0],
+    setVolumeHover = _useState4[1];
+  var handleCurrentTimeChange = function handleCurrentTimeChange(e) {
+    var target = e === null || e === void 0 ? void 0 : e.currentTarget;
+    var rect = target.getBoundingClientRect();
+    var width = rect === null || rect === void 0 ? void 0 : rect.width;
+    var mouseXPos = e.clientX - rect.left;
+    var percentage = mouseXPos / width;
+    var currentTime = Number(percentage * videoDuration).toFixed(5);
+    changeCurrentTime(currentTime);
+  };
+  var videoProgress = Math.floor(currentTime / videoDuration * 100);
+  return /*#__PURE__*/react.createElement("div", {
+    className: canShowAction || !isPlaying ? 'videoPlayerActions px-2 w-full' : 'videoPlayerActions-hide',
+    onMouseEnter: function onMouseEnter() {
+      return setActionsState(true);
+    }
+    // onMouseLeave={() => setActionsState(false)}
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "videoPlayerActions-track bg-neutral-600 h-1 w-full",
+    onMouseEnter: function onMouseEnter() {
+      return setDraggablePointState(true);
+    },
+    onMouseLeave: function onMouseLeave() {
+      return setDraggablePointState(false);
+    },
+    onClick: function onClick(e) {
+      return handleCurrentTimeChange(e);
+    },
+    style: {
+      position: 'relative',
+      cursor: 'pointer'
+    }
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "bg-neutral-200 h-1 transition duration-1000 ease-in",
+    style: {
+      width: "".concat(videoProgress, "%"),
+      position: 'absolute'
+    }
+  })), /*#__PURE__*/react.createElement("div", {
+    className: "flex item-center justify-between mt-2"
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "flex items-center"
+  }, !isPlaying ? /*#__PURE__*/react.createElement(Components_v2_VideoPlayer_VideoPlayerActions_IconButton, {
+    show: true,
+    onClick: function onClick() {
+      return handlePlayState();
+    }
+  }, /*#__PURE__*/react.createElement("img", {
+    src: play,
+    className: "ease-in-out duration-700"
+  })) : /*#__PURE__*/react.createElement(Components_v2_VideoPlayer_VideoPlayerActions_IconButton, {
+    show: true,
+    onClick: function onClick() {
+      return handlePlayState();
+    }
+  }, /*#__PURE__*/react.createElement("img", {
+    src: pause,
+    className: "ease-in-out duration-700"
+  })), /*#__PURE__*/react.createElement("div", {
+    className: "videoPlayerActions-volume"
+  }, isMuted ? /*#__PURE__*/react.createElement(Components_v2_VideoPlayer_VideoPlayerActions_IconButton, {
+    show: true,
+    style: {
+      marginLeft: '8px !important'
+    },
+    onClick: function onClick() {
+      return handleVolumeBtnClick();
+    },
+    onMouseEnter: function onMouseEnter() {
+      return setVolumeHover(true);
+    },
+    onMouseLeave: function onMouseLeave() {
+      return setVolumeHover(false);
+    }
+  }, /*#__PURE__*/react.createElement("img", {
+    src: volume_off
+  })) : /*#__PURE__*/react.createElement(Components_v2_VideoPlayer_VideoPlayerActions_IconButton, {
+    show: true,
+    style: {
+      marginLeft: '8px !important'
+    },
+    onClick: function onClick() {
+      return handleVolumeBtnClick();
+    },
+    onMouseEnter: function onMouseEnter() {
+      return setVolumeHover(true);
+    },
+    onMouseLeave: function onMouseLeave() {
+      return setVolumeHover(false);
+    }
+  }, /*#__PURE__*/react.createElement("img", {
+    src: volume
+  })), isHovered ? /*#__PURE__*/react.createElement("div", {
+    className: "transition ease-in-out delay-700",
+    onMouseEnter: function onMouseEnter() {
+      return setVolumeHover(true);
+    },
+    onMouseLeave: function onMouseLeave() {
+      return setVolumeHover(false);
+    }
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "videoPlayerActions-knob-container p-3 transition ease-in-out delay-250"
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "videoPlayerActions-knob rounded-full bg-neutral-400 transition ease-in-out delay-300",
+    onClick: function onClick(e) {
+      return handleVolumeChange(e);
+    }
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "videoPlayerActions-knob-inner rounded-full transition ease-in-out delay-350",
+    style: {
+      width: "".concat(volumeLevel, "%"),
+      position: 'absolute'
+    }
+  })))) : null), videoDuration ? /*#__PURE__*/react.createElement("span", {
+    className: "videoPlayerActions-time p-2 flex items-center"
+  }, /*#__PURE__*/react.createElement("p", {
+    className: "text-xs text-white"
+  }, formatVideoTime(currentTime)), /*#__PURE__*/react.createElement("p", {
+    className: "text-xs text-white mx-1"
+  }, "/"), /*#__PURE__*/react.createElement("p", {
+    className: "text-xs text-white"
+  }, formatVideoTime(videoDuration))) : null), /*#__PURE__*/react.createElement("div", null, !isFullScreen ? /*#__PURE__*/react.createElement(Components_v2_VideoPlayer_VideoPlayerActions_IconButton, {
+    show: true,
+    onClick: toggleFullscreen
+  }, /*#__PURE__*/react.createElement("img", {
+    src: fullscreen
+  })) : /*#__PURE__*/react.createElement(Components_v2_VideoPlayer_VideoPlayerActions_IconButton, {
+    show: true,
+    onClick: toggleFullscreen
+  }, /*#__PURE__*/react.createElement("img", {
+    src: fullscreen_exit
+  })))));
+}
+/* harmony default export */ const Components_v2_VideoPlayer_VideoPlayerActions = (VideoPlayerActions_VideoPlayerActions);
+// EXTERNAL MODULE: ./src/store/actions/videosActions.js
+var videosActions = __webpack_require__(3953);
+;// CONCATENATED MODULE: ./src/Components_v2/VideoPlayer/index.js
+
+
+
+
+
+
+
+
+
+
+var redirectToTweet = function redirectToTweet(parentTweetId) {
+  window.open("https://twitter.com/i/status/".concat(parentTweetId), '_blank');
+};
+function VideoPlayer_VideoPlayer(_ref) {
+  var videoUrl = _ref.videoUrl,
+    videoText = _ref.videoText,
+    elapsedTime = _ref.elapsedTime,
+    handleVideoDownload = _ref.handleVideoDownload,
+    parentTweetId = _ref.parentTweetId,
+    videoSlug = _ref.videoSlug;
+  var videoRef = (0,react.useRef)(null);
+  var _useState = (0,react.useState)(null),
+    _useState2 = (0,slicedToArray["default"])(_useState, 2),
+    videoDuration = _useState2[0],
+    setVideoDuration = _useState2[1];
+  var _useState3 = (0,react.useState)(false),
+    _useState4 = (0,slicedToArray["default"])(_useState3, 2),
+    canShowAction = _useState4[0],
+    setActionsState = _useState4[1];
+  var _useState5 = (0,react.useState)(0),
+    _useState6 = (0,slicedToArray["default"])(_useState5, 2),
+    currentTime = _useState6[0],
+    setCurrentTime = _useState6[1];
+  var _useState7 = (0,react.useState)(false),
+    _useState8 = (0,slicedToArray["default"])(_useState7, 2),
+    isFullScreen = _useState8[0],
+    setFullScreen = _useState8[1];
+  var _useState9 = (0,react.useState)(false),
+    _useState10 = (0,slicedToArray["default"])(_useState9, 2),
+    isMuted = _useState10[0],
+    setMuteState = _useState10[1];
+  var _useState11 = (0,react.useState)(false),
+    _useState12 = (0,slicedToArray["default"])(_useState11, 2),
+    isPlaying = _useState12[0],
+    setPlayState = _useState12[1];
+  var _useState13 = (0,react.useState)(0),
+    _useState14 = (0,slicedToArray["default"])(_useState13, 2),
+    volumeLevel = _useState14[0],
+    setVolumeLevel = _useState14[1];
+  var handlePlayState = function handlePlayState() {
+    var current = videoRef === null || videoRef === void 0 ? void 0 : videoRef.current;
+    if (!current) {
+      return;
+    }
+    if (current.paused) {
+      current.play();
+      setPlayState(true);
+      return;
+    }
+    current.pause();
+    setPlayState(false);
+  };
+  var getVideoMetadata = function getVideoMetadata() {
+    var videoDuration = videoRef === null || videoRef === void 0 ? void 0 : videoRef.current.duration;
+    var volumeLevel = videoRef === null || videoRef === void 0 ? void 0 : videoRef.current.volume;
+    setVideoDuration(videoDuration);
+    setVolumeLevel(volumeLevel * 100);
+  };
+  var updateCurrentTime = function updateCurrentTime() {
+    var _videoRef$current;
+    var currentTime = videoRef === null || videoRef === void 0 ? void 0 : videoRef.current.currentTime;
+    setCurrentTime(currentTime);
+    if (currentTime > 0 && !(videoRef !== null && videoRef !== void 0 && (_videoRef$current = videoRef.current) !== null && _videoRef$current !== void 0 && _videoRef$current.paused)) {
+      setPlayState(true);
+    }
+  };
+  var handleMouseEnter = function handleMouseEnter() {
+    setActionsState(true);
+  };
+  var changeCurrentTime = function changeCurrentTime(currentTime) {
+    var target = videoRef === null || videoRef === void 0 ? void 0 : videoRef.current;
+    target.currentTime = currentTime;
+    setCurrentTime(currentTime);
+  };
+  var toggleFullscreen = function toggleFullscreen() {
+    var element = document.getElementById('videoPlayer');
+    if (document.fullscreenElement || window.event.key === 'Escape' || window.event.key === 'Esc' || window.event.keyCode === 27) {
+      element.classList.remove('videoPlayer-fullscreen');
+      element.classList.add('videoPlayer');
+      setFullScreen(false);
+      document.exitFullscreen();
+    } else {
+      document.getElementById('videoPlayer-container').requestFullscreen();
+      element.classList.remove('videoPlayer');
+      element.classList.add('videoPlayer-fullscreen');
+      setFullScreen(true);
+      console.log(window.innerHeight);
+    }
+  };
+  var handleVolumeBtnClick = function handleVolumeBtnClick() {
+    var target = videoRef === null || videoRef === void 0 ? void 0 : videoRef.current;
+    if (target !== null && target !== void 0 && target.muted) {
+      target.volume = 1;
+      target.muted = false;
+      setMuteState(false);
+      setVolumeLevel(100);
+    } else {
+      target.volume = 0;
+      target.muted = true;
+      setMuteState(true);
+      setVolumeLevel(0);
+    }
+  };
+  var handleVolumeChange = function handleVolumeChange(e) {
+    var videoTarget = videoRef === null || videoRef === void 0 ? void 0 : videoRef.current;
+    var target = e === null || e === void 0 ? void 0 : e.currentTarget;
+    var rect = target.getBoundingClientRect();
+    var mouseXPos = e.clientX - rect.left;
+    var vol = Number((mouseXPos / (rect === null || rect === void 0 ? void 0 : rect.width)).toFixed(1));
+    videoTarget.volume = vol;
+    setVolumeLevel(vol * 100);
+  };
+  var _onKeyDown = function onKeyDown() {
+    var element = document.getElementById('videoPlayer');
+    debugger;
+    if (document.fullscreenElement && (window.event.key === 'Escape' || window.event.key === 'Esc' || window.event.keyCode === 27)) {
+      element.classList.remove('videoPlayer-fullscreen');
+      element.classList.add('videoPlayer');
+      setFullScreen(false);
+      document.exitFullscreen();
+    }
+  };
+  var strippedText = (0,utilFunctions.getStrippedVideoText)(videoText);
+  return /*#__PURE__*/react.createElement("div", {
+    onKeyDown: function onKeyDown() {
+      debugger;
+    }
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "videoPlayer-container",
+    id: "videoPlayer-container",
+    onKeyDown: function onKeyDown() {
+      return _onKeyDown();
+    }
+  }, /*#__PURE__*/react.createElement("video", {
+    ref: videoRef,
+    autoPlay: true,
+    disablePictureInPicture: true,
+    controlsList: "nodownload",
+    onContextMenu: function onContextMenu(e) {
+      return e.preventDefault();
+    },
+    className: "videoPlayer lg:rounded-lg",
+    onMouseEnter: function onMouseEnter() {
+      return handleMouseEnter();
+    },
+    onMouseLeave: function onMouseLeave() {
+      return setActionsState(false);
+    },
+    onLoadedMetadata: function onLoadedMetadata() {
+      return getVideoMetadata();
+    },
+    onTimeUpdate: function onTimeUpdate(e) {
+      return updateCurrentTime();
+    },
+    onEnded: function onEnded() {
+      return setPlayState(false);
+    },
+    id: "videoPlayer",
+    onClick: function onClick() {
+      return handlePlayState();
+    }
+  }, /*#__PURE__*/react.createElement("source", {
+    src: videoUrl,
+    type: "video/mp4"
+  })), /*#__PURE__*/react.createElement(Components_v2_VideoPlayer_VideoPlayerActions, {
+    canShowAction: canShowAction,
+    setActionsState: setActionsState,
+    handlePlayState: handlePlayState,
+    videoDuration: videoDuration,
+    currentTime: currentTime,
+    changeCurrentTime: changeCurrentTime,
+    toggleFullscreen: toggleFullscreen,
+    isFullScreen: isFullScreen,
+    handleVolumeBtnClick: handleVolumeBtnClick,
+    isMuted: isMuted,
+    isPlaying: isPlaying,
+    volumeLevel: volumeLevel,
+    handleVolumeChange: handleVolumeChange
+  })), /*#__PURE__*/react.createElement("div", {
+    className: "mt-4 videoPlayer-video-info"
+  }, strippedText && strippedText.length > 0 ? /*#__PURE__*/react.createElement("div", {
+    className: ""
+  }, /*#__PURE__*/react.createElement("p", {
+    className: "videoPlayer-text lg:text-lg font-semibold"
+  }, strippedText)) : null, /*#__PURE__*/react.createElement("div", {
+    className: "videoPlayer-actions mt-2 flex justify-between items-center"
+  }, elapsedTime ? /*#__PURE__*/react.createElement("p", {
+    className: "videoCard-elapsed-time text-sm"
+  }, elapsedTime) : null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(src_Components_v2_IconButton, {
+    show: true,
+    style: {
+      marginLeft: '32px !important'
+    },
+    onClick: function onClick() {
+      return redirectToTweet(parentTweetId);
+    }
+  }, /*#__PURE__*/react.createElement("img", {
+    src: twitter
+  })), /*#__PURE__*/react.createElement(src_Components_v2_IconButton, {
+    show: true,
+    style: {
+      marginLeft: '32px !important'
+    },
+    onClick: function onClick() {
+      return (0,utilFunctions.shareVideo)(videoSlug);
+    }
+  }, /*#__PURE__*/react.createElement("img", {
+    src: share["default"]
+  })), /*#__PURE__*/react.createElement(src_Components_v2_IconButton, {
+    show: true,
+    style: {
+      marginLeft: '32px !important'
+    },
+    onClick: function onClick() {
+      return handleVideoDownload();
+    }
+  }, /*#__PURE__*/react.createElement("img", {
+    src: download
+  }))))));
+}
+/* harmony default export */ const src_Components_v2_VideoPlayer = (VideoPlayer_VideoPlayer);
+// EXTERNAL MODULE: ./node_modules/react-redux/es/index.js + 26 modules
+var es = __webpack_require__(1399);
+// EXTERNAL MODULE: ./node_modules/react-router/esm/react-router.js + 2 modules
+var react_router = __webpack_require__(2573);
+// EXTERNAL MODULE: ./src/utils/calculateTimeLapse.js
+var calculateTimeLapse = __webpack_require__(128);
+;// CONCATENATED MODULE: ./src/Components_v2/VideoPlayer/VideoPlayerPlaceholder.js
+
+
+function VideoPlayerPlaceholder() {
+  return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", {
+    className: "videoPlayer lg:rounded-lg bg-neutral-200"
+  }), /*#__PURE__*/react.createElement("div", {
+    className: "mt-6 videoPlayer-video-info"
+  }, Array.from(new Array(2)).map(function (x) {
+    return /*#__PURE__*/react.createElement("div", {
+      className: "bg-neutral-200 mt-1 animate-pulse",
+      style: {
+        height: 16,
+        width: '100%'
+      }
+    });
+  }), /*#__PURE__*/react.createElement("div", {
+    className: "bg-neutral-200 mt-4 animate-pulse",
+    style: {
+      height: 16,
+      width: 100
+    }
+  })));
+}
+/* harmony default export */ const VideoPlayer_VideoPlayerPlaceholder = (VideoPlayerPlaceholder);
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./src/Components_v2/TrendingVideos/index.css
+var TrendingVideos = __webpack_require__(8546);
+;// CONCATENATED MODULE: ./src/Components_v2/TrendingVideos/index.css
+
+            
+
+var TrendingVideos_options = {};
+
+TrendingVideos_options.insert = "head";
+TrendingVideos_options.singleton = false;
+
+var TrendingVideos_update = injectStylesIntoStyleTag_default()(TrendingVideos["default"], TrendingVideos_options);
+
+
+
+/* harmony default export */ const Components_v2_TrendingVideos = (TrendingVideos["default"].locals || {});
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./src/Components_v2/TrendingVideo/index.css
+var TrendingVideo = __webpack_require__(3442);
+;// CONCATENATED MODULE: ./src/Components_v2/TrendingVideo/index.css
+
+            
+
+var TrendingVideo_options = {};
+
+TrendingVideo_options.insert = "head";
+TrendingVideo_options.singleton = false;
+
+var TrendingVideo_update = injectStylesIntoStyleTag_default()(TrendingVideo["default"], TrendingVideo_options);
+
+
+
+/* harmony default export */ const Components_v2_TrendingVideo = (TrendingVideo["default"].locals || {});
+// EXTERNAL MODULE: ./src/assets/more.svg
+var more = __webpack_require__(5664);
 // EXTERNAL MODULE: ./src/Components_v2/Menu/index.js + 1 modules
 var Menu = __webpack_require__(3263);
 // EXTERNAL MODULE: ./src/Components_v2/MenuItem/index.js + 1 modules
 var MenuItem = __webpack_require__(3061);
-// EXTERNAL MODULE: ./src/assets/share.svg
-var share = __webpack_require__(6825);
 // EXTERNAL MODULE: ./src/assets/flag.svg
 var flag = __webpack_require__(9270);
-// EXTERNAL MODULE: ./src/assets/more.svg
-var more = __webpack_require__(5664);
-// EXTERNAL MODULE: ./node_modules/react-router/esm/react-router.js + 2 modules
-var react_router = __webpack_require__(2573);
-// EXTERNAL MODULE: ./src/utils/utilFunctions.js
-var utilFunctions = __webpack_require__(1175);
-;// CONCATENATED MODULE: ./src/Components_v2/VideoCard/index.js
+;// CONCATENATED MODULE: ./src/Components_v2/TrendingVideo/index.js
 
 
 
@@ -242,61 +798,69 @@ var utilFunctions = __webpack_require__(1175);
 
 
 var HIDDEN = false;
-function Components_v2_VideoCard_VideoCard(_ref) {
+function TrendingVideo_TrendingVideo(_ref) {
   var imageSource = _ref.imageSource,
     text = _ref.text,
     elapsedTime = _ref.elapsedTime,
+    handleClick = _ref.handleClick,
     videoSlug = _ref.videoSlug;
   var _useState = (0,react.useState)(false),
     _useState2 = (0,slicedToArray["default"])(_useState, 2),
-    isBtnOnDisplay = _useState2[0],
-    setBtnOnDisplay = _useState2[1];
+    canDisplayBtn = _useState2[0],
+    setBtnDisplayState = _useState2[1];
   var _useState3 = (0,react.useState)(null),
     _useState4 = (0,slicedToArray["default"])(_useState3, 2),
-    target = _useState4[0],
-    setMenuTarget = _useState4[1];
-  var history = (0,react_router.useHistory)();
-  var strippedText = (0,utilFunctions.getStrippedVideoText)(text);
-  var handleMouseLeave = function handleMouseLeave() {
-    setBtnOnDisplay(false);
-    setMenuTarget(null);
+    menuEvent = _useState4[0],
+    setMenuEvent = _useState4[1];
+  var handleBtnClick = function handleBtnClick(e) {
+    e.stopPropagation();
+    setMenuEvent(e);
   };
-  var handleClick = function handleClick(videoSlug) {
-    debugger;
-    history.push("/".concat(videoSlug));
+  var hideButton = function hideButton() {
+    setBtnDisplayState(false);
+    setMenuEvent(null);
   };
   return /*#__PURE__*/react.createElement("div", {
-    className: "videoCard p-2 focus:ring-1 focus:ring-neutral-500",
+    className: "trendingVideo rounded-l-lg lg:grid lg:grid-cols-7 lg:gap-4 mb-2 lg:hover:bg-neutral-100 pr-2",
+    onClick: function onClick() {
+      return handleClick();
+    },
     onMouseLeave: function onMouseLeave() {
-      return handleMouseLeave();
+      return hideButton();
     },
     onMouseEnter: function onMouseEnter() {
-      return setBtnOnDisplay(true);
-    },
-    onClick: function onClick() {
-      return handleClick(videoSlug);
+      return setBtnDisplayState(true);
     }
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "col-span-3"
   }, /*#__PURE__*/react.createElement("img", {
-    className: "rounded-lg bg-neutral-200",
+    className: "rounded-lg trendingVideo-img",
     src: imageSource,
-    alt: "Omniscraper Twitter Video",
-    style: {
-      height: 190,
-      objectFit: 'cover',
-      width: '100%'
-    }
-  }), /*#__PURE__*/react.createElement("div", {
-    className: "videoCard-actions mt-2"
-  }, strippedText && strippedText.length > 0 && /*#__PURE__*/react.createElement("div", {
-    className: "videoCard-text-container"
+    alt: "Omniscraper Trending Twitter Video"
+  })), /*#__PURE__*/react.createElement("div", {
+    className: "col-span-4 sm:pt-2"
+  }, text && /*#__PURE__*/react.createElement("div", {
+    className: "trendingVideo-text-container mb-2"
   }, /*#__PURE__*/react.createElement("p", {
     className: "text-sm font-semibold"
-  }, strippedText)), /*#__PURE__*/react.createElement("div", {
-    className: "videoCard-bottom flex justify-between items-center"
-  }, /*#__PURE__*/react.createElement("p", {
-    className: "videoCard-elapsed-time text-xs text-inherit"
-  }, elapsedTime), target && /*#__PURE__*/react.createElement(Menu["default"], {
-    event: target
+  }, text)), /*#__PURE__*/react.createElement("div", {
+    className: "trendingVideo-bottom flex justify-between items-center"
+  }, elapsedTime ? /*#__PURE__*/react.createElement("p", {
+    className: "text-xs text-inherit"
+  }, elapsedTime) : null, canDisplayBtn ? /*#__PURE__*/react.createElement("span", {
+    className: "mt-1",
+    onClick: function onClick(e) {
+      return handleBtnClick(e);
+    },
+    onBlur: function onBlur() {
+      return setMenuEvent(null);
+    }
+  }, /*#__PURE__*/react.createElement(src_Components_v2_IconButton, {
+    show: true
+  }, /*#__PURE__*/react.createElement("img", {
+    src: more["default"]
+  }))) : null, menuEvent && /*#__PURE__*/react.createElement(Menu["default"], {
+    event: menuEvent
   }, /*#__PURE__*/react.createElement(MenuItem["default"], {
     label: "Share",
     icon: /*#__PURE__*/react.createElement("img", {
@@ -308,124 +872,84 @@ function Components_v2_VideoCard_VideoCard(_ref) {
   }), HIDDEN ? /*#__PURE__*/react.createElement(MenuItem["default"], {
     label: "Report",
     icon: /*#__PURE__*/react.createElement("img", {
-      src: flag["default"]
+      src: flagIcon
     })
-  }) : null), /*#__PURE__*/react.createElement("button", {
-    className: "".concat(isBtnOnDisplay ? 'videoCard-btn-hover bg-neutral-200 rounded-full p-2 hover:bg-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-500' : 'videoCard-btn bg-neutral-200 rounded-full p-2 hover:bg-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-500'),
-    onClick: function onClick(e) {
-      e.stopPropagation();
-      setMenuTarget(e);
-    },
-    onBlur: function onBlur() {
-      return setMenuTarget(null);
-    }
-  }, /*#__PURE__*/react.createElement("img", {
-    src: more["default"]
-  })))));
+  }) : null))));
 }
-/* harmony default export */ const Components_v2_VideoCard = (Components_v2_VideoCard_VideoCard);
-// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./src/Components_v2/Videos/Videos.css
-var Videos = __webpack_require__(2739);
-;// CONCATENATED MODULE: ./src/Components_v2/Videos/Videos.css
+/* harmony default export */ const src_Components_v2_TrendingVideo = (TrendingVideo_TrendingVideo);
+;// CONCATENATED MODULE: ./src/Components_v2/TrendingVideo/TrendingVideoPlaceholder.js
 
-            
-
-var Videos_options = {};
-
-Videos_options.insert = "head";
-Videos_options.singleton = false;
-
-var Videos_update = injectStylesIntoStyleTag_default()(Videos["default"], Videos_options);
-
-
-
-/* harmony default export */ const Videos_Videos = (Videos["default"].locals || {});
-// EXTERNAL MODULE: ./src/components/reusableComponents/Placeholder.js + 1 modules
-var Placeholder = __webpack_require__(9155);
-;// CONCATENATED MODULE: ./src/Components_v2/VideoCard/VideoCardPlaceholder.js
-
-
-function VideoCardPlaceholder() {
+function TrendingVideoPlaceholder() {
   return /*#__PURE__*/react.createElement("div", {
-    className: "videoCard p-2 w-full"
+    className: "trendingVideo rounded-l-lg lg:grid lg:grid-cols-7 lg:gap-4 mb-2 lg:hover:bg-neutral-100 pr-2"
   }, /*#__PURE__*/react.createElement("div", {
-    className: "bg-neutral-200 rounded-lg animate-pulse mb-2",
-    style: {
-      height: 190
-    }
-  }), /*#__PURE__*/react.createElement("div", {
-    className: "w-full videoCard-actions mt-2"
+    className: "col-span-3"
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "rounded-lg bg-neutral-200 animate-pulse trendingVideo-img",
+    alt: "Omniscraper Trending Twitter Video"
+  })), /*#__PURE__*/react.createElement("div", {
+    className: "col-span-4"
   }, Array.from(new Array(2)).map(function (x) {
     return /*#__PURE__*/react.createElement("div", {
-      className: "bg-neutral-200 mt-1 animate-pulse w-full",
+      className: "bg-neutral-200 mt-1 animate-pulse trendingVideo-text-container",
       style: {
-        height: 12
+        height: 16,
+        width: '100%'
       }
     });
   }), /*#__PURE__*/react.createElement("div", {
     className: "bg-neutral-200 mt-4 animate-pulse",
     style: {
-      height: 12,
+      height: 16,
       width: 100
     }
   })));
 }
-/* harmony default export */ const VideoCard_VideoCardPlaceholder = (VideoCardPlaceholder);
-;// CONCATENATED MODULE: ./src/Components_v2/Videos/index.js
+/* harmony default export */ const TrendingVideo_TrendingVideoPlaceholder = (TrendingVideoPlaceholder);
+;// CONCATENATED MODULE: ./src/Components_v2/TrendingVideos/index.js
 
 
 
 
 
 
-function Components_v2_Videos_Videos(_ref) {
-  var videos = _ref.videos,
-    hasMoreVideos = _ref.hasMoreVideos,
-    videosLoading = _ref.videosLoading,
-    videosLoadingError = _ref.videosLoadingError,
-    loadVideos = _ref.loadVideos,
-    offset = _ref.offset;
-  (0,react.useEffect)(function () {
-    window.addEventListener('scroll', handleInfiniteScroll);
-    return function () {
-      window.removeEventListener('scroll', handleInfiniteScroll);
-      console.log('Event listener removed!');
-    };
-  }, []);
-  var handleInfiniteScroll = function handleInfiniteScroll() {
-    var _document$documentEle = document.documentElement,
-      scrollHeight = _document$documentEle.scrollHeight,
-      scrollTop = _document$documentEle.scrollTop,
-      clientHeight = _document$documentEle.clientHeight;
-    if (videosLoadingError || videosLoading || !hasMoreVideos) return;
-    var checkHeight = scrollTop >= scrollHeight - clientHeight - 200;
-    if (checkHeight) {
-      loadVideos();
-    }
+
+function TrendingVideos_TrendingVideos(_ref) {
+  var trendingVideos = _ref.trendingVideos,
+    trendingVideosLoading = _ref.trendingVideosLoading;
+  var history = (0,react_router.useHistory)();
+  var handleVideoClick = function handleVideoClick(videoSlug) {
+    history.push("/".concat(videoSlug));
   };
   return /*#__PURE__*/react.createElement("div", {
-    className: "videos-grid flex fle-wrap grid 2xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4 p-4"
-  }, videosLoading && offset === 1 ? /*#__PURE__*/react.createElement(react.Fragment, null, Array.from(new Array(12)).map(function (item, index) {
-    return /*#__PURE__*/react.createElement(VideoCard_VideoCardPlaceholder, {
+    className: "trendingVideos px-2 sm:px-4"
+  }, /*#__PURE__*/react.createElement("p", {
+    className: "font-bold lg:text-lg mb-1 py-2"
+  }, "Trending this week"), /*#__PURE__*/react.createElement("div", {
+    className: "trendingVideos-container lg:rounded-lg lg:pr-1"
+  }, trendingVideosLoading ? /*#__PURE__*/react.createElement(react.Fragment, null, Array.from(new Array(5)).map(function (item, index) {
+    return /*#__PURE__*/react.createElement(TrendingVideo_TrendingVideoPlaceholder, {
       key: index
     });
-  })) : /*#__PURE__*/react.createElement(react.Fragment, null, videos.map(function (x) {
-    var elapsedTime = (0,calculateTimeLapse.calculateTimeSinceSave)(x);
-    return /*#__PURE__*/react.createElement(Components_v2_VideoCard, {
-      key: x.id,
-      imageSource: x.video_thumbnail_link_https,
-      text: x.text,
+  })) : /*#__PURE__*/react.createElement(react.Fragment, null, trendingVideos.map(function (trendingVideo) {
+    var elapsedTime = (0,calculateTimeLapse.calculateTimeSinceSave)(trendingVideo);
+    var text = (0,utilFunctions.getStrippedVideoText)(trendingVideo.text);
+    return /*#__PURE__*/react.createElement(src_Components_v2_TrendingVideo, {
+      key: trendingVideo.id,
+      text: text,
+      imageSource: trendingVideo.video_thumbnail_link_https,
       elapsedTime: elapsedTime,
-      videoSlug: x.slug
+      handleClick: function handleClick() {
+        return handleVideoClick(trendingVideo.slug);
+      },
+      videoSlug: trendingVideo.slug
     });
-  })), videosLoading && offset > 1 && /*#__PURE__*/react.createElement(react.Fragment, null, Array.from(new Array(12)).map(function (item, index) {
-    return /*#__PURE__*/react.createElement(VideoCard_VideoCardPlaceholder, {
-      key: index
-    });
-  })));
+  }))));
 }
-/* harmony default export */ const Components_v2_Videos = (Components_v2_Videos_Videos);
-;// CONCATENATED MODULE: ./src/pages/Home/index.js
+/* harmony default export */ const src_Components_v2_TrendingVideos = (TrendingVideos_TrendingVideos);
+// EXTERNAL MODULE: ./node_modules/react-helmet/es/Helmet.js
+var Helmet = __webpack_require__(4593);
+;// CONCATENATED MODULE: ./src/pages/Video/index.js
 
 
 
@@ -446,119 +970,143 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 
-var List = /*#__PURE__*/react.lazy(function () {
-  return __webpack_require__.e(/*! import() */ "src_components_List_js").then(__webpack_require__.bind(__webpack_require__, /*! ../../components/List */ 7000));
-});
-var styles = function styles(theme) {
-  return {
-    root: {
-      color: '#185adb',
-      flex: 1,
-      marginRight: theme.spacing(3),
-      marginLeft: theme.spacing(3),
-      paddingTop: 72
-    }
-  };
-};
-var LIMIT = 12;
-var pages_Home_Home = /*#__PURE__*/function (_Component) {
-  (0,inherits["default"])(Home, _Component);
-  var _super = _createSuper(Home);
-  function Home() {
+
+
+
+var Video_Video = /*#__PURE__*/function (_Component) {
+  (0,inherits["default"])(Video, _Component);
+  var _super = _createSuper(Video);
+  function Video() {
     var _this;
-    (0,classCallCheck["default"])(this, Home);
+    (0,classCallCheck["default"])(this, Video);
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
     _this = _super.call.apply(_super, [this].concat(args));
-    (0,defineProperty["default"])((0,assertThisInitialized["default"])(_this), "state", {
-      offset: 1
-    });
-    (0,defineProperty["default"])((0,assertThisInitialized["default"])(_this), "componentDidMount", function () {
-      var _this$props = _this.props,
-        location = _this$props.location,
-        updateHomeFirstLoad = _this$props.updateHomeFirstLoad,
-        isHomeFirstLoad = _this$props.isHomeFirstLoad;
-      var scrollPosition = _this.state.scrollPosition;
-      window.gtag('event', 'page_view', {
-        page_title: 'Home',
-        page_path: location.pathname + location.search,
-        page_location: window.location.href
-      });
-      window.scrollTo(0, scrollPosition);
-      if (isHomeFirstLoad) {
-        updateHomeFirstLoad(false);
-        _this.loadVideos();
-      }
-    });
-    (0,defineProperty["default"])((0,assertThisInitialized["default"])(_this), "loadVideos", /*#__PURE__*/(0,asyncToGenerator["default"])( /*#__PURE__*/regenerator_default().mark(function _callee() {
-      var offset, _this$props2, videosLoadingError, videosLoading;
+    (0,defineProperty["default"])((0,assertThisInitialized["default"])(_this), "loadVideo", /*#__PURE__*/(0,asyncToGenerator["default"])( /*#__PURE__*/regenerator_default().mark(function _callee() {
+      var _this$props, getVideo, match, slug;
       return regenerator_default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              offset = _this.state.offset;
-              _context.next = 3;
-              return _this.props.getVideos(offset, LIMIT);
-            case 3:
-              _this$props2 = _this.props, videosLoadingError = _this$props2.videosLoadingError, videosLoading = _this$props2.videosLoading;
-              if (!videosLoadingError && !videosLoading) {
-                _this.setState({
-                  offset: offset + LIMIT
-                });
-              }
-            case 5:
+              _this$props = _this.props, getVideo = _this$props.getVideo, match = _this$props.match;
+              slug = match.params.slug;
+              _context.next = 4;
+              return getVideo(slug);
+            case 4:
             case "end":
               return _context.stop();
           }
         }
       }, _callee);
     })));
-    (0,defineProperty["default"])((0,assertThisInitialized["default"])(_this), "handleScrollPosition", function () {
-      _this.setState({
-        autoplayVideo: true,
-        scrollPosition: window.pageYOffset
-      });
-    });
+    (0,defineProperty["default"])((0,assertThisInitialized["default"])(_this), "handleVideoDownload", /*#__PURE__*/function () {
+      var _ref2 = (0,asyncToGenerator["default"])( /*#__PURE__*/regenerator_default().mark(function _callee2(videoObj) {
+        return regenerator_default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return _this.props.downloadVideo({
+                  url: videoObj.url,
+                  slug: videoObj.slug
+                });
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+      return function (_x) {
+        return _ref2.apply(this, arguments);
+      };
+    }());
     return _this;
   }
-  (0,createClass["default"])(Home, [{
+  (0,createClass["default"])(Video, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadVideo();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.match.params.slug !== this.props.match.params.slug) {
+        this.loadVideo();
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this$props3 = this.props,
-        videosLoadingError = _this$props3.videosLoadingError,
-        videosLoading = _this$props3.videosLoading,
-        hasMoreVideos = _this$props3.hasMoreVideos,
-        videos = _this$props3.videos;
-      var loadVideos = this.loadVideos;
-      var offset = this.state.offset;
+      var _this$props2 = this.props,
+        videoObject = _this$props2.videoObject,
+        videoLoading = _this$props2.videoLoading,
+        trendingVideos = _this$props2.trendingVideos,
+        trendingVideosLoading = _this$props2.trendingVideosLoading;
+      var _handleVideoDownload = this.handleVideoDownload;
+      var elapsedTime = videoObject ? (0,calculateTimeLapse.calculateTimeSinceSave)(videoObject) : null;
       return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Helmet.Helmet, null, /*#__PURE__*/react.createElement("meta", {
-        charset: "UTF-8"
-      }), /*#__PURE__*/react.createElement("meta", {
         name: "description",
         content: "The most efficient Twitter Videos and GIFs downloader. Log into Twitter, Find a tweet with a video and comment with @OMNISCRAPER, Click on the replied link, Download and share your video!"
       }), /*#__PURE__*/react.createElement("meta", {
         name: "keywords",
         content: "Viral Tweets. Viral Videos. Funny Tweets. Funny Videos. Cat Videos. NFL. Rap. Sports. NFL players. Gaming. Barstool Sports. Joe Rogan. Actors. NBA players. MLB. Baseball. Bitcoin cryptocurrency. Tiktok Videos. Football Videos."
-      }), /*#__PURE__*/react.createElement("title", null, "Home - Omniscraper: The Best Twitter Videos Downloader!")), /*#__PURE__*/react.createElement(Components_v2_Videos, {
-        videos: videos,
-        hasMoreVideos: hasMoreVideos,
-        videosLoading: videosLoading,
-        videosLoadingError: videosLoadingError,
-        loadVideos: loadVideos,
-        offset: offset
-      }));
+      }), /*#__PURE__*/react.createElement("meta", {
+        property: "og:image:width",
+        content: "600"
+      }), /*#__PURE__*/react.createElement("meta", {
+        property: "og:image:height",
+        content: "314"
+      }), /*#__PURE__*/react.createElement("meta", {
+        property: "og:image",
+        content: videoObject === null || videoObject === void 0 ? void 0 : videoObject.video_thumbnail_link_https
+      }), /*#__PURE__*/react.createElement("meta", {
+        name: "twitter:card",
+        content: "summary_large_image"
+      }), /*#__PURE__*/react.createElement("meta", {
+        name: "twitter:title",
+        content: videoObject === null || videoObject === void 0 ? void 0 : videoObject.text
+      }), /*#__PURE__*/react.createElement("meta", {
+        name: "twitter:description",
+        content: "Log into Twitter, Find a tweet with a video and comment with @OMNISCRAPER, Click on the link, Download and share your video!"
+      }), /*#__PURE__*/react.createElement("meta", {
+        name: "twitter:image",
+        content: videoObject === null || videoObject === void 0 ? void 0 : videoObject.video_thumbnail_link_https
+      }), /*#__PURE__*/react.createElement("meta", {
+        name: "twitter:site",
+        content: "@omniscraper"
+      }), /*#__PURE__*/react.createElement("title", null, "Video - Omniscraper: The Best Twitter Videos Downloader!")), /*#__PURE__*/react.createElement("div", {
+        className: "lg:p-4 grid flex lg:grid-cols-6 md:grid-cols-1 lg:gap-6 xs:gap-0"
+      }, /*#__PURE__*/react.createElement("div", {
+        className: "col-span-4 videoVideoPlayer-container"
+      }, videoLoading ? /*#__PURE__*/react.createElement(VideoPlayer_VideoPlayerPlaceholder, null) : /*#__PURE__*/react.createElement(react.Fragment, null, videoObject ? /*#__PURE__*/react.createElement(src_Components_v2_VideoPlayer, {
+        videoUrl: videoObject.url,
+        videoText: videoObject.text,
+        elapsedTime: elapsedTime,
+        handleVideoDownload: function handleVideoDownload() {
+          return _handleVideoDownload(videoObject);
+        },
+        parentTweetId: videoObject.parent_tweet_id,
+        videoSlug: videoObject.slug
+      }) : null)), /*#__PURE__*/react.createElement("div", {
+        className: "col-span-2"
+      }, /*#__PURE__*/react.createElement(src_Components_v2_TrendingVideos, {
+        trendingVideos: trendingVideos,
+        trendingVideosLoading: trendingVideosLoading
+      }))));
     }
   }]);
-  return Home;
+  return Video;
 }(react.Component);
 var mapStateToProps = function mapStateToProps(state) {
   return _objectSpread({}, state.videos);
 };
 var mapDispatchToProps = {
-  getVideos: videosActions.getVideos
+  getVideo: videosActions.getVideo,
+  downloadVideo: videosActions.downloadVideo
 };
-/* harmony default export */ const pages_Home = ((0,es.connect)(mapStateToProps, mapDispatchToProps)((0,withStyles["default"])(styles)(pages_Home_Home)));
+/* harmony default export */ const src_pages_Video = ((0,react_router.withRouter)((0,es.connect)(mapStateToProps, mapDispatchToProps)(Video_Video)));
 
 /***/ }),
 
@@ -596,6 +1144,32 @@ var shareVideo = function shareVideo(slug) {
     console.log('Web share not supported!');
   }
 };
+
+/***/ }),
+
+/***/ 566:
+/*!**************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/Components_v2/IconButton/index.css ***!
+  \**************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/cssWithMappingToString.js */ 4015);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ 3645);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".videoCard-btn-hide {\n\tdisplay: none;\n}\n\n.videoCard-btn {\n\tdisplay: block;\n}\n", "",{"version":3,"sources":["webpack://./src/Components_v2/IconButton/index.css"],"names":[],"mappings":"AAAA;CACC,aAAa;AACd;;AAEA;CACC,cAAc;AACf","sourcesContent":[".videoCard-btn-hide {\n\tdisplay: none;\n}\n\n.videoCard-btn {\n\tdisplay: block;\n}\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
 
 /***/ }),
 
@@ -651,9 +1225,9 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".menuItem {\n\twidth: 100%;\n}\n", "",
 
 /***/ }),
 
-/***/ 6677:
+/***/ 3442:
 /*!*****************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./src/Components_v2/VideoCard/VideoCard.css ***!
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/Components_v2/TrendingVideo/index.css ***!
   \*****************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -670,17 +1244,17 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".menuItem {\n\twidth: 100%;\n}\n", "",
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".videoCard {\n\twidth: 340px;\n\tcursor: pointer;\n}\n\n.videoCard-bottom {\n\theight: 36px;\n}\n\nvideoCard-elapsed-time {\n}\n\n.videoCard-btn {\n\tdisplay: none;\n}\n\n.videoCard-btn-hover {\n\tdisplay: block;\n}\n\n.videoCard-btn:hover {\n}\n\n/* For Mobile Screens */\n@media screen and (max-width: 640px) {\n\t.videoCard {\n\t\twidth: 100%;\n\t\tcursor: pointer;\n\t\tpadding: 0;\n\t}\n\n\t.rounded-lg {\n\t\tborder-radius: 0px;\n\t}\n\n\t.videoCard-actions {\n\t\tpadding: 8px;\n\t\tmargin-top: 0;\n\t}\n\n\t.videoCard-btn {\n\t\tdisplay: block;\n\t}\n}\n\n/* For tabs */\n@media screen and (max-width: 1300px) and (min-width: 640px) {\n\t.videoCard {\n\t\twidth: 390px;\n\t\tcursor: pointer;\n\t}\n\n\t.videoCard-btn {\n\t\tdisplay: none;\n\t}\n}\n\n@media screen and (min-width: 411px) {\n\t.videoCard-text-container {\n\t\tmax-height: 42px;\n\t\toverflow: hidden;\n\t\ttext-overflow: ellipsis;\n\t\tdisplay: -webkit-box;\n\t\twhite-space: initial;\n\t\t-webkit-line-clamp: 2;\n\t\t-webkit-box-orient: vertical;\n\t}\n}\n", "",{"version":3,"sources":["webpack://./src/Components_v2/VideoCard/VideoCard.css"],"names":[],"mappings":"AAAA;CACC,YAAY;CACZ,eAAe;AAChB;;AAEA;CACC,YAAY;AACb;;AAEA;AACA;;AAEA;CACC,aAAa;AACd;;AAEA;CACC,cAAc;AACf;;AAEA;AACA;;AAEA,uBAAuB;AACvB;CACC;EACC,WAAW;EACX,eAAe;EACf,UAAU;CACX;;CAEA;EACC,kBAAkB;CACnB;;CAEA;EACC,YAAY;EACZ,aAAa;CACd;;CAEA;EACC,cAAc;CACf;AACD;;AAEA,aAAa;AACb;CACC;EACC,YAAY;EACZ,eAAe;CAChB;;CAEA;EACC,aAAa;CACd;AACD;;AAEA;CACC;EACC,gBAAgB;EAChB,gBAAgB;EAChB,uBAAuB;EACvB,oBAAoB;EACpB,oBAAoB;EACpB,qBAAqB;EACrB,4BAA4B;CAC7B;AACD","sourcesContent":[".videoCard {\n\twidth: 340px;\n\tcursor: pointer;\n}\n\n.videoCard-bottom {\n\theight: 36px;\n}\n\nvideoCard-elapsed-time {\n}\n\n.videoCard-btn {\n\tdisplay: none;\n}\n\n.videoCard-btn-hover {\n\tdisplay: block;\n}\n\n.videoCard-btn:hover {\n}\n\n/* For Mobile Screens */\n@media screen and (max-width: 640px) {\n\t.videoCard {\n\t\twidth: 100%;\n\t\tcursor: pointer;\n\t\tpadding: 0;\n\t}\n\n\t.rounded-lg {\n\t\tborder-radius: 0px;\n\t}\n\n\t.videoCard-actions {\n\t\tpadding: 8px;\n\t\tmargin-top: 0;\n\t}\n\n\t.videoCard-btn {\n\t\tdisplay: block;\n\t}\n}\n\n/* For tabs */\n@media screen and (max-width: 1300px) and (min-width: 640px) {\n\t.videoCard {\n\t\twidth: 390px;\n\t\tcursor: pointer;\n\t}\n\n\t.videoCard-btn {\n\t\tdisplay: none;\n\t}\n}\n\n@media screen and (min-width: 411px) {\n\t.videoCard-text-container {\n\t\tmax-height: 42px;\n\t\toverflow: hidden;\n\t\ttext-overflow: ellipsis;\n\t\tdisplay: -webkit-box;\n\t\twhite-space: initial;\n\t\t-webkit-line-clamp: 2;\n\t\t-webkit-box-orient: vertical;\n\t}\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".trendingVideo {\n\tcursor: pointer;\n}\n\n.trendingVideo-bottom {\n\theight: 36px;\n}\n\n.trendingVideo-img {\n\theight: 13vh;\n\tobject-fit: cover;\n\twidth: 100%;\n}\n\n@media screen and (min-width: 411px) {\n\t.trendingVideo-text-container {\n\t\tmax-height: 42px;\n\t\toverflow: hidden;\n\t\ttext-overflow: ellipsis;\n\t\tdisplay: -webkit-box;\n\t\twhite-space: initial;\n\t\t-webkit-line-clamp: 2;\n\t\t-webkit-box-orient: vertical;\n\t}\n}\n\n/* For Mobile Screens */\n@media screen and (max-width: 640px) {\n\t.trendingVideo {\n\t\tmin-width: 180px;\n\t\theight: 30vh;\n\t}\n\n\t.trendingVideo-img {\n\t\theight: 20vh;\n\t}\n\n\t.trendingVideo-text-container {\n\t\t/* display: none; */\n\t}\n}\n\n/* For tabs */\n@media screen and (max-width: 1300px) and (min-width: 640px) {\n\t.trendingVideo {\n\t\tmin-width: 180px;\n\t\theight: 30vh;\n\t}\n\n\t.trendingVideo-img-container {\n\t}\n\n\t.trendingVideo-img {\n\t\theight: 20vh;\n\t}\n\n\t.trendingVideo-text-container {\n\t\t/* display: none; */\n\t}\n}\n", "",{"version":3,"sources":["webpack://./src/Components_v2/TrendingVideo/index.css"],"names":[],"mappings":"AAAA;CACC,eAAe;AAChB;;AAEA;CACC,YAAY;AACb;;AAEA;CACC,YAAY;CACZ,iBAAiB;CACjB,WAAW;AACZ;;AAEA;CACC;EACC,gBAAgB;EAChB,gBAAgB;EAChB,uBAAuB;EACvB,oBAAoB;EACpB,oBAAoB;EACpB,qBAAqB;EACrB,4BAA4B;CAC7B;AACD;;AAEA,uBAAuB;AACvB;CACC;EACC,gBAAgB;EAChB,YAAY;CACb;;CAEA;EACC,YAAY;CACb;;CAEA;EACC,mBAAmB;CACpB;AACD;;AAEA,aAAa;AACb;CACC;EACC,gBAAgB;EAChB,YAAY;CACb;;CAEA;CACA;;CAEA;EACC,YAAY;CACb;;CAEA;EACC,mBAAmB;CACpB;AACD","sourcesContent":[".trendingVideo {\n\tcursor: pointer;\n}\n\n.trendingVideo-bottom {\n\theight: 36px;\n}\n\n.trendingVideo-img {\n\theight: 13vh;\n\tobject-fit: cover;\n\twidth: 100%;\n}\n\n@media screen and (min-width: 411px) {\n\t.trendingVideo-text-container {\n\t\tmax-height: 42px;\n\t\toverflow: hidden;\n\t\ttext-overflow: ellipsis;\n\t\tdisplay: -webkit-box;\n\t\twhite-space: initial;\n\t\t-webkit-line-clamp: 2;\n\t\t-webkit-box-orient: vertical;\n\t}\n}\n\n/* For Mobile Screens */\n@media screen and (max-width: 640px) {\n\t.trendingVideo {\n\t\tmin-width: 180px;\n\t\theight: 30vh;\n\t}\n\n\t.trendingVideo-img {\n\t\theight: 20vh;\n\t}\n\n\t.trendingVideo-text-container {\n\t\t/* display: none; */\n\t}\n}\n\n/* For tabs */\n@media screen and (max-width: 1300px) and (min-width: 640px) {\n\t.trendingVideo {\n\t\tmin-width: 180px;\n\t\theight: 30vh;\n\t}\n\n\t.trendingVideo-img-container {\n\t}\n\n\t.trendingVideo-img {\n\t\theight: 20vh;\n\t}\n\n\t.trendingVideo-text-container {\n\t\t/* display: none; */\n\t}\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ 2739:
-/*!***********************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./src/Components_v2/Videos/Videos.css ***!
-  \***********************************************************************************/
+/***/ 8546:
+/*!******************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/Components_v2/TrendingVideos/index.css ***!
+  \******************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -696,17 +1270,69 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".videoCard {\n\twidth: 340px;\n\tcurso
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".videos-grid {\n\toverflow-y: auto;\n\tmin-height: 100vh;\n}\n\n.videos-grid::-webkit-scrollbar {\n\twidth: 8px;\n}\n\n.videos-grid::-webkit-scrollbar-track {\n\tbackground-color: transparent;\n\tborder-radius: 999px;\n}\n\n.videos-grid::-webkit-scrollbar-thumb {\n\tbackground-color: #c4c4c4;\n\tborder-radius: 999px;\n}\n\n@media screen and (max-width: 640px) {\n\t.videos-grid {\n\t\tpadding-bottom: 0 !important;\n\t\tpadding-right: 0 !important;\n\t\tpadding-left: 0 !important;\n\t}\n\n\t.videos-grid::-webkit-scrollbar {\n\t\twidth: 8px;\n\t}\n\n\t.videos-grid::-webkit-scrollbar-track {\n\t\tbackground-color: transparent;\n\t\tborder-radius: 999px;\n\t}\n\n\t.videos-grid::-webkit-scrollbar-thumb {\n\t\tbackground-color: #c4c4c4;\n\t\tborder-radius: 999px;\n\t}\n}\n", "",{"version":3,"sources":["webpack://./src/Components_v2/Videos/Videos.css"],"names":[],"mappings":"AAAA;CACC,gBAAgB;CAChB,iBAAiB;AAClB;;AAEA;CACC,UAAU;AACX;;AAEA;CACC,6BAA6B;CAC7B,oBAAoB;AACrB;;AAEA;CACC,yBAAyB;CACzB,oBAAoB;AACrB;;AAEA;CACC;EACC,4BAA4B;EAC5B,2BAA2B;EAC3B,0BAA0B;CAC3B;;CAEA;EACC,UAAU;CACX;;CAEA;EACC,6BAA6B;EAC7B,oBAAoB;CACrB;;CAEA;EACC,yBAAyB;EACzB,oBAAoB;CACrB;AACD","sourcesContent":[".videos-grid {\n\toverflow-y: auto;\n\tmin-height: 100vh;\n}\n\n.videos-grid::-webkit-scrollbar {\n\twidth: 8px;\n}\n\n.videos-grid::-webkit-scrollbar-track {\n\tbackground-color: transparent;\n\tborder-radius: 999px;\n}\n\n.videos-grid::-webkit-scrollbar-thumb {\n\tbackground-color: #c4c4c4;\n\tborder-radius: 999px;\n}\n\n@media screen and (max-width: 640px) {\n\t.videos-grid {\n\t\tpadding-bottom: 0 !important;\n\t\tpadding-right: 0 !important;\n\t\tpadding-left: 0 !important;\n\t}\n\n\t.videos-grid::-webkit-scrollbar {\n\t\twidth: 8px;\n\t}\n\n\t.videos-grid::-webkit-scrollbar-track {\n\t\tbackground-color: transparent;\n\t\tborder-radius: 999px;\n\t}\n\n\t.videos-grid::-webkit-scrollbar-thumb {\n\t\tbackground-color: #c4c4c4;\n\t\tborder-radius: 999px;\n\t}\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".trendingVideos {\n\twidth: 100%;\n}\n\n.trendingVideos-container {\n\twidth: 100%;\n}\n\n.trendingVideos-container::-webkit-scrollbar {\n\twidth: 8px;\n}\n\n.trendingVideos-container::-webkit-scrollbar-track {\n\tbackground-color: transparent;\n\tborder-radius: 999px;\n}\n\n.trendingVideos-container::-webkit-scrollbar-thumb {\n\tbackground-color: #c4c4c4;\n\tborder-radius: 999px;\n}\n\n/* Mobile Screens */\n@media screen and (max-width: 640px) {\n\t.trendingVideos {\n\t\twidth: 100vw;\n\t}\n\n\t.trendingVideos-container {\n\t\toverflow-x: auto;\n\t\tdisplay: flex;\n\t\t-ms-overflow-style: none;\n\t\tscrollbar-width: none;\n\t\tscroll-behavior: smooth;\n\t\tscroll-snap-type: both mandatory;\n\t\twidth: 100%;\n\t}\n\n\t.trendingVideos-container::-webkit-scrollbar {\n\t\tdisplay: none;\n\t}\n}\n\n/* Tabs */\n@media screen and (max-width: 1024px) and (min-width: 640px) {\n\t.trendingVideos {\n\t\tpadding-left: 0.5rem;\n\t\tpadding-right: 0.5rem;\n\t\twidth: 100vw;\n\t}\n\n\t.trendingVideos-container {\n\t\toverflow-x: auto;\n\t\tdisplay: flex;\n\t\t-ms-overflow-style: none;\n\t\tscrollbar-width: none;\n\t\tscroll-behavior: smooth;\n\t\tscroll-snap-type: both mandatory;\n\t\twidth: 100%;\n\t}\n\n\t.trendingVideos-container::-webkit-scrollbar {\n\t\tdisplay: none;\n\t}\n}\n\n/* Laptops and bigger screens */\n@media screen and (min-width: 1280px) {\n\t.trendingVideos {\n\t\tpadding-left: 1rem;\n\t\tpadding-right: 1rem;\n\t}\n\n\t.trendingVideos-container {\n\t\toverflow-y: auto;\n\t\theight: 70vh;\n\t}\n}\n", "",{"version":3,"sources":["webpack://./src/Components_v2/TrendingVideos/index.css"],"names":[],"mappings":"AAAA;CACC,WAAW;AACZ;;AAEA;CACC,WAAW;AACZ;;AAEA;CACC,UAAU;AACX;;AAEA;CACC,6BAA6B;CAC7B,oBAAoB;AACrB;;AAEA;CACC,yBAAyB;CACzB,oBAAoB;AACrB;;AAEA,mBAAmB;AACnB;CACC;EACC,YAAY;CACb;;CAEA;EACC,gBAAgB;EAChB,aAAa;EACb,wBAAwB;EACxB,qBAAqB;EACrB,uBAAuB;EACvB,gCAAgC;EAChC,WAAW;CACZ;;CAEA;EACC,aAAa;CACd;AACD;;AAEA,SAAS;AACT;CACC;EACC,oBAAoB;EACpB,qBAAqB;EACrB,YAAY;CACb;;CAEA;EACC,gBAAgB;EAChB,aAAa;EACb,wBAAwB;EACxB,qBAAqB;EACrB,uBAAuB;EACvB,gCAAgC;EAChC,WAAW;CACZ;;CAEA;EACC,aAAa;CACd;AACD;;AAEA,+BAA+B;AAC/B;CACC;EACC,kBAAkB;EAClB,mBAAmB;CACpB;;CAEA;EACC,gBAAgB;EAChB,YAAY;CACb;AACD","sourcesContent":[".trendingVideos {\n\twidth: 100%;\n}\n\n.trendingVideos-container {\n\twidth: 100%;\n}\n\n.trendingVideos-container::-webkit-scrollbar {\n\twidth: 8px;\n}\n\n.trendingVideos-container::-webkit-scrollbar-track {\n\tbackground-color: transparent;\n\tborder-radius: 999px;\n}\n\n.trendingVideos-container::-webkit-scrollbar-thumb {\n\tbackground-color: #c4c4c4;\n\tborder-radius: 999px;\n}\n\n/* Mobile Screens */\n@media screen and (max-width: 640px) {\n\t.trendingVideos {\n\t\twidth: 100vw;\n\t}\n\n\t.trendingVideos-container {\n\t\toverflow-x: auto;\n\t\tdisplay: flex;\n\t\t-ms-overflow-style: none;\n\t\tscrollbar-width: none;\n\t\tscroll-behavior: smooth;\n\t\tscroll-snap-type: both mandatory;\n\t\twidth: 100%;\n\t}\n\n\t.trendingVideos-container::-webkit-scrollbar {\n\t\tdisplay: none;\n\t}\n}\n\n/* Tabs */\n@media screen and (max-width: 1024px) and (min-width: 640px) {\n\t.trendingVideos {\n\t\tpadding-left: 0.5rem;\n\t\tpadding-right: 0.5rem;\n\t\twidth: 100vw;\n\t}\n\n\t.trendingVideos-container {\n\t\toverflow-x: auto;\n\t\tdisplay: flex;\n\t\t-ms-overflow-style: none;\n\t\tscrollbar-width: none;\n\t\tscroll-behavior: smooth;\n\t\tscroll-snap-type: both mandatory;\n\t\twidth: 100%;\n\t}\n\n\t.trendingVideos-container::-webkit-scrollbar {\n\t\tdisplay: none;\n\t}\n}\n\n/* Laptops and bigger screens */\n@media screen and (min-width: 1280px) {\n\t.trendingVideos {\n\t\tpadding-left: 1rem;\n\t\tpadding-right: 1rem;\n\t}\n\n\t.trendingVideos-container {\n\t\toverflow-y: auto;\n\t\theight: 70vh;\n\t}\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ 8901:
-/*!***********************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./src/pages/Home/Home.css ***!
-  \***********************************************************************/
+/***/ 1896:
+/*!*********************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/Components_v2/VideoPlayer/VideoPlayerActions/IconButton/index.css ***!
+  \*********************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/cssWithMappingToString.js */ 4015);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ 3645);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".videoCard-btn-hide {\n\tdisplay: none;\n}\n\n.videoCard-btn {\n\tdisplay: block;\n}\n", "",{"version":3,"sources":["webpack://./src/Components_v2/VideoPlayer/VideoPlayerActions/IconButton/index.css"],"names":[],"mappings":"AAAA;CACC,aAAa;AACd;;AAEA;CACC,cAAc;AACf","sourcesContent":[".videoCard-btn-hide {\n\tdisplay: none;\n}\n\n.videoCard-btn {\n\tdisplay: block;\n}\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ 3584:
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/Components_v2/VideoPlayer/VideoPlayerActions/index.css ***!
+  \**********************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/cssWithMappingToString.js */ 4015);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ 3645);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".videoPlayerActions {\n\tposition: absolute;\n\tbottom: 0px;\n\tz-index: 1;\n\tdisplay: block;\n\tpadding-bottom: 8px;\n}\n\n.videoPlayerActions-hide {\n\tdisplay: none;\n}\n\n.videoPlayerActions-time {\n\theight: '20px';\n\twidth: '100px';\n}\n\n.videoPlayerActions-volume {\n\tposition: relative;\n\tdisplay: flex;\n\talign-items: center;\n}\n\n.videoPlayerActions-knob-container {\n}\n\n.videoPlayerActions-knob {\n\twidth: 60px;\n\theight: 5px;\n\tposition: relative;\n\tcursor: pointer;\n}\n\n.videoPlayerActions-knob-inner {\n\theight: 5px;\n\tbackground-color: white;\n\tposition: absolute;\n}\n", "",{"version":3,"sources":["webpack://./src/Components_v2/VideoPlayer/VideoPlayerActions/index.css"],"names":[],"mappings":"AAAA;CACC,kBAAkB;CAClB,WAAW;CACX,UAAU;CACV,cAAc;CACd,mBAAmB;AACpB;;AAEA;CACC,aAAa;AACd;;AAEA;CACC,cAAc;CACd,cAAc;AACf;;AAEA;CACC,kBAAkB;CAClB,aAAa;CACb,mBAAmB;AACpB;;AAEA;AACA;;AAEA;CACC,WAAW;CACX,WAAW;CACX,kBAAkB;CAClB,eAAe;AAChB;;AAEA;CACC,WAAW;CACX,uBAAuB;CACvB,kBAAkB;AACnB","sourcesContent":[".videoPlayerActions {\n\tposition: absolute;\n\tbottom: 0px;\n\tz-index: 1;\n\tdisplay: block;\n\tpadding-bottom: 8px;\n}\n\n.videoPlayerActions-hide {\n\tdisplay: none;\n}\n\n.videoPlayerActions-time {\n\theight: '20px';\n\twidth: '100px';\n}\n\n.videoPlayerActions-volume {\n\tposition: relative;\n\tdisplay: flex;\n\talign-items: center;\n}\n\n.videoPlayerActions-knob-container {\n}\n\n.videoPlayerActions-knob {\n\twidth: 60px;\n\theight: 5px;\n\tposition: relative;\n\tcursor: pointer;\n}\n\n.videoPlayerActions-knob-inner {\n\theight: 5px;\n\tbackground-color: white;\n\tposition: absolute;\n}\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ 4234:
+/*!***************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/Components_v2/VideoPlayer/index.css ***!
+  \***************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -722,7 +1348,33 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".videos-grid {\n\toverflow-y: auto;\n\
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n", "",{"version":3,"sources":[],"names":[],"mappings":"","sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".videoPlayer-container {\n\twidth: 100%;\n\tposition: relative;\n\tz-index: 0;\n}\n\n.videoPlayer {\n\tobject-fit: contain;\n\tborder: none;\n\tposition: relative;\n\twidth: 100%;\n\tbackground-color: #000;\n\toutline-width: 0px;\n}\n\n.videoPlayer-fullscreen {\n\theight: 100vh;\n\tobject-fit: contain;\n\tborder: none;\n\tposition: relative;\n\twidth: 100%;\n\tbackground-color: #000;\n\toutline-width: 0px;\n}\n\n.videoPlayer-actions {\n\t/* height: 100px; */\n}\n\n/* For Mobile Screens */\n@media screen and (max-width: 640px) {\n\t.videoPlayer {\n\t\theight: 40vh !important;\n\t}\n\n\t.videoPlayer-video-info {\n\t\tpadding-left: 0.5rem;\n\t\tpadding-right: 0.5rem;\n\t}\n}\n\n/* Tabs */\n@media screen and (max-width: 1024px) and (min-width: 640px) {\n\t.videoPlayer {\n\t\theight: 50vh !important;\n\t}\n\t.videoPlayer-video-info {\n\t\tpadding-left: 0.5rem;\n\t\tpadding-right: 0.5rem;\n\t}\n}\n\n/* Laptops */\n@media screen and (min-width: 1280px) {\n\t.videoPlayer {\n\t\theight: 65vh;\n\t}\n}\n", "",{"version":3,"sources":["webpack://./src/Components_v2/VideoPlayer/index.css"],"names":[],"mappings":"AAAA;CACC,WAAW;CACX,kBAAkB;CAClB,UAAU;AACX;;AAEA;CACC,mBAAmB;CACnB,YAAY;CACZ,kBAAkB;CAClB,WAAW;CACX,sBAAsB;CACtB,kBAAkB;AACnB;;AAEA;CACC,aAAa;CACb,mBAAmB;CACnB,YAAY;CACZ,kBAAkB;CAClB,WAAW;CACX,sBAAsB;CACtB,kBAAkB;AACnB;;AAEA;CACC,mBAAmB;AACpB;;AAEA,uBAAuB;AACvB;CACC;EACC,uBAAuB;CACxB;;CAEA;EACC,oBAAoB;EACpB,qBAAqB;CACtB;AACD;;AAEA,SAAS;AACT;CACC;EACC,uBAAuB;CACxB;CACA;EACC,oBAAoB;EACpB,qBAAqB;CACtB;AACD;;AAEA,YAAY;AACZ;CACC;EACC,YAAY;CACb;AACD","sourcesContent":[".videoPlayer-container {\n\twidth: 100%;\n\tposition: relative;\n\tz-index: 0;\n}\n\n.videoPlayer {\n\tobject-fit: contain;\n\tborder: none;\n\tposition: relative;\n\twidth: 100%;\n\tbackground-color: #000;\n\toutline-width: 0px;\n}\n\n.videoPlayer-fullscreen {\n\theight: 100vh;\n\tobject-fit: contain;\n\tborder: none;\n\tposition: relative;\n\twidth: 100%;\n\tbackground-color: #000;\n\toutline-width: 0px;\n}\n\n.videoPlayer-actions {\n\t/* height: 100px; */\n}\n\n/* For Mobile Screens */\n@media screen and (max-width: 640px) {\n\t.videoPlayer {\n\t\theight: 40vh !important;\n\t}\n\n\t.videoPlayer-video-info {\n\t\tpadding-left: 0.5rem;\n\t\tpadding-right: 0.5rem;\n\t}\n}\n\n/* Tabs */\n@media screen and (max-width: 1024px) and (min-width: 640px) {\n\t.videoPlayer {\n\t\theight: 50vh !important;\n\t}\n\t.videoPlayer-video-info {\n\t\tpadding-left: 0.5rem;\n\t\tpadding-right: 0.5rem;\n\t}\n}\n\n/* Laptops */\n@media screen and (min-width: 1280px) {\n\t.videoPlayer {\n\t\theight: 65vh;\n\t}\n}\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ 5879:
+/*!*************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/pages/Video/index.css ***!
+  \*************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/cssWithMappingToString.js */ 4015);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ 3645);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".video {\n\tbackground-color: #fff;\n}\n\n.videoVideoPlayer-container {\n\twidth: 100%;\n}\n", "",{"version":3,"sources":["webpack://./src/pages/Video/index.css"],"names":[],"mappings":"AAAA;CACC,sBAAsB;AACvB;;AAEA;CACC,WAAW;AACZ","sourcesContent":[".video {\n\tbackground-color: #fff;\n}\n\n.videoVideoPlayer-container {\n\twidth: 100%;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2054,4 +2706,4 @@ function _slicedToArray(arr, i) {
 /***/ })
 
 }]);
-//# sourceMappingURL=src_pages_Home_index_js-6ffddd02fa637fa1d2ea.js.map
+//# sourceMappingURL=src_pages_Video_index_js-08fc96a979674ffdd8d6.js.map

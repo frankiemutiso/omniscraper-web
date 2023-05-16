@@ -38,17 +38,19 @@ function VideoPlayerActions({
 	isMuted,
 	isPlaying,
 	volumeLevel,
+	handleVolumeChange,
 }) {
 	const [canShowDraggablePoint, setDraggablePointState] = useState(false);
 	const [isHovered, setVolumeHover] = useState(false);
 
 	const handleCurrentTimeChange = (e) => {
-		const width = e?.currentTarget?.offsetWidth;
-		const xPos = e?.pageX;
+		let target = e?.currentTarget;
+		let rect = target.getBoundingClientRect();
+		let width = rect?.width;
 
-		const percentage = xPos / width;
-
-		const currentTime = percentage * videoDuration;
+		const mouseXPos = e.clientX - rect.left;
+		const percentage = mouseXPos / width;
+		const currentTime = Number(percentage * videoDuration).toFixed(5);
 
 		changeCurrentTime(currentTime);
 	};
@@ -79,7 +81,7 @@ function VideoPlayerActions({
 						position: 'absolute',
 					}}
 				/>
-				{canShowDraggablePoint ? (
+				{/* {canShowDraggablePoint ? (
 					<div
 						className='bg-neutral-200 h-3 w-3 rounded-full transition duration-1000 ease-in'
 						style={{
@@ -89,7 +91,7 @@ function VideoPlayerActions({
 							transform: 'transform: translate(50%, 0)',
 						}}
 					/>
-				) : null}
+				) : null} */}
 			</div>
 
 			<div className='flex item-center justify-between mt-2'>
@@ -127,28 +129,27 @@ function VideoPlayerActions({
 							</IconButton>
 						)}
 						{isHovered ? (
-							<div className='videoPlayerActions-knob-container rounded-full bg-neutral-800 p-3'>
-								<div className='videoPlayerActions-knob rounded-full bg-neutral-400'>
+							<div
+								className='transition ease-in-out delay-700'
+								onMouseEnter={() => setVolumeHover(true)}
+								onMouseLeave={() => setVolumeHover(false)}
+							>
+								<div className='videoPlayerActions-knob-container p-3 transition ease-in-out delay-250'>
 									<div
-										className='videoPlayerActions-knob-inner rounded-full'
-										style={{ height: `${volumeLevel}%` }}
+										className='videoPlayerActions-knob rounded-full bg-neutral-400 transition ease-in-out delay-300'
+										onClick={(e) => handleVolumeChange(e)}
 									>
 										<div
-											className='videoPlayerActions-knob-inner-tip rounded-full bg-white'
-											style={{
-												position: 'absolute',
-												top: -4,
-												left: `${videoProgress - 0.6}%`,
-												transform: 'transform: translate(50%, 0)',
-											}}
-										></div>
+											className='videoPlayerActions-knob-inner rounded-full transition ease-in-out delay-350'
+											style={{ width: `${volumeLevel}%`, position: 'absolute' }}
+										/>
 									</div>
 								</div>
 							</div>
 						) : null}
 					</div>
 					{videoDuration ? (
-						<span className='videoPlayerActions-time rounded-full bg-neutral-800 p-2 ml-2 flex items-center'>
+						<span className='videoPlayerActions-time p-2 flex items-center'>
 							<p className='text-xs text-white'>
 								{formatVideoTime(currentTime)}
 							</p>

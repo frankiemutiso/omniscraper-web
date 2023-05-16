@@ -30,18 +30,28 @@
 /* For Mobile Screens */
 @media screen and (max-width: 640px) {
 	.videoPlayer {
-		height: 45vh !important;
-	}
-}
-
-/* For tabs */
-@media screen and (max-width: 1300px) and (min-width: 640px) {
-	.videoPlayer {
 		height: 40vh !important;
 	}
+
+	.videoPlayer-video-info {
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+	}
 }
 
-@media screen and (min-width: 411px) {
+/* Tabs */
+@media screen and (max-width: 1024px) and (min-width: 640px) {
+	.videoPlayer {
+		height: 50vh !important;
+	}
+	.videoPlayer-video-info {
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+	}
+}
+
+/* Laptops */
+@media screen and (min-width: 1280px) {
 	.videoPlayer {
 		height: 65vh;
 	}

@@ -7,7 +7,6 @@ function TrendingVideoPlaceholder() {
 				<div
 					className='rounded-lg bg-neutral-200 animate-pulse trendingVideo-img'
 					alt='Omniscraper Trending Twitter Video'
-					style={{ height: 100, width: '100%' }}
 				/>
 			</div>
 			<div className='col-span-4'>

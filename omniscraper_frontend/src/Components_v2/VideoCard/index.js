@@ -24,8 +24,6 @@ function VideoCard({ imageSource, text, elapsedTime, videoSlug }) {
 	};
 
 	const handleClick = (videoSlug) => {
-		debugger;
-
 		history.push(`/${videoSlug}`);
 	};
 

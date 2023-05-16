@@ -15,8 +15,8 @@ function TrendingVideos({ trendingVideos, trendingVideosLoading }) {
 
 	return (
 		<div className='trendingVideos px-2 sm:px-4'>
-			<p className='font-bold text-lg mb-1 py-2'>Trending this week</p>
-			<div className='trendingVideos-container rounded-lg pr-1'>
+			<p className='font-bold lg:text-lg mb-1 py-2'>Trending this week</p>
+			<div className='trendingVideos-container lg:rounded-lg lg:pr-1'>
 				{trendingVideosLoading ? (
 					<Fragment>
 						{Array.from(new Array(5)).map((item, index) => (

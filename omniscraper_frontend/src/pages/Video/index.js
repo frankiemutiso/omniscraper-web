@@ -75,7 +75,7 @@ class Video extends Component {
 						Video - Omniscraper: The Best Twitter Videos Downloader!
 					</title>
 				</Helmet>
-				<div className='lg:p-4 grid flex lg:grid-cols-6 md:grid-cols-1 lg:gap-6'>
+				<div className='lg:p-4 grid flex lg:grid-cols-6 md:grid-cols-1 lg:gap-6 xs:gap-0'>
 					<div className='col-span-4 videoVideoPlayer-container'>
 						{videoLoading ? (
 							<VideoPlayerPlaceholder />
