@@ -12,8 +12,19 @@ from django.conf import settings
 from django.utils.text import slugify
 
 from .models import FlagRequest, TwitterVideo, VideoTag
-from .serializers import FlagRequestsListSerializer, FlagRequestsSerializer, VideosSerializer, TagsSerializer, TrendingVideosSerializer
-from .ga_trends_generator import get_report, initialize_analyticsreporting, get_ga_trending_videos
+from .serializers import (
+    FlagRequestsListSerializer,
+    FlagRequestsSerializer,
+    VideosSerializer,
+    TagsSerializer,
+    TrendingVideosSerializer,
+)
+from .ga_trends_generator import (
+    get_report,
+    initialize_analyticsreporting,
+    get_ga_trending_videos,
+)
+
 
 def get_infinite_videos(request, slug=None):
     limit = request.GET.get("limit")
@@ -24,22 +35,32 @@ def get_infinite_videos(request, slug=None):
         statuses = ["Pending", "Approved"]
         rejected_requests = FlagRequest.objects.filter(request_status__in=statuses)
         slugs = [x.slug for x in rejected_requests]
-        
-        print(f'---{rejected_requests}---')
 
-        return TwitterVideo.objects.exclude(flagged=True).exclude(slug__in=slugs).order_by('-date_saved_utc')[int(offset): int(offset) + int(limit)]
-    return VideoTag.objects.get(slug=slug).twitter_videos.all().order_by('-date_saved_utc')[int(offset): int(offset) + int(limit)]
+        return (
+            TwitterVideo.objects.exclude(flagged=True)
+            .exclude(slug__in=slugs)
+            .order_by("-date_saved_utc")[int(offset) : int(offset) + int(limit)]
+        )
+    return (
+        VideoTag.objects.get(slug=slug)
+        .twitter_videos.all()
+        .order_by("-date_saved_utc")[int(offset) : int(offset) + int(limit)]
+    )
     # except:
-        # raise Http404
+    # raise Http404
 
 
 def is_there_more_data(request, slug=None):
     offset = request.GET.get("offset")
 
-    if slug == None and int(offset) > TwitterVideo.objects.exclude(flagged=True).count() - int(offset):
+    if slug == None and int(offset) > TwitterVideo.objects.exclude(
+        flagged=True
+    ).count() - int(offset):
         return False
 
-    if slug != None and int(offset) > VideoTag.objects.get(slug=slug).twitter_videos.all().count() - int(offset):
+    if slug != None and int(offset) > VideoTag.objects.get(
+        slug=slug
+    ).twitter_videos.all().count() - int(offset):
         return False
 
     return True
@@ -51,7 +72,7 @@ class LogoutAndBlacklistToken(APIView):
 
     def post(self, request):
         try:
-            refresh_token = request.data['refresh_token']
+            refresh_token = request.data["refresh_token"]
             token = RefreshToken(refresh_token)
             token.blacklist()
             return Response(status=status.HTTP_205_RESET_CONTENT)
@@ -63,13 +84,10 @@ class Videos(APIView):
     def get(self, request):
         videos = get_infinite_videos(request)
         serializer = VideosSerializer(videos, many=True)
-        
-        print(f'---DATABASE HOST: {settings.DATABASES["default"]["ENGINE"]}---')
 
-        return Response({
-            "videos": serializer.data,
-            "has_more": is_there_more_data(request)
-        })
+        return Response(
+            {"videos": serializer.data, "has_more": is_there_more_data(request)}
+        )
 
 
 class Video(APIView):
@@ -97,8 +115,7 @@ class Video(APIView):
 
     def patch(self, request, slug):
         video = self.get_object(slug)
-        serializer = VideosSerializer(
-            video, data=request.data, partial=True)
+        serializer = VideosSerializer(video, data=request.data, partial=True)
 
         if serializer.is_valid() and request.user.is_authenticated:
             serializer.save()
@@ -116,11 +133,11 @@ class Tags(APIView):
     def post(self, request):
         serializer = TagsSerializer(data=request.data)
         if serializer.is_valid() and request.user.is_authenticated:
-            
             serializer.save(slug=slugify(serializer.data["tag_name"]))
-            
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class Tag(APIView):
     def get_object(self, slug):
@@ -128,24 +145,26 @@ class Tag(APIView):
             return VideoTag.objects.get(slug=slug)
         except VideoTag.DoesNotExist:
             raise Http404
-        
+
     def get(self, request, slug):
         videos = get_infinite_videos(request, slug)
         serializer = VideosSerializer(videos, many=True)
 
-        return Response({"videos": serializer.data, "has_more": is_there_more_data(request, slug)})
-    
+        return Response(
+            {"videos": serializer.data, "has_more": is_there_more_data(request, slug)}
+        )
+
     def patch(self, request, slug):
         tag = self.get_object(slug)
         serializer = TagsSerializer(tag, data=request.data, partial=True)
-        
+
         if serializer.is_valid() and request.user.is_authenticated:
             serializer.save(slug=slugify(serializer.data["tag_name"]))
-            
+
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-        
+
+
 class TrendingVideos(APIView):
     def get_object(self, slug):
         try:
@@ -159,14 +178,17 @@ class TrendingVideos(APIView):
         response = get_report(analytics)
 
         trending_paths = get_ga_trending_videos(response)
-        
-        videos = TwitterVideo.objects.filter(slug__in=trending_paths, 
-                                            flagged=False, 
-                                            date_saved_utc__gt=datetime.today() - timedelta(7))[:10]
+
+        videos = TwitterVideo.objects.filter(
+            slug__in=trending_paths,
+            flagged=False,
+            date_saved_utc__gt=datetime.today() - timedelta(7),
+        )[:10]
 
         serializer = VideosSerializer(videos, many=True)
-        
+
         return Response({"trending_videos": serializer.data})
+
 
 class FlagRequests(APIView):
     def post(self, request):
@@ -182,12 +204,17 @@ class FlagRequests(APIView):
         request_status = request.GET.get("request_status")
 
         if request_status is not None:
-            flag_requests = FlagRequest.objects.filter(request_status=request_status).values("slug", "request_status").annotate(total=Count("slug")).order_by("-total")
+            flag_requests = (
+                FlagRequest.objects.filter(request_status=request_status)
+                .values("slug", "request_status")
+                .annotate(total=Count("slug"))
+                .order_by("-total")
+            )
             serializer = FlagRequestsListSerializer(flag_requests, many=True)
 
             return Response({"flag_requests": serializer.data})
 
-        if slug is not None: 
+        if slug is not None:
             flag_requests = FlagRequest.objects.filter(slug=slug)
             serializer = FlagRequestsSerializer(flag_requests, many=True)
 
@@ -197,8 +224,8 @@ class FlagRequests(APIView):
 
     def patch(self, request):
         slug = request.GET.get("slug")
-        flag_requests = FlagRequest.objects.filter(slug=slug)  
-        
+        flag_requests = FlagRequest.objects.filter(slug=slug)
+
         for x in flag_requests:
             serializer = FlagRequestsSerializer(x, data=request.data, partial=True)
 
@@ -208,4 +235,3 @@ class FlagRequests(APIView):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(data="Action taken successfully", status=status.HTTP_200_OK)
-        

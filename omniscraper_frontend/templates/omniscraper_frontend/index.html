@@ -65,7 +65,7 @@
 			rel="preload"
 			as="style"
 			onload="this.onload=null;this.rel='stylesheet'"
-			href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
 			rel="stylesheet"
 		/>
 		<link
@@ -75,6 +75,7 @@
 			onload="this.onload=null;this.rel='stylesheet'"
 			href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&display=swap"
 		/>
+
 		<link rel="stylesheet" href={% static 'omniscraper_frontend/styles.css' %}>
 
 		<link
@@ -82,6 +83,12 @@
 			type="image/png"
 			href="{% static 'omniscraper_frontend/favicon.ico' %}"
 		/>
+
+		<link href={% static 'omniscraper_frontend/dist/output.css' %}
+		rel="stylesheet" />
+
+		<!---->
+
 		{% render_bundle 'main' 'css' %}
 
 		<!-- Google tag (gtag.js) -->
@@ -122,7 +129,7 @@
 		</script>
 	</head>
 	<body>
-		<div id="app" style="background: #f5f5f7; min-height: 100vh"></div>
+		<div id="app"></div>
 		{% render_bundle 'main' 'js' %}
 
 		<script defer>

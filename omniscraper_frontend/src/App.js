@@ -12,14 +12,16 @@ import Login from './pages/Login';
 import FlagRequests from './pages/FlagRequests';
 import ProtectedComponent from './components/ProtectedComponent';
 import DotPulse from './components/reusableComponents/DotPulse';
+import { getTrendingVideos } from './store/actions/videosActions';
+import { connect } from 'react-redux';
 
-const Video = React.lazy(() => import('./pages/Video'));
+const Video = React.lazy(() => import('./pages/Video/index'));
 const Home = React.lazy(() => import('./pages/Home'));
 const FilteredVideos = React.lazy(() => import('./pages/FilteredVideos'));
 
 const theme = createTheme({
 	typography: {
-		fontFamily: ['Open Sans', 'Sora'].join(','),
+		fontFamily: ['Plus Jakarta Sans', 'Sora'].join(','),
 	},
 	palette: {
 		primary: {
@@ -56,17 +58,11 @@ class App extends Component {
 		error: null,
 		tagsLoading: false,
 		videoTags: [],
-		videosLoadingError: false,
-		loading: false,
-		offset: 0,
-		limit: 12,
-		videos: [],
-		hasMore: true,
 		scrollPosition: 0,
 		autoplayVideo: false,
 		successfulLogin: false,
-		trendingVideos: [],
-		trendingVideosLoading: false,
+		isHomeFirstLoad: true,
+		homeVideosOffset: 1,
 	};
 
 	componentDidMount = async () => {
@@ -74,36 +70,7 @@ class App extends Component {
 		window.ga('send', 'pageview');
 
 		await this.loadTags();
-		await this.loadVideos();
-		await this.loadTrendingVideos();
-	};
-
-	loadVideos = () => {
-		this.setState({ loading: true }, () => {
-			const { offset, limit } = this.state;
-
-			const url = `/api/videos/?limit=${limit}&offset=${offset}`;
-
-			axios
-				.get(url)
-				.then((res) => {
-					const newVideos = res.data.videos;
-					const hasMore = res.data.has_more;
-
-					this.setState({
-						hasMore,
-						loading: false,
-						videos: [...this.state.videos, ...newVideos],
-						offset: offset + limit,
-					});
-				})
-				.catch((err) => {
-					this.setState({
-						videosLoadingError: err.message,
-						loading: false,
-					});
-				});
-		});
+		this.loadTrendingVideos();
 	};
 
 	loadTags = () => {
@@ -128,21 +95,8 @@ class App extends Component {
 		});
 	};
 
-	loadTrendingVideos = () => {
-		const url = '/api/trending/';
-		this.setState({ trendingVideosLoading: true }, () => {
-			axios
-				.get(url)
-				.then((res) => {
-					const trendingVideos = res.data.trending_videos;
-
-					this.setState({
-						trendingVideos: trendingVideos,
-						trendingVideosLoading: false,
-					});
-				})
-				.catch((err) => {});
-		});
+	loadTrendingVideos = async () => {
+		await this.props.getTrendingVideos();
 	};
 
 	handleChange = (e) => {
@@ -238,6 +192,14 @@ class App extends Component {
 		});
 	};
 
+	updateHomeFirstLoad = (state) => {
+		this.setState({ isHomeFirstLoad: state });
+	};
+
+	handleHomeOffsetUpdate = (offset) => {
+		this.setState({ homeVideosOffset: offset });
+	};
+
 	render() {
 		const {
 			handleChange,
@@ -246,6 +208,8 @@ class App extends Component {
 			loadTags,
 			loadVideos,
 			handleScrollPosition,
+			updateHomeFirstLoad,
+			handleHomeOffsetUpdate,
 		} = this;
 		const {
 			username,
@@ -256,14 +220,10 @@ class App extends Component {
 			videoTags,
 			tagsLoading,
 			successfulLogin,
-			videosLoadingError,
-			loading,
-			hasMore,
-			videos,
 			scrollPosition,
 			autoplayVideo,
-			trendingVideos,
-			trendingVideosLoading,
+			isHomeFirstLoad,
+			homeVideosOffset,
 		} = this.state;
 
 		return (
@@ -272,7 +232,7 @@ class App extends Component {
 				<StyledEngineProvider injectFirst>
 					<ThemeProvider theme={theme}>
 						<Router history={history}>
-							<div>
+							<div style={{}}>
 								<Suspense
 									fallback={
 										<div
@@ -296,17 +256,12 @@ class App extends Component {
 											render={(props) => (
 												<Home
 													{...props}
-													loggedIn={loggedIn}
-													videoTags={videoTags}
-													tagsLoading={tagsLoading}
-													loadTags={loadTags}
-													error={videosLoadingError}
-													loading={loading}
-													hasMore={hasMore}
-													videos={videos}
-													loadVideos={loadVideos}
 													scrollPosition={scrollPosition}
 													handleScrollPosition={handleScrollPosition}
+													isHomeFirstLoad={isHomeFirstLoad}
+													updateHomeFirstLoad={updateHomeFirstLoad}
+													handleHomeOffsetUpdate={handleHomeOffsetUpdate}
+													homeVideosOffset={homeVideosOffset}
 												/>
 											)}
 										/>
@@ -349,17 +304,7 @@ class App extends Component {
 												</ProtectedComponent>
 											)}
 										/>
-										<Route
-											path='/:slug'
-											render={() => (
-												<Video
-													trendingVideosLoading={trendingVideosLoading}
-													autoplayVideo={autoplayVideo}
-													loggedIn={loggedIn}
-													trendingVideos={trendingVideos}
-												/>
-											)}
-										/>
+										<Route path='/:slug' render={() => <Video />} />
 									</Switch>
 								</Suspense>
 							</div>
@@ -371,4 +316,7 @@ class App extends Component {
 	}
 }
 
-export default App;
+const mapStateToProps = (state) => ({ ...state.videos });
+const mapDispatchToProps = { getTrendingVideos };
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

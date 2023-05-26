@@ -1,24 +1,24 @@
 .nav__link {
-  text-decoration: none;
-  color: #fff;
-  border: 1px solid #fff;
-  background-color: #000;
+	text-decoration: none;
+	color: #fff;
+	border: 1px solid #fff;
+	background-color: #000;
 }
 .title {
-  transition: all 0.5s ease;
+	transition: all 0.5s ease;
 }
 
 .title:hover {
-  color: #f5f5f7;
+	color: #f5f5f7;
 }
 .toolbarRoot {
-  height: 64px;
-  padding-left: 0;
+	height: 64px;
+	padding-left: 0;
 }
 .logo {
-  width: 60px;
-  max-width: 100%;
-  height: auto;
-  margin-left: -16px;
-  margin-right: -10px;
+	width: 60px;
+	max-width: 100%;
+	height: auto;
+	margin-left: -16px;
+	margin-right: -10px;
 }

@@ -1,0 +1,38 @@
+.videoPlayerActions {
+	position: absolute;
+	bottom: 0px;
+	z-index: 1;
+	display: block;
+	padding-bottom: 8px;
+}
+
+.videoPlayerActions-hide {
+	display: none;
+}
+
+.videoPlayerActions-time {
+	height: '20px';
+	width: '100px';
+}
+
+.videoPlayerActions-volume {
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.videoPlayerActions-knob-container {
+}
+
+.videoPlayerActions-knob {
+	width: 60px;
+	height: 5px;
+	position: relative;
+	cursor: pointer;
+}
+
+.videoPlayerActions-knob-inner {
+	height: 5px;
+	background-color: white;
+	position: absolute;
+}
