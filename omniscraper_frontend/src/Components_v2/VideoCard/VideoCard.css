@@ -11,14 +11,11 @@ videoCard-elapsed-time {
 }
 
 .videoCard-btn {
-	display: none;
+	display: none !important;
 }
 
 .videoCard-btn-hover {
-	display: block;
-}
-
-.videoCard-btn:hover {
+	display: block !important;
 }
 
 /* For Mobile Screens */

@@ -38,7 +38,9 @@ function VideoCard({
 		<div
 			className='videoCard px-2 pt-2 focus:ring-1 focus:ring-neutral-500'
 			onMouseLeave={() => handleMouseLeave()}
-			onMouseEnter={() => setBtnOnDisplay(true)}
+			onMouseEnter={() => {
+				setBtnOnDisplay(true);
+			}}
 			onClick={() => handleClick(videoSlug)}
 		>
 			<img

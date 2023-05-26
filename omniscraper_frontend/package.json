@@ -6,7 +6,7 @@
 	"main": "index.js",
 	"scripts": {
 		"dev": "webpack --mode development --watch",
-		"build": "webpack --mode production build-tailwind",
+		"build": "webpack --mode production",
 		"report": "npm run build",
 		"help": "webpack --help",
 		"tailwind": "npx tailwindcss -i ./src/index.css -o ./static/omniscraper_frontend/dist/output.css --watch"
