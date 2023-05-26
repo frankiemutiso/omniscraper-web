@@ -5,9 +5,9 @@
       "name": "906ffc1111c85378935e0d742d100ad1.png",
       "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/906ffc1111c85378935e0d742d100ad1.png"
     },
-    "620-45d652f78909a3e4a148.js": {
-      "name": "620-45d652f78909a3e4a148.js",
-      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/620-45d652f78909a3e4a148.js"
+    "620-c38e0d431030d4672432.js": {
+      "name": "620-c38e0d431030d4672432.js",
+      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/620-c38e0d431030d4672432.js"
     },
     "315-fd5deaf062569feef631.js": {
       "name": "315-fd5deaf062569feef631.js",
@@ -33,13 +33,13 @@
       "name": "main.0a842a4080576fa31a0a.js",
       "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/main.0a842a4080576fa31a0a.js"
     },
-    "runtime.026dc21a52a27e2858a5.js": {
-      "name": "runtime.026dc21a52a27e2858a5.js",
-      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/runtime.026dc21a52a27e2858a5.js"
+    "runtime.7803b7ab65e88f800bb5.js": {
+      "name": "runtime.7803b7ab65e88f800bb5.js",
+      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/runtime.7803b7ab65e88f800bb5.js"
     },
-    "620.22c763ef.chunk.css": {
-      "name": "620.22c763ef.chunk.css",
-      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/620.22c763ef.chunk.css"
+    "620.f0a80f7d.chunk.css": {
+      "name": "620.f0a80f7d.chunk.css",
+      "path": "/Users/francismutiso/Documents/Projects/omniscraper/omniscraper-web/omniscraper_frontend/static/omniscraper_frontend/bundles/620.f0a80f7d.chunk.css"
     },
     "315.b9ddc808.chunk.css": {
       "name": "315.b9ddc808.chunk.css",
@@ -64,7 +64,7 @@
   },
   "chunks": {
     "main": [
-      "runtime.026dc21a52a27e2858a5.js",
+      "runtime.7803b7ab65e88f800bb5.js",
       "870.1071d2bf8baecd8f2d14.js",
       "main.036067b6.css",
       "main.0a842a4080576fa31a0a.js"
