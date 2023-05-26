@@ -9,7 +9,7 @@
 		"build": "webpack --mode production",
 		"report": "npm run build",
 		"help": "webpack --help",
-		"tailwind": "npx tailwindcss -i ./src/index.css -o ./static/omniscraper_frontend/dist/output.css --watch"
+		"tailwind": "npx tailwindcss -i ./src/index.css -o ./static/omniscraper_frontend/tailwindOutput/output.css --watch"
 	},
 	"keywords": [],
 	"author": "",
