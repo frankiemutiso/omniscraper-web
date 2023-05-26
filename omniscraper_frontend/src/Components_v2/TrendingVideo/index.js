@@ -44,7 +44,7 @@ function TrendingVideo({
 					alt='Omniscraper Trending Twitter Video'
 				/>
 			</div>
-			<div className='col-span-4 sm:pt-2'>
+			<div className='trendingVideo-actions col-span-4 sm:mt-2'>
 				{text && (
 					<div className='trendingVideo-text-container mb-2'>
 						<p className='text-sm font-semibold'>{text}</p>
