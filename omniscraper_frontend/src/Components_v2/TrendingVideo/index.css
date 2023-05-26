@@ -12,16 +12,14 @@
 	width: 100%;
 }
 
-@media screen and (min-width: 411px) {
-	.trendingVideo-text-container {
-		max-height: 42px;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		display: -webkit-box;
-		white-space: initial;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-	}
+.trendingVideo-text-container {
+	max-height: 42px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	white-space: initial;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 }
 
 /* For Mobile Screens */
@@ -37,6 +35,10 @@
 
 	.trendingVideo-text-container {
 		/* display: none; */
+	}
+
+	.trendingVideo-actions {
+		margin-top: 8px;
 	}
 }
 
@@ -56,5 +58,9 @@
 
 	.trendingVideo-text-container {
 		/* display: none; */
+	}
+
+	.trendingVideo-actions {
+		margin-top: 8px;
 	}
 }
