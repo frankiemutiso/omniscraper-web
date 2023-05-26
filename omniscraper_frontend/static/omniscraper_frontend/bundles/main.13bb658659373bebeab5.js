@@ -738,7 +738,7 @@ var flagRequestReducer = function flagRequestReducer() {
 function videosReducer_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function videosReducer_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? videosReducer_ownKeys(Object(source), !0).forEach(function (key) { (0,defineProperty["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : videosReducer_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
-var videosReducer_initalState = {
+var initialState = {
   videoLoading: false,
   videoError: false,
   videoObject: null,
@@ -756,7 +756,7 @@ var videosReducer_initalState = {
   downloadingVideoProgress: 0
 };
 var videosReducer = function videosReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : videosReducer_initalState;
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments.length > 1 ? arguments[1] : undefined;
   switch (action.type) {
     case actionTypes.GET_VIDEO:
@@ -793,13 +793,14 @@ var videosReducer = function videosReducer() {
     case actionTypes.GET_VIDEOS_LIST:
       return videosReducer_objectSpread(videosReducer_objectSpread({}, state), {}, {
         videosLoading: true,
-        videosLoadingError: false
+        videosLoadingError: false,
+        hasMoreVideos: true
       });
     case actionTypes.GET_VIDEOS_LIST_SUCCESS:
       return videosReducer_objectSpread(videosReducer_objectSpread({}, state), {}, {
         videosLoading: false,
         videos: state.videos.concat(action.videosData.videos),
-        hasMoreVideos: action.videosData.hasMore
+        hasMoreVideos: action.videosData.has_more
       });
     case actionTypes.GET_VIDEOS_LIST_ERROR:
       return videosReducer_objectSpread(videosReducer_objectSpread({}, state), {}, {
@@ -1977,10 +1978,10 @@ function App_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || 
 
 
 var Video = /*#__PURE__*/react.lazy(function () {
-  return __webpack_require__.e(/*! import() */ "src_pages_Video_index_js").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/Video/index */ 2509));
+  return __webpack_require__.e(/*! import() */ "src_pages_Video_index_js").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/Video/index */ 859));
 });
 var Home = /*#__PURE__*/react.lazy(function () {
-  return __webpack_require__.e(/*! import() */ "src_pages_Home_index_js").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/Home */ 2648));
+  return __webpack_require__.e(/*! import() */ "src_pages_Home_index_js").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/Home */ 460));
 });
 var FilteredVideos = /*#__PURE__*/react.lazy(function () {
   return __webpack_require__.e(/*! import() */ "src_pages_FilteredVideos_js").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/FilteredVideos */ 8755));
@@ -2030,7 +2031,8 @@ var App = /*#__PURE__*/function (_Component) {
       scrollPosition: 0,
       autoplayVideo: false,
       successfulLogin: false,
-      isHomeFirstLoad: true
+      isHomeFirstLoad: true,
+      homeVideosOffset: 1
     });
     (0,defineProperty["default"])((0,assertThisInitialized["default"])(_this), "componentDidMount", /*#__PURE__*/(0,asyncToGenerator["default"])( /*#__PURE__*/regenerator_default().mark(function _callee() {
       return regenerator_default().wrap(function _callee$(_context) {
@@ -2169,6 +2171,11 @@ var App = /*#__PURE__*/function (_Component) {
         isHomeFirstLoad: state
       });
     });
+    (0,defineProperty["default"])((0,assertThisInitialized["default"])(_this), "handleHomeOffsetUpdate", function (offset) {
+      _this.setState({
+        homeVideosOffset: offset
+      });
+    });
     return _this;
   }
   (0,createClass["default"])(App, [{
@@ -2180,7 +2187,8 @@ var App = /*#__PURE__*/function (_Component) {
         loadTags = this.loadTags,
         loadVideos = this.loadVideos,
         handleScrollPosition = this.handleScrollPosition,
-        updateHomeFirstLoad = this.updateHomeFirstLoad;
+        updateHomeFirstLoad = this.updateHomeFirstLoad,
+        handleHomeOffsetUpdate = this.handleHomeOffsetUpdate;
       var _this$state2 = this.state,
         username = _this$state2.username,
         password = _this$state2.password,
@@ -2192,7 +2200,8 @@ var App = /*#__PURE__*/function (_Component) {
         successfulLogin = _this$state2.successfulLogin,
         scrollPosition = _this$state2.scrollPosition,
         autoplayVideo = _this$state2.autoplayVideo,
-        isHomeFirstLoad = _this$state2.isHomeFirstLoad;
+        isHomeFirstLoad = _this$state2.isHomeFirstLoad,
+        homeVideosOffset = _this$state2.homeVideosOffset;
       return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Toolbar["default"], null), /*#__PURE__*/react.createElement(StyledEngineProvider["default"], {
         injectFirst: true
       }, /*#__PURE__*/react.createElement(ThemeProvider["default"], {
@@ -2223,7 +2232,9 @@ var App = /*#__PURE__*/function (_Component) {
             scrollPosition: scrollPosition,
             handleScrollPosition: handleScrollPosition,
             isHomeFirstLoad: isHomeFirstLoad,
-            updateHomeFirstLoad: updateHomeFirstLoad
+            updateHomeFirstLoad: updateHomeFirstLoad,
+            handleHomeOffsetUpdate: handleHomeOffsetUpdate,
+            homeVideosOffset: homeVideosOffset
           }));
         }
       }), /*#__PURE__*/react.createElement(react_router.Route, {
@@ -2587,13 +2598,12 @@ var submitFlagRequestsApprovalStatus = function submitFlagRequestsApprovalStatus
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "downloadVideo": () => (/* binding */ downloadVideo),
 /* harmony export */   "flagVideo": () => (/* binding */ flagVideo),
 /* harmony export */   "getTrendingVideos": () => (/* binding */ getTrendingVideos),
 /* harmony export */   "getVideo": () => (/* binding */ getVideo),
 /* harmony export */   "getVideos": () => (/* binding */ getVideos)
 /* harmony export */ });
-/* unused harmony export getTaggedVideos */
+/* unused harmony exports getTaggedVideos, downloadVideo */
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 5861);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ 4687);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
@@ -3273,4 +3283,4 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".login__success-text {\n  color: #24bf
 /******/ var __webpack_exports__ = __webpack_require__.O();
 /******/ }
 ]);
-//# sourceMappingURL=main.f75e8117d0bdea261d03.js.map
+//# sourceMappingURL=main.13bb658659373bebeab5.js.map

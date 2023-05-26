@@ -6,7 +6,7 @@ function IconButton({ show, children, ...restProps }) {
 		<button
 			className={`${
 				show
-					? 'icon-btn ml-2 bg-neutral-200 rounded-full p-2 hover:bg-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-500'
+					? 'icon-btn ml-2 lg:bg-neutral-200 rounded-full p-2 hover:bg-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-500'
 					: 'icon-btn-hide'
 			}`}
 			{...restProps}

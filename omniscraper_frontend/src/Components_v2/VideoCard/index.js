@@ -8,9 +8,15 @@ import moreIcon from '../../assets/more.svg';
 import { useHistory } from 'react-router-dom';
 import { getStrippedVideoText, shareVideo } from '../../utils/utilFunctions';
 
-const HIDDEN = false;
+const HIDDEN = true;
 
-function VideoCard({ imageSource, text, elapsedTime, videoSlug }) {
+function VideoCard({
+	imageSource,
+	text,
+	elapsedTime,
+	videoSlug,
+	handleScrollPosition,
+}) {
 	const [isBtnOnDisplay, setBtnOnDisplay] = useState(false);
 	const [target, setMenuTarget] = useState(null);
 
@@ -24,12 +30,13 @@ function VideoCard({ imageSource, text, elapsedTime, videoSlug }) {
 	};
 
 	const handleClick = (videoSlug) => {
+		handleScrollPosition();
 		history.push(`/${videoSlug}`);
 	};
 
 	return (
 		<div
-			className='videoCard p-2 focus:ring-1 focus:ring-neutral-500'
+			className='videoCard px-2 pt-2 focus:ring-1 focus:ring-neutral-500'
 			onMouseLeave={() => handleMouseLeave()}
 			onMouseEnter={() => setBtnOnDisplay(true)}
 			onClick={() => handleClick(videoSlug)}
@@ -57,7 +64,7 @@ function VideoCard({ imageSource, text, elapsedTime, videoSlug }) {
 								icon={<img src={shareIcon} />}
 								onClick={() => shareVideo(videoSlug)}
 							/>
-							{HIDDEN ? (
+							{!HIDDEN ? (
 								<MenuItem label='Report' icon={<img src={flagIcon} />} />
 							) : null}
 						</Menu>

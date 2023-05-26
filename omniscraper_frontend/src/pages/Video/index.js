@@ -10,13 +10,28 @@ import TrendingVideos from '../../Components_v2/TrendingVideos';
 import { Helmet } from 'react-helmet';
 
 class Video extends Component {
+	state = {
+		trendingVideoList: [],
+	};
 	componentDidMount() {
-		this.loadVideo();
+		const { setTrendingVideos, loadVideo } = this;
+
+		loadVideo();
+		setTrendingVideos();
 	}
 
 	componentDidUpdate(prevProps) {
-		if (prevProps.match.params.slug !== this.props.match.params.slug) {
-			this.loadVideo();
+		const { setTrendingVideos, loadVideo } = this;
+		const { trendingVideos, match } = this.props;
+		const { slug } = match.params;
+
+		if (prevProps.match.params.slug !== slug) {
+			loadVideo();
+			setTrendingVideos();
+		}
+
+		if (prevProps.trendingVideos !== trendingVideos) {
+			setTrendingVideos();
 		}
 	}
 
@@ -34,10 +49,19 @@ class Video extends Component {
 		});
 	};
 
+	setTrendingVideos = () => {
+		const { trendingVideos, match } = this.props;
+		const { slug } = match.params;
+
+		const trendingVideoList = trendingVideos.filter((x) => x.slug !== slug);
+
+		this.setState({ trendingVideoList });
+	};
+
 	render() {
-		const { videoObject, videoLoading, trendingVideos, trendingVideosLoading } =
-			this.props;
+		const { videoObject, videoLoading, trendingVideosLoading } = this.props;
 		const { handleVideoDownload } = this;
+		const { trendingVideoList } = this.state;
 
 		const elapsedTime = videoObject
 			? calculateTimeSinceSave(videoObject)
@@ -96,7 +120,7 @@ class Video extends Component {
 					</div>
 					<div className='col-span-2'>
 						<TrendingVideos
-							trendingVideos={trendingVideos}
+							trendingVideos={trendingVideoList}
 							trendingVideosLoading={trendingVideosLoading}
 						/>
 					</div>

@@ -3,7 +3,7 @@ import './VideoCard.css';
 
 function VideoCardPlaceholder() {
 	return (
-		<div className='videoCard p-2 w-full'>
+		<div className='videoCard px-2 pt-2 w-full'>
 			<div
 				className='bg-neutral-200 rounded-lg animate-pulse mb-2'
 				style={{ height: 190 }}

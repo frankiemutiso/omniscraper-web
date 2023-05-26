@@ -12,30 +12,10 @@ function Videos({
 	videosLoadingError,
 	loadVideos,
 	offset,
+	handleScrollPosition,
 }) {
-	useEffect(() => {
-		window.addEventListener('scroll', handleInfiniteScroll);
-
-		return () => {
-			window.removeEventListener('scroll', handleInfiniteScroll);
-			console.log('Event listener removed!');
-		};
-	}, []);
-
-	const handleInfiniteScroll = () => {
-		const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
-
-		if (videosLoadingError || videosLoading || !hasMoreVideos) return;
-
-		const checkHeight = scrollTop >= scrollHeight - clientHeight - 200;
-
-		if (checkHeight) {
-			loadVideos();
-		}
-	};
-
 	return (
-		<div className='videos-grid flex fle-wrap grid 2xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4 p-4'>
+		<div className='videos-grid flex fle-wrap grid 2xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 lg:gap-4 gap-3 p-4'>
 			{videosLoading && offset === 1 ? (
 				<Fragment>
 					{Array.from(new Array(12)).map((item, index) => (
@@ -54,6 +34,7 @@ function Videos({
 								text={x.text}
 								elapsedTime={elapsedTime}
 								videoSlug={x.slug}
+								handleScrollPosition={handleScrollPosition}
 							/>
 						);
 					})}

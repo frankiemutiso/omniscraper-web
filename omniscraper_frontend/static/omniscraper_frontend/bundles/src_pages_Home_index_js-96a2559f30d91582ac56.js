@@ -241,12 +241,13 @@ var utilFunctions = __webpack_require__(1175);
 
 
 
-var HIDDEN = false;
+var HIDDEN = true;
 function Components_v2_VideoCard_VideoCard(_ref) {
   var imageSource = _ref.imageSource,
     text = _ref.text,
     elapsedTime = _ref.elapsedTime,
-    videoSlug = _ref.videoSlug;
+    videoSlug = _ref.videoSlug,
+    handleScrollPosition = _ref.handleScrollPosition;
   var _useState = (0,react.useState)(false),
     _useState2 = (0,slicedToArray["default"])(_useState, 2),
     isBtnOnDisplay = _useState2[0],
@@ -262,10 +263,11 @@ function Components_v2_VideoCard_VideoCard(_ref) {
     setMenuTarget(null);
   };
   var handleClick = function handleClick(videoSlug) {
+    handleScrollPosition();
     history.push("/".concat(videoSlug));
   };
   return /*#__PURE__*/react.createElement("div", {
-    className: "videoCard p-2 focus:ring-1 focus:ring-neutral-500",
+    className: "videoCard px-2 pt-2 focus:ring-1 focus:ring-neutral-500",
     onMouseLeave: function onMouseLeave() {
       return handleMouseLeave();
     },
@@ -304,7 +306,7 @@ function Components_v2_VideoCard_VideoCard(_ref) {
     onClick: function onClick() {
       return (0,utilFunctions.shareVideo)(videoSlug);
     }
-  }), HIDDEN ? /*#__PURE__*/react.createElement(MenuItem["default"], {
+  }), !HIDDEN ? /*#__PURE__*/react.createElement(MenuItem["default"], {
     label: "Report",
     icon: /*#__PURE__*/react.createElement("img", {
       src: flag["default"]
@@ -346,7 +348,7 @@ var Placeholder = __webpack_require__(9155);
 
 function VideoCardPlaceholder() {
   return /*#__PURE__*/react.createElement("div", {
-    className: "videoCard p-2 w-full"
+    className: "videoCard px-2 pt-2 w-full"
   }, /*#__PURE__*/react.createElement("div", {
     className: "bg-neutral-200 rounded-lg animate-pulse mb-2",
     style: {
@@ -383,27 +385,10 @@ function Components_v2_Videos_Videos(_ref) {
     videosLoading = _ref.videosLoading,
     videosLoadingError = _ref.videosLoadingError,
     loadVideos = _ref.loadVideos,
-    offset = _ref.offset;
-  (0,react.useEffect)(function () {
-    window.addEventListener('scroll', handleInfiniteScroll);
-    return function () {
-      window.removeEventListener('scroll', handleInfiniteScroll);
-      console.log('Event listener removed!');
-    };
-  }, []);
-  var handleInfiniteScroll = function handleInfiniteScroll() {
-    var _document$documentEle = document.documentElement,
-      scrollHeight = _document$documentEle.scrollHeight,
-      scrollTop = _document$documentEle.scrollTop,
-      clientHeight = _document$documentEle.clientHeight;
-    if (videosLoadingError || videosLoading || !hasMoreVideos) return;
-    var checkHeight = scrollTop >= scrollHeight - clientHeight - 200;
-    if (checkHeight) {
-      loadVideos();
-    }
-  };
+    offset = _ref.offset,
+    handleScrollPosition = _ref.handleScrollPosition;
   return /*#__PURE__*/react.createElement("div", {
-    className: "videos-grid flex fle-wrap grid 2xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4 p-4"
+    className: "videos-grid flex fle-wrap grid 2xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 lg:gap-4 gap-3 p-4"
   }, videosLoading && offset === 1 ? /*#__PURE__*/react.createElement(react.Fragment, null, Array.from(new Array(12)).map(function (item, index) {
     return /*#__PURE__*/react.createElement(VideoCard_VideoCardPlaceholder, {
       key: index
@@ -415,7 +400,8 @@ function Components_v2_Videos_Videos(_ref) {
       imageSource: x.video_thumbnail_link_https,
       text: x.text,
       elapsedTime: elapsedTime,
-      videoSlug: x.slug
+      videoSlug: x.slug,
+      handleScrollPosition: handleScrollPosition
     });
   })), videosLoading && offset > 1 && /*#__PURE__*/react.createElement(react.Fragment, null, Array.from(new Array(12)).map(function (item, index) {
     return /*#__PURE__*/react.createElement(VideoCard_VideoCardPlaceholder, {
@@ -470,15 +456,12 @@ var pages_Home_Home = /*#__PURE__*/function (_Component) {
       args[_key] = arguments[_key];
     }
     _this = _super.call.apply(_super, [this].concat(args));
-    (0,defineProperty["default"])((0,assertThisInitialized["default"])(_this), "state", {
-      offset: 1
-    });
     (0,defineProperty["default"])((0,assertThisInitialized["default"])(_this), "componentDidMount", function () {
       var _this$props = _this.props,
         location = _this$props.location,
         updateHomeFirstLoad = _this$props.updateHomeFirstLoad,
-        isHomeFirstLoad = _this$props.isHomeFirstLoad;
-      var scrollPosition = _this.state.scrollPosition;
+        isHomeFirstLoad = _this$props.isHomeFirstLoad,
+        scrollPosition = _this$props.scrollPosition;
       window.gtag('event', 'page_view', {
         page_title: 'Home',
         page_path: location.pathname + location.search,
@@ -489,22 +472,36 @@ var pages_Home_Home = /*#__PURE__*/function (_Component) {
         updateHomeFirstLoad(false);
         _this.loadVideos();
       }
+      window.addEventListener('scroll', _this.handleInfiniteScroll);
+    });
+    (0,defineProperty["default"])((0,assertThisInitialized["default"])(_this), "handleInfiniteScroll", function () {
+      var _this$props2 = _this.props,
+        videosLoadingError = _this$props2.videosLoadingError,
+        videosLoading = _this$props2.videosLoading,
+        hasMoreVideos = _this$props2.hasMoreVideos;
+      var _document$documentEle = document.documentElement,
+        scrollHeight = _document$documentEle.scrollHeight,
+        scrollTop = _document$documentEle.scrollTop,
+        clientHeight = _document$documentEle.clientHeight;
+      if (videosLoadingError || videosLoading || !hasMoreVideos) return;
+      var checkHeight = scrollTop >= scrollHeight - clientHeight - 200;
+      if (checkHeight) {
+        _this.loadVideos();
+      }
     });
     (0,defineProperty["default"])((0,assertThisInitialized["default"])(_this), "loadVideos", /*#__PURE__*/(0,asyncToGenerator["default"])( /*#__PURE__*/regenerator_default().mark(function _callee() {
-      var offset, _this$props2, videosLoadingError, videosLoading;
+      var homeVideosOffset, _this$props3, videosLoadingError, videosLoading;
       return regenerator_default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              offset = _this.state.offset;
+              homeVideosOffset = _this.props.homeVideosOffset;
               _context.next = 3;
-              return _this.props.getVideos(offset, LIMIT);
+              return _this.props.getVideos(homeVideosOffset, LIMIT);
             case 3:
-              _this$props2 = _this.props, videosLoadingError = _this$props2.videosLoadingError, videosLoading = _this$props2.videosLoading;
+              _this$props3 = _this.props, videosLoadingError = _this$props3.videosLoadingError, videosLoading = _this$props3.videosLoading;
               if (!videosLoadingError && !videosLoading) {
-                _this.setState({
-                  offset: offset + LIMIT
-                });
+                _this.props.handleHomeOffsetUpdate(homeVideosOffset + LIMIT);
               }
             case 5:
             case "end":
@@ -513,24 +510,22 @@ var pages_Home_Home = /*#__PURE__*/function (_Component) {
         }
       }, _callee);
     })));
-    (0,defineProperty["default"])((0,assertThisInitialized["default"])(_this), "handleScrollPosition", function () {
-      _this.setState({
-        autoplayVideo: true,
-        scrollPosition: window.pageYOffset
-      });
+    (0,defineProperty["default"])((0,assertThisInitialized["default"])(_this), "componentWillUnmount", function () {
+      window.removeEventListener('scroll', _this.handleInfiniteScroll);
     });
     return _this;
   }
   (0,createClass["default"])(Home, [{
     key: "render",
     value: function render() {
-      var _this$props3 = this.props,
-        videosLoadingError = _this$props3.videosLoadingError,
-        videosLoading = _this$props3.videosLoading,
-        hasMoreVideos = _this$props3.hasMoreVideos,
-        videos = _this$props3.videos;
+      var _this$props4 = this.props,
+        videosLoadingError = _this$props4.videosLoadingError,
+        videosLoading = _this$props4.videosLoading,
+        hasMoreVideos = _this$props4.hasMoreVideos,
+        videos = _this$props4.videos,
+        handleScrollPosition = _this$props4.handleScrollPosition,
+        homeVideosOffset = _this$props4.homeVideosOffset;
       var loadVideos = this.loadVideos;
-      var offset = this.state.offset;
       return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Helmet.Helmet, null, /*#__PURE__*/react.createElement("meta", {
         charset: "UTF-8"
       }), /*#__PURE__*/react.createElement("meta", {
@@ -545,7 +540,8 @@ var pages_Home_Home = /*#__PURE__*/function (_Component) {
         videosLoading: videosLoading,
         videosLoadingError: videosLoadingError,
         loadVideos: loadVideos,
-        offset: offset
+        handleScrollPosition: handleScrollPosition,
+        offset: homeVideosOffset
       }));
     }
   }]);
@@ -2053,4 +2049,4 @@ function _slicedToArray(arr, i) {
 /***/ })
 
 }]);
-//# sourceMappingURL=src_pages_Home_index_js-fd8b70fb8c19e35c657b.js.map
+//# sourceMappingURL=src_pages_Home_index_js-96a2559f30d91582ac56.js.map

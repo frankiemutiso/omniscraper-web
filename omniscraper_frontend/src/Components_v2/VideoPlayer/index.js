@@ -30,6 +30,28 @@ function VideoPlayer({
 	const [isPlaying, setPlayState] = useState(false);
 	const [volumeLevel, setVolumeLevel] = useState(0);
 
+	useEffect(() => {
+		const handleFullscreenChange = () => {
+			const element = document.getElementById('videoPlayer');
+
+			if (document.fullscreenElement) {
+				element.classList.remove('videoPlayer');
+				element.classList.add('videoPlayer-fullscreen');
+				setFullScreen(true);
+			} else {
+				element.classList.remove('videoPlayer-fullscreen');
+				element.classList.add('videoPlayer');
+				setFullScreen(false);
+			}
+		};
+
+		window.addEventListener('fullscreenchange', handleFullscreenChange);
+
+		return () => {
+			window.removeEventListener('fullscreenchange', handleFullscreenChange);
+		};
+	}, []);
+
 	const handlePlayState = () => {
 		const current = videoRef?.current;
 
@@ -78,12 +100,7 @@ function VideoPlayer({
 	const toggleFullscreen = () => {
 		const element = document.getElementById('videoPlayer');
 
-		if (
-			document.fullscreenElement ||
-			window.event.key === 'Escape' ||
-			window.event.key === 'Esc' ||
-			window.event.keyCode === 27
-		) {
+		if (document.fullscreenElement) {
 			element.classList.remove('videoPlayer-fullscreen');
 			element.classList.add('videoPlayer');
 			setFullScreen(false);
@@ -94,7 +111,6 @@ function VideoPlayer({
 			element.classList.remove('videoPlayer');
 			element.classList.add('videoPlayer-fullscreen');
 			setFullScreen(true);
-			console.log(window.innerHeight);
 		}
 	};
 
@@ -130,37 +146,11 @@ function VideoPlayer({
 		setVolumeLevel(vol * 100);
 	};
 
-	const onKeyDown = () => {
-		const element = document.getElementById('videoPlayer');
-
-		debugger;
-
-		if (
-			document.fullscreenElement &&
-			(window.event.key === 'Escape' ||
-				window.event.key === 'Esc' ||
-				window.event.keyCode === 27)
-		) {
-			element.classList.remove('videoPlayer-fullscreen');
-			element.classList.add('videoPlayer');
-			setFullScreen(false);
-			document.exitFullscreen();
-		}
-	};
-
 	const strippedText = getStrippedVideoText(videoText);
 
 	return (
-		<div
-			onKeyDown={() => {
-				debugger;
-			}}
-		>
-			<div
-				className='videoPlayer-container'
-				id='videoPlayer-container'
-				onKeyDown={() => onKeyDown()}
-			>
+		<div>
+			<div className='videoPlayer-container' id='videoPlayer-container'>
 				<video
 					ref={videoRef}
 					autoPlay={true}

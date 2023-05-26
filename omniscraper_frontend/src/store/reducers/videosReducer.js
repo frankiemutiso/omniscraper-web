@@ -17,7 +17,7 @@ import {
 	GET_VIDEO_SUCCESS,
 } from '../actionTypes';
 
-const initalState = {
+const initialState = {
 	videoLoading: false,
 	videoError: false,
 	videoObject: null,
@@ -38,7 +38,7 @@ const initalState = {
 	downloadingVideoProgress: 0,
 };
 
-const videosReducer = (state = initalState, action) => {
+const videosReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case GET_VIDEO:
 			return {
@@ -87,6 +87,7 @@ const videosReducer = (state = initalState, action) => {
 				...state,
 				videosLoading: true,
 				videosLoadingError: false,
+				hasMoreVideos: true,
 			};
 
 		case GET_VIDEOS_LIST_SUCCESS:
@@ -94,7 +95,7 @@ const videosReducer = (state = initalState, action) => {
 				...state,
 				videosLoading: false,
 				videos: state.videos.concat(action.videosData.videos),
-				hasMoreVideos: action.videosData.hasMore,
+				hasMoreVideos: action.videosData.has_more,
 			};
 
 		case GET_VIDEOS_LIST_ERROR:

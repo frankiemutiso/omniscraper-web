@@ -21,13 +21,9 @@ const styles = (theme) => ({
 const LIMIT = 12;
 
 export class Home extends Component {
-	state = {
-		offset: 1,
-	};
-
 	componentDidMount = () => {
-		const { location, updateHomeFirstLoad, isHomeFirstLoad } = this.props;
-		const { scrollPosition } = this.state;
+		const { location, updateHomeFirstLoad, isHomeFirstLoad, scrollPosition } =
+			this.props;
 
 		window.gtag('event', 'page_view', {
 			page_title: 'Home',
@@ -41,32 +37,49 @@ export class Home extends Component {
 			updateHomeFirstLoad(false);
 			this.loadVideos();
 		}
+
+		window.addEventListener('scroll', this.handleInfiniteScroll);
+	};
+
+	handleInfiniteScroll = () => {
+		const { videosLoadingError, videosLoading, hasMoreVideos } = this.props;
+
+		const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
+		if (videosLoadingError || videosLoading || !hasMoreVideos) return;
+
+		const checkHeight = scrollTop >= scrollHeight - clientHeight - 200;
+
+		if (checkHeight) {
+			this.loadVideos();
+		}
 	};
 
 	loadVideos = async () => {
-		const { offset } = this.state;
+		const { homeVideosOffset } = this.props;
 
-		await this.props.getVideos(offset, LIMIT);
+		await this.props.getVideos(homeVideosOffset, LIMIT);
 
 		const { videosLoadingError, videosLoading } = this.props;
 
 		if (!videosLoadingError && !videosLoading) {
-			this.setState({ offset: offset + LIMIT });
+			this.props.handleHomeOffsetUpdate(homeVideosOffset + LIMIT);
 		}
 	};
 
-	handleScrollPosition = () => {
-		this.setState({
-			autoplayVideo: true,
-			scrollPosition: window.pageYOffset,
-		});
+	componentWillUnmount = () => {
+		window.removeEventListener('scroll', this.handleInfiniteScroll);
 	};
 
 	render() {
-		const { videosLoadingError, videosLoading, hasMoreVideos, videos } =
-			this.props;
+		const {
+			videosLoadingError,
+			videosLoading,
+			hasMoreVideos,
+			videos,
+			handleScrollPosition,
+			homeVideosOffset,
+		} = this.props;
 		const { loadVideos } = this;
-		const { offset } = this.state;
 
 		return (
 			<React.Fragment>
@@ -89,14 +102,18 @@ export class Home extends Component {
 					videosLoading={videosLoading}
 					videosLoadingError={videosLoadingError}
 					loadVideos={loadVideos}
-					offset={offset}
+					handleScrollPosition={handleScrollPosition}
+					offset={homeVideosOffset}
 				/>
 			</React.Fragment>
 		);
 	}
 }
 
-const mapStateToProps = (state) => ({ ...state.videos });
+const mapStateToProps = (state) => ({
+	...state.videos,
+});
+
 const mapDispatchToProps = { getVideos };
 
 export default connect(

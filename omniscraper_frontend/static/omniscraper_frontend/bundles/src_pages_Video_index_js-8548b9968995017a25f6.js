@@ -238,7 +238,7 @@ function IconButton_IconButton(_ref) {
     children = _ref.children,
     restProps = (0,objectWithoutProperties["default"])(_ref, _excluded);
   return /*#__PURE__*/react.createElement("button", (0,esm_extends["default"])({
-    className: "".concat(show ? 'icon-btn ml-2 bg-neutral-200 rounded-full p-2 hover:bg-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-500' : 'icon-btn-hide')
+    className: "".concat(show ? 'icon-btn ml-2 lg:bg-neutral-200 rounded-full p-2 hover:bg-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-500' : 'icon-btn-hide')
   }, restProps), children);
 }
 /* harmony default export */ const src_Components_v2_IconButton = (IconButton_IconButton);
@@ -533,6 +533,24 @@ function VideoPlayer_VideoPlayer(_ref) {
     _useState14 = (0,slicedToArray["default"])(_useState13, 2),
     volumeLevel = _useState14[0],
     setVolumeLevel = _useState14[1];
+  (0,react.useEffect)(function () {
+    var handleFullscreenChange = function handleFullscreenChange() {
+      var element = document.getElementById('videoPlayer');
+      if (document.fullscreenElement) {
+        element.classList.remove('videoPlayer');
+        element.classList.add('videoPlayer-fullscreen');
+        setFullScreen(true);
+      } else {
+        element.classList.remove('videoPlayer-fullscreen');
+        element.classList.add('videoPlayer');
+        setFullScreen(false);
+      }
+    };
+    window.addEventListener('fullscreenchange', handleFullscreenChange);
+    return function () {
+      window.removeEventListener('fullscreenchange', handleFullscreenChange);
+    };
+  }, []);
   var handlePlayState = function handlePlayState() {
     var current = videoRef === null || videoRef === void 0 ? void 0 : videoRef.current;
     if (!current) {
@@ -570,7 +588,7 @@ function VideoPlayer_VideoPlayer(_ref) {
   };
   var toggleFullscreen = function toggleFullscreen() {
     var element = document.getElementById('videoPlayer');
-    if (document.fullscreenElement || window.event.key === 'Escape' || window.event.key === 'Esc' || window.event.keyCode === 27) {
+    if (document.fullscreenElement) {
       element.classList.remove('videoPlayer-fullscreen');
       element.classList.add('videoPlayer');
       setFullScreen(false);
@@ -580,7 +598,6 @@ function VideoPlayer_VideoPlayer(_ref) {
       element.classList.remove('videoPlayer');
       element.classList.add('videoPlayer-fullscreen');
       setFullScreen(true);
-      console.log(window.innerHeight);
     }
   };
   var handleVolumeBtnClick = function handleVolumeBtnClick() {
@@ -606,27 +623,10 @@ function VideoPlayer_VideoPlayer(_ref) {
     videoTarget.volume = vol;
     setVolumeLevel(vol * 100);
   };
-  var _onKeyDown = function onKeyDown() {
-    var element = document.getElementById('videoPlayer');
-    debugger;
-    if (document.fullscreenElement && (window.event.key === 'Escape' || window.event.key === 'Esc' || window.event.keyCode === 27)) {
-      element.classList.remove('videoPlayer-fullscreen');
-      element.classList.add('videoPlayer');
-      setFullScreen(false);
-      document.exitFullscreen();
-    }
-  };
   var strippedText = (0,utilFunctions.getStrippedVideoText)(videoText);
-  return /*#__PURE__*/react.createElement("div", {
-    onKeyDown: function onKeyDown() {
-      debugger;
-    }
-  }, /*#__PURE__*/react.createElement("div", {
+  return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", {
     className: "videoPlayer-container",
-    id: "videoPlayer-container",
-    onKeyDown: function onKeyDown() {
-      return _onKeyDown();
-    }
+    id: "videoPlayer-container"
   }, /*#__PURE__*/react.createElement("video", {
     ref: videoRef,
     autoPlay: true,
@@ -983,6 +983,9 @@ var Video_Video = /*#__PURE__*/function (_Component) {
       args[_key] = arguments[_key];
     }
     _this = _super.call.apply(_super, [this].concat(args));
+    (0,defineProperty["default"])((0,assertThisInitialized["default"])(_this), "state", {
+      trendingVideoList: []
+    });
     (0,defineProperty["default"])((0,assertThisInitialized["default"])(_this), "loadVideo", /*#__PURE__*/(0,asyncToGenerator["default"])( /*#__PURE__*/regenerator_default().mark(function _callee() {
       var _this$props, getVideo, match, slug;
       return regenerator_default().wrap(function _callee$(_context) {
@@ -1022,29 +1025,54 @@ var Video_Video = /*#__PURE__*/function (_Component) {
         return _ref2.apply(this, arguments);
       };
     }());
+    (0,defineProperty["default"])((0,assertThisInitialized["default"])(_this), "setTrendingVideos", function () {
+      var _this$props2 = _this.props,
+        trendingVideos = _this$props2.trendingVideos,
+        match = _this$props2.match;
+      var slug = match.params.slug;
+      var trendingVideoList = trendingVideos.filter(function (x) {
+        return x.slug !== slug;
+      });
+      _this.setState({
+        trendingVideoList: trendingVideoList
+      });
+    });
     return _this;
   }
   (0,createClass["default"])(Video, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.loadVideo();
+      var setTrendingVideos = this.setTrendingVideos,
+        loadVideo = this.loadVideo;
+      loadVideo();
+      setTrendingVideos();
     }
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      if (prevProps.match.params.slug !== this.props.match.params.slug) {
-        this.loadVideo();
+      var setTrendingVideos = this.setTrendingVideos,
+        loadVideo = this.loadVideo;
+      var _this$props3 = this.props,
+        trendingVideos = _this$props3.trendingVideos,
+        match = _this$props3.match;
+      var slug = match.params.slug;
+      if (prevProps.match.params.slug !== slug) {
+        loadVideo();
+        setTrendingVideos();
+      }
+      if (prevProps.trendingVideos !== trendingVideos) {
+        setTrendingVideos();
       }
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$props2 = this.props,
-        videoObject = _this$props2.videoObject,
-        videoLoading = _this$props2.videoLoading,
-        trendingVideos = _this$props2.trendingVideos,
-        trendingVideosLoading = _this$props2.trendingVideosLoading;
+      var _this$props4 = this.props,
+        videoObject = _this$props4.videoObject,
+        videoLoading = _this$props4.videoLoading,
+        trendingVideosLoading = _this$props4.trendingVideosLoading;
       var _handleVideoDownload = this.handleVideoDownload;
+      var trendingVideoList = this.state.trendingVideoList;
       var elapsedTime = videoObject ? (0,calculateTimeLapse.calculateTimeSinceSave)(videoObject) : null;
       return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Helmet.Helmet, null, /*#__PURE__*/react.createElement("meta", {
         name: "description",
@@ -1092,7 +1120,7 @@ var Video_Video = /*#__PURE__*/function (_Component) {
       }) : null)), /*#__PURE__*/react.createElement("div", {
         className: "col-span-2"
       }, /*#__PURE__*/react.createElement(src_Components_v2_TrendingVideos, {
-        trendingVideos: trendingVideos,
+        trendingVideos: trendingVideoList,
         trendingVideosLoading: trendingVideosLoading
       }))));
     }
@@ -2706,4 +2734,4 @@ function _slicedToArray(arr, i) {
 /***/ })
 
 }]);
-//# sourceMappingURL=src_pages_Video_index_js-08fc96a979674ffdd8d6.js.map
+//# sourceMappingURL=src_pages_Video_index_js-8548b9968995017a25f6.js.map

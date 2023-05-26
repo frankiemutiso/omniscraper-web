@@ -62,6 +62,7 @@ class App extends Component {
 		autoplayVideo: false,
 		successfulLogin: false,
 		isHomeFirstLoad: true,
+		homeVideosOffset: 1,
 	};
 
 	componentDidMount = async () => {
@@ -195,6 +196,10 @@ class App extends Component {
 		this.setState({ isHomeFirstLoad: state });
 	};
 
+	handleHomeOffsetUpdate = (offset) => {
+		this.setState({ homeVideosOffset: offset });
+	};
+
 	render() {
 		const {
 			handleChange,
@@ -204,6 +209,7 @@ class App extends Component {
 			loadVideos,
 			handleScrollPosition,
 			updateHomeFirstLoad,
+			handleHomeOffsetUpdate,
 		} = this;
 		const {
 			username,
@@ -217,6 +223,7 @@ class App extends Component {
 			scrollPosition,
 			autoplayVideo,
 			isHomeFirstLoad,
+			homeVideosOffset,
 		} = this.state;
 
 		return (
@@ -253,6 +260,8 @@ class App extends Component {
 													handleScrollPosition={handleScrollPosition}
 													isHomeFirstLoad={isHomeFirstLoad}
 													updateHomeFirstLoad={updateHomeFirstLoad}
+													handleHomeOffsetUpdate={handleHomeOffsetUpdate}
+													homeVideosOffset={homeVideosOffset}
 												/>
 											)}
 										/>
